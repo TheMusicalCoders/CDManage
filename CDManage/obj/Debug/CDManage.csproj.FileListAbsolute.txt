@@ -1,0 +1,10 @@
+C:\Users\tripl\source\repos\CDManage\CDManage\obj\Debug\CDManage.csprojAssemblyReference.cache
+C:\Users\tripl\source\repos\CDManage\CDManage\obj\Debug\CDManage.Properties.Resources.resources
+C:\Users\tripl\source\repos\CDManage\CDManage\obj\Debug\CDManage.csproj.GenerateResource.cache
+C:\Users\tripl\source\repos\CDManage\CDManage\obj\Debug\CDManage.csproj.CoreCompileInputs.cache
+C:\Users\tripl\source\repos\CDManage\CDManage\bin\Debug\CDManage.exe.config
+C:\Users\tripl\source\repos\CDManage\CDManage\bin\Debug\CDManage.exe
+C:\Users\tripl\source\repos\CDManage\CDManage\bin\Debug\CDManage.pdb
+C:\Users\tripl\source\repos\CDManage\CDManage\obj\Debug\CDManage.Form1.resources
+C:\Users\tripl\source\repos\CDManage\CDManage\obj\Debug\CDManage.exe
+C:\Users\tripl\source\repos\CDManage\CDManage\obj\Debug\CDManage.pdb
