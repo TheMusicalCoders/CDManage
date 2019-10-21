@@ -16,5 +16,15 @@ namespace CDManage
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.Size = new Size(360,500);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Swap to the login panel
+        }
     }
 }
