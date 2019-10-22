@@ -50,6 +50,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.CancelBtn = new System.Windows.Forms.Button();
             this.loginPnL.SuspendLayout();
             this.AdminPnL.SuspendLayout();
             this.usrPnL.SuspendLayout();
@@ -58,6 +59,7 @@
             // 
             // loginPnL
             // 
+            this.loginPnL.Controls.Add(this.CancelBtn);
             this.loginPnL.Controls.Add(this.LoginBtn);
             this.loginPnL.Controls.Add(this.PasswdBx);
             this.loginPnL.Controls.Add(this.UsrBx);
@@ -67,12 +69,12 @@
             this.loginPnL.Location = new System.Drawing.Point(493, 27);
             this.loginPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.loginPnL.Name = "loginPnL";
-            this.loginPnL.Size = new System.Drawing.Size(523, 119);
+            this.loginPnL.Size = new System.Drawing.Size(453, 554);
             this.loginPnL.TabIndex = 0;
             // 
             // LoginBtn
             // 
-            this.LoginBtn.Location = new System.Drawing.Point(95, 87);
+            this.LoginBtn.Location = new System.Drawing.Point(197, 223);
             this.LoginBtn.Name = "LoginBtn";
             this.LoginBtn.Size = new System.Drawing.Size(75, 29);
             this.LoginBtn.TabIndex = 5;
@@ -82,7 +84,7 @@
             // 
             // PasswdBx
             // 
-            this.PasswdBx.Location = new System.Drawing.Point(95, 58);
+            this.PasswdBx.Location = new System.Drawing.Point(197, 160);
             this.PasswdBx.Name = "PasswdBx";
             this.PasswdBx.PasswordChar = '*';
             this.PasswdBx.Size = new System.Drawing.Size(100, 22);
@@ -91,7 +93,7 @@
             // 
             // UsrBx
             // 
-            this.UsrBx.Location = new System.Drawing.Point(95, 24);
+            this.UsrBx.Location = new System.Drawing.Point(197, 123);
             this.UsrBx.Name = "UsrBx";
             this.UsrBx.Size = new System.Drawing.Size(100, 22);
             this.UsrBx.TabIndex = 3;
@@ -99,25 +101,25 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 63);
+            this.label9.Location = new System.Drawing.Point(82, 165);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(69, 17);
+            this.label9.Size = new System.Drawing.Size(73, 17);
             this.label9.TabIndex = 2;
-            this.label9.Text = "Password";
+            this.label9.Text = "Password:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 27);
+            this.label8.Location = new System.Drawing.Point(78, 128);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(81, 17);
+            this.label8.Size = new System.Drawing.Size(77, 17);
             this.label8.TabIndex = 1;
-            this.label8.Text = "Username: ";
+            this.label8.Text = "Username:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(-3, 0);
+            this.label4.Location = new System.Drawing.Point(6, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(83, 17);
             this.label4.TabIndex = 0;
@@ -126,7 +128,7 @@
             // AdminPnL
             // 
             this.AdminPnL.Controls.Add(this.label5);
-            this.AdminPnL.Location = new System.Drawing.Point(493, 150);
+            this.AdminPnL.Location = new System.Drawing.Point(476, 454);
             this.AdminPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AdminPnL.Name = "AdminPnL";
             this.AdminPnL.Size = new System.Drawing.Size(200, 100);
@@ -144,7 +146,7 @@
             // usrPnL
             // 
             this.usrPnL.Controls.Add(this.label6);
-            this.usrPnL.Location = new System.Drawing.Point(493, 256);
+            this.usrPnL.Location = new System.Drawing.Point(733, 454);
             this.usrPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.usrPnL.Name = "usrPnL";
             this.usrPnL.Size = new System.Drawing.Size(200, 100);
@@ -153,7 +155,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(59, 42);
+            this.label6.Location = new System.Drawing.Point(59, 39);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 17);
             this.label6.TabIndex = 1;
@@ -269,11 +271,21 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 24);
             this.comboBox1.TabIndex = 0;
             // 
+            // CancelBtn
+            // 
+            this.CancelBtn.Location = new System.Drawing.Point(197, 312);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(75, 23);
+            this.CancelBtn.TabIndex = 6;
+            this.CancelBtn.Text = "Cancel";
+            this.CancelBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 553);
+            this.ClientSize = new System.Drawing.Size(1126, 553);
             this.Controls.Add(this.guestPnL);
             this.Controls.Add(this.usrPnL);
             this.Controls.Add(this.AdminPnL);
@@ -318,6 +330,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button switchToLoginPnlBtn;
+        private System.Windows.Forms.Button CancelBtn;
     }
 }
 

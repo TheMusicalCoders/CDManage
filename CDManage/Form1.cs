@@ -31,6 +31,9 @@ namespace CDManage
             AdminPnL.Visible = false;
             usrPnL.Enabled = false;
             usrPnL.Visible = false;
+
+            
+            
         }
 
         private void switchToLoginPnlBtn_Click(object sender, EventArgs e)
@@ -47,6 +50,14 @@ namespace CDManage
             loginPnL.Visible = false;
             usrPnL.Enabled = true;
             usrPnL.Visible = true;
+        }
+
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+            guestPnL.Enabled = true;
+            guestPnL.Visible = true;
+            loginPnL.Enabled = false;
+            loginPnL.Visible = false;
         }
     }
 }
