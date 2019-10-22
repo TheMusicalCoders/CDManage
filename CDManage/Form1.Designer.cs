@@ -40,6 +40,7 @@
             this.usrPnL = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.guestPnL = new System.Windows.Forms.Panel();
+            this.switchToLoginPnlBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.searchBtN = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -49,7 +50,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.switchToLoginPnlBtn = new System.Windows.Forms.Button();
             this.loginPnL.SuspendLayout();
             this.AdminPnL.SuspendLayout();
             this.usrPnL.SuspendLayout();
@@ -74,7 +74,7 @@
             // 
             this.LoginBtn.Location = new System.Drawing.Point(95, 87);
             this.LoginBtn.Name = "LoginBtn";
-            this.LoginBtn.Size = new System.Drawing.Size(75, 23);
+            this.LoginBtn.Size = new System.Drawing.Size(75, 29);
             this.LoginBtn.TabIndex = 5;
             this.LoginBtn.Text = "Login";
             this.LoginBtn.UseVisualStyleBackColor = true;
@@ -177,6 +177,16 @@
             this.guestPnL.Size = new System.Drawing.Size(453, 554);
             this.guestPnL.TabIndex = 3;
             // 
+            // switchToLoginPnlBtn
+            // 
+            this.switchToLoginPnlBtn.Location = new System.Drawing.Point(69, 155);
+            this.switchToLoginPnlBtn.Name = "switchToLoginPnlBtn";
+            this.switchToLoginPnlBtn.Size = new System.Drawing.Size(75, 23);
+            this.switchToLoginPnlBtn.TabIndex = 11;
+            this.switchToLoginPnlBtn.Text = "Login";
+            this.switchToLoginPnlBtn.UseVisualStyleBackColor = true;
+            this.switchToLoginPnlBtn.Click += new System.EventHandler(this.switchToLoginPnlBtn_Click);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -258,16 +268,6 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 24);
             this.comboBox1.TabIndex = 0;
-            // 
-            // switchToLoginPnlBtn
-            // 
-            this.switchToLoginPnlBtn.Location = new System.Drawing.Point(69, 155);
-            this.switchToLoginPnlBtn.Name = "switchToLoginPnlBtn";
-            this.switchToLoginPnlBtn.Size = new System.Drawing.Size(75, 23);
-            this.switchToLoginPnlBtn.TabIndex = 11;
-            this.switchToLoginPnlBtn.Text = "Login";
-            this.switchToLoginPnlBtn.UseVisualStyleBackColor = true;
-            this.switchToLoginPnlBtn.Click += new System.EventHandler(this.switchToLoginPnlBtn_Click);
             // 
             // Form1
             // 
