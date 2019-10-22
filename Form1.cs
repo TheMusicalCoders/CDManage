@@ -26,7 +26,14 @@ namespace CDManage
         {
             //go to login panel
         }
-        
+
+        private void lgoutBtn_Click(object sender, EventArgs e)
+        {
+            usrPnl.Enabled = false;
+            usrPnl.Visible = false;
+            loginPnL.Enabled = true;
+            loginPnL.Visible = true;
+        }
     }
 
     /* class CDManager
