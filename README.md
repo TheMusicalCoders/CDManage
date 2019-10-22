@@ -1,2 +1,1 @@
-# CDManage
-CPSC236 group project
+Basic design of the guest panel is created
