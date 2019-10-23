@@ -19,11 +19,11 @@ namespace CDManage
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Size = new Size(360,500);
+            this.Size = new Size(360,600);
             foreach(Panel myPnl in this.Controls)
             {
                 myPnl.Location = new Point(0, 0);
-                myPnl.Size = new Size(360, 500);
+                myPnl.Size = new Size(360, 600);
             }
             loginPnL.Enabled = false;
             loginPnL.Visible = false;
@@ -58,6 +58,14 @@ namespace CDManage
             guestPnL.Visible = true;
             loginPnL.Enabled = false;
             loginPnL.Visible = false;
+        }
+
+        private void lgoutBtn_Click(object sender, EventArgs e)
+        {
+            usrPnL.Enabled = false;
+            usrPnL.Visible = false;
+            loginPnL.Enabled = true;
+            loginPnL.Visible = true;
         }
     }
 }

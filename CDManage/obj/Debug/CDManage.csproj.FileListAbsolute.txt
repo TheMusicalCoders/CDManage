@@ -28,3 +28,13 @@ C:\Users\autov\source\repos\CDManage\CDManage\CDManage\obj\Debug\CDManage.csproj
 C:\Users\autov\source\repos\CDManage\CDManage\CDManage\obj\Debug\CDManage.csproj.CoreCompileInputs.cache
 C:\Users\autov\source\repos\CDManage\CDManage\CDManage\obj\Debug\CDManage.exe
 C:\Users\autov\source\repos\CDManage\CDManage\CDManage\obj\Debug\CDManage.pdb
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\obj\Debug\CDManage.csprojAssemblyReference.cache
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\obj\Debug\CDManage.Form1.resources
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\obj\Debug\CDManage.Properties.Resources.resources
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\obj\Debug\CDManage.csproj.GenerateResource.cache
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\obj\Debug\CDManage.csproj.CoreCompileInputs.cache
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\obj\Debug\CDManage.exe
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\obj\Debug\CDManage.pdb
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\bin\Debug\CDManage.exe.config
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\bin\Debug\CDManage.exe
+D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\bin\Debug\CDManage.pdb
