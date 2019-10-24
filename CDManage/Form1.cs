@@ -60,7 +60,9 @@ namespace CDManage
             loginPnL.Visible = false;
         }
 
-        private void lgoutBtn_Click(object sender, EventArgs e)
+
+
+        private void LgoutBtn_Click(object sender, EventArgs e)
         {
             usrPnL.Enabled = false;
             usrPnL.Visible = false;

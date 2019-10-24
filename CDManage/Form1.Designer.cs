@@ -387,6 +387,7 @@
             this.lgoutBtn.TabIndex = 9;
             this.lgoutBtn.Text = "Logout";
             this.lgoutBtn.UseVisualStyleBackColor = true;
+            this.lgoutBtn.Click += new System.EventHandler(this.LgoutBtn_Click);
             // 
             // uSearchBtn
             // 
