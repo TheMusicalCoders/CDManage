@@ -19,21 +19,18 @@ namespace CDManage
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Size = new Size(360,600);
+            this.Size = new Size(360,500);
             foreach(Panel myPnl in this.Controls)
             {
                 myPnl.Location = new Point(0, 0);
-                myPnl.Size = new Size(360, 600);
+                myPnl.Size = new Size(360, 450);
             }
             loginPnL.Enabled = false;
             loginPnL.Visible = false;
             AdminPnL.Enabled = false;
             AdminPnL.Visible = false;
-            usrPnL.Enabled = false;
-            usrPnL.Visible = false;
-
-            
-            
+            addCdPnL.Enabled = false;
+            addCdPnL.Visible = false;         
         }
 
         private void switchToLoginPnlBtn_Click(object sender, EventArgs e)
@@ -46,10 +43,9 @@ namespace CDManage
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
-            loginPnL.Enabled = false;
+            guestPnL.Enabled = Enabled = true;
+            guestPnL.Visible = true;
             loginPnL.Visible = false;
-            usrPnL.Enabled = true;
-            usrPnL.Visible = true;
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)
@@ -64,8 +60,8 @@ namespace CDManage
 
         private void LgoutBtn_Click(object sender, EventArgs e)
         {
-            usrPnL.Enabled = false;
-            usrPnL.Visible = false;
+            addCdPnL.Enabled = false;
+            addCdPnL.Visible = false;
             loginPnL.Enabled = true;
             loginPnL.Visible = true;
         }

@@ -38,3 +38,12 @@ D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\obj\Debug\CDManage
 D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\bin\Debug\CDManage.exe.config
 D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\bin\Debug\CDManage.exe
 D:\CDManage-e35fb13a155c32116f581a95681773a8b138079f\CDManage\bin\Debug\CDManage.pdb
+C:\Users\swe1002\Documents\github\CDManage\CDManage\bin\Debug\CDManage.exe.config
+C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.exe
+C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.pdb
+C:\Users\swe1002\Documents\github\CDManage\CDManage\bin\Debug\CDManage.exe
+C:\Users\swe1002\Documents\github\CDManage\CDManage\bin\Debug\CDManage.pdb
+C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csprojResolveAssemblyReference.cache
+C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.Form1.resources
+C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.Properties.Resources.resources
+C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csproj.GenerateResource.Cache
