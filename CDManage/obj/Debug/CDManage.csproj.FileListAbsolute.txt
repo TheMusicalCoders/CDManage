@@ -47,3 +47,13 @@ C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csprojRes
 C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.Form1.resources
 C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.Properties.Resources.resources
 C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csproj.GenerateResource.Cache
+C:\Users\autov\Documents\github\CDManage\CDManage\bin\Debug\CDManage.exe.config
+C:\Users\autov\Documents\github\CDManage\CDManage\bin\Debug\CDManage.exe
+C:\Users\autov\Documents\github\CDManage\CDManage\bin\Debug\CDManage.pdb
+C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csprojAssemblyReference.cache
+C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.Form1.resources
+C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.Properties.Resources.resources
+C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csproj.GenerateResource.cache
+C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csproj.CoreCompileInputs.cache
+C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.exe
+C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.pdb
