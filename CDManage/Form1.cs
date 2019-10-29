@@ -65,5 +65,55 @@ namespace CDManage
             loginPnL.Enabled = true;
             loginPnL.Visible = true;
         }
+
+        private void SwitchToAdminPnlBtn_Click(object sender, EventArgs e)
+        {
+            AdminPnL.Enabled = true;
+            AdminPnL.Visible = true;
+            loginPnL.Enabled = false;
+            loginPnL.Visible = false;
+        }
+
+
+        private void UserListBx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectedUserBx.Text = UserListBx.SelectedItem.ToString();
+        }
+
+
+
+
+
+
+        private void AddPermissionBtn_Click_1(object sender, EventArgs e)
+        {
+            if (SelectedUserBx.Text.Trim() != "")
+            {
+                string AddCptn = "Confirmation";
+                string AddMsg = "Are you sure you want to give " + SelectedUserBx.Text.Trim() + " edit permissions?";
+                MessageBox.Show(AddMsg, AddCptn, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            }
+            else { MessageBox.Show("Please Select a user"); }
+        }
+
+        private void RemovePermissionBtn_Click_1(object sender, EventArgs e)
+        {
+            if (SelectedUserBx.Text.Trim() != "")
+            {
+                string RemoveCptn = "Confirmation";
+                string RemoveMsg = "Are you sure you want to remove " + SelectedUserBx.Text.Trim() + "'s edit permissions?";
+                MessageBox.Show(RemoveMsg, RemoveCptn, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            }
+            else { MessageBox.Show("Please Select a user"); }
+        }
+
+        private void ReturnBtn_Click(object sender, EventArgs e)
+        {
+            AdminPnL.Enabled = false;
+            AdminPnL.Visible = false;
+            loginPnL.Enabled = true;
+            loginPnL.Visible = true;
+        }
     }
 }
+
