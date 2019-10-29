@@ -47,3 +47,9 @@ C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csprojRes
 C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.Form1.resources
 C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.Properties.Resources.resources
 C:\Users\swe1002\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csproj.GenerateResource.Cache
+C:\Users\swe1002\Documents\CDManage\CDManage\bin\Debug\CDManage.exe.config
+C:\Users\swe1002\Documents\CDManage\CDManage\obj\Debug\CDManage.exe
+C:\Users\swe1002\Documents\CDManage\CDManage\obj\Debug\CDManage.pdb
+C:\Users\swe1002\Desktop\CDManage\CDManage\bin\Debug\CDManage.exe.config
+C:\Users\swe1002\Desktop\CDManage\CDManage\obj\Debug\CDManage.exe
+C:\Users\swe1002\Desktop\CDManage\CDManage\obj\Debug\CDManage.pdb
