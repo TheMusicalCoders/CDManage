@@ -19,6 +19,12 @@ namespace CDManage
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            /**
+             * Todo add load in CDs from the database
+             * Fill in the genre and artist combo boxes based on details from CDs
+             * Set user level to guess
+             * Set Display to match user level
+             */
             this.Size = new Size(360,500);
             foreach(Panel myPnl in this.Controls)
             {
@@ -30,28 +36,47 @@ namespace CDManage
             AdminPnL.Enabled = false;
             AdminPnL.Visible = false;
             addCdPnL.Enabled = false;
-            addCdPnL.Visible = false;         
+            addCdPnL.Visible = false;
+
+            switchToAddCdPanelBtn.Visible = false;
+            swithToAdminPanelBtn.Visible = false;
         }
 
         private void switchToLoginPnlBtn_Click(object sender, EventArgs e)
         {
-            guestPnL.Enabled = false;
-            guestPnL.Visible = false;
+            //Switch to the Login Panel
+            cdEditPnl.Enabled = false;
+            cdEditPnl.Visible = false;
             loginPnL.Enabled = true;
             loginPnL.Visible = true;
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
-            guestPnL.Enabled = Enabled = true;
-            guestPnL.Visible = true;
+            /** Login Button order of operations
+             * Determines if the log in attempt is in the database. If not return error
+             * Make the buttons enabled based on the users level
+             * Change login button with a logout button
+             * Switch back to the cd edit panel
+             */
+
+             //Compare the username and password of that witch is in the database
+             //Change Userlevel according
+
+
+            //Enable the correct buttons. Determined by User Level
+
+            //Switch to the Panels
+            cdEditPnl.Enabled = true;
+            cdEditPnl.Visible = true;
             loginPnL.Visible = false;
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)
         {
-            guestPnL.Enabled = true;
-            guestPnL.Visible = true;
+            //Swicth to the CD Edit Panel
+            cdEditPnl.Enabled = true;
+            cdEditPnl.Visible = true;
             loginPnL.Enabled = false;
             loginPnL.Visible = false;
         }
@@ -60,6 +85,7 @@ namespace CDManage
 
         private void LgoutBtn_Click(object sender, EventArgs e)
         {
+            //Sets the user level to Guess
             addCdPnL.Enabled = false;
             addCdPnL.Visible = false;
             loginPnL.Enabled = true;
@@ -68,6 +94,7 @@ namespace CDManage
 
         private void SwitchToAdminPnlBtn_Click(object sender, EventArgs e)
         {
+            //Switch to the admin Panel
             AdminPnL.Enabled = true;
             AdminPnL.Visible = true;
             loginPnL.Enabled = false;
@@ -79,10 +106,6 @@ namespace CDManage
         {
             SelectedUserBx.Text = UserListBx.SelectedItem.ToString();
         }
-
-
-
-
 
 
         private void AddPermissionBtn_Click_1(object sender, EventArgs e)
@@ -109,10 +132,27 @@ namespace CDManage
 
         private void ReturnBtn_Click(object sender, EventArgs e)
         {
+            //Switch to the Login Panel
             AdminPnL.Enabled = false;
             AdminPnL.Visible = false;
             loginPnL.Enabled = true;
             loginPnL.Visible = true;
+        }
+
+        private void switchToCdPanelBtn_Click(object sender, EventArgs e)
+        {
+            //Switch to the Add CD Panel
+            addCdPnL.Visible = true;
+            addCdPnL.Enabled = true;
+            addCdPnL.BringToFront();
+        }
+
+        private void swithToAdminPanelBtn_Click(object sender, EventArgs e)
+        {
+            //Switch to the admin Panel
+            AdminPnL.BringToFront();
+            AdminPnL.Visible = true;
+            AdminPnL.Enabled = true;
         }
     }
 }

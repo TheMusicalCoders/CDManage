@@ -36,7 +36,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.guestPnL = new System.Windows.Forms.Panel();
+            this.cdEditPnl = new System.Windows.Forms.Panel();
             this.switchToLoginPnlBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.searchBtN = new System.Windows.Forms.Button();
@@ -71,16 +71,16 @@
             this.label16 = new System.Windows.Forms.Label();
             this.UserListBx = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.SwitchToAdminPnlBtn = new System.Windows.Forms.Button();
+            this.switchToAddCdPanelBtn = new System.Windows.Forms.Button();
+            this.swithToAdminPanelBtn = new System.Windows.Forms.Button();
             this.loginPnL.SuspendLayout();
-            this.guestPnL.SuspendLayout();
+            this.cdEditPnl.SuspendLayout();
             this.addCdPnL.SuspendLayout();
             this.AdminPnL.SuspendLayout();
             this.SuspendLayout();
             // 
             // loginPnL
             // 
-            this.loginPnL.Controls.Add(this.SwitchToAdminPnlBtn);
             this.loginPnL.Controls.Add(this.CancelBtn);
             this.loginPnL.Controls.Add(this.LoginBtn);
             this.loginPnL.Controls.Add(this.PasswdBx);
@@ -88,7 +88,7 @@
             this.loginPnL.Controls.Add(this.label9);
             this.loginPnL.Controls.Add(this.label8);
             this.loginPnL.Controls.Add(this.label4);
-            this.loginPnL.Location = new System.Drawing.Point(493, 27);
+            this.loginPnL.Location = new System.Drawing.Point(485, 0);
             this.loginPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.loginPnL.Name = "loginPnL";
             this.loginPnL.Size = new System.Drawing.Size(453, 554);
@@ -96,7 +96,7 @@
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Location = new System.Drawing.Point(197, 313);
+            this.CancelBtn.Location = new System.Drawing.Point(197, 273);
             this.CancelBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(75, 23);
@@ -161,30 +161,32 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Login Panel";
             // 
-            // guestPnL
+            // cdEditPnl
             // 
-            this.guestPnL.Controls.Add(this.switchToLoginPnlBtn);
-            this.guestPnL.Controls.Add(this.label7);
-            this.guestPnL.Controls.Add(this.searchBtN);
-            this.guestPnL.Controls.Add(this.listView1);
-            this.guestPnL.Controls.Add(this.label3);
-            this.guestPnL.Controls.Add(this.label2);
-            this.guestPnL.Controls.Add(this.comboBox2);
-            this.guestPnL.Controls.Add(this.textBox1);
-            this.guestPnL.Controls.Add(this.label1);
-            this.guestPnL.Controls.Add(this.comboBox1);
-            this.guestPnL.Location = new System.Drawing.Point(0, 0);
-            this.guestPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.guestPnL.Name = "guestPnL";
-            this.guestPnL.Size = new System.Drawing.Size(453, 554);
-            this.guestPnL.TabIndex = 3;
+            this.cdEditPnl.Controls.Add(this.swithToAdminPanelBtn);
+            this.cdEditPnl.Controls.Add(this.switchToAddCdPanelBtn);
+            this.cdEditPnl.Controls.Add(this.switchToLoginPnlBtn);
+            this.cdEditPnl.Controls.Add(this.label7);
+            this.cdEditPnl.Controls.Add(this.searchBtN);
+            this.cdEditPnl.Controls.Add(this.listView1);
+            this.cdEditPnl.Controls.Add(this.label3);
+            this.cdEditPnl.Controls.Add(this.label2);
+            this.cdEditPnl.Controls.Add(this.comboBox2);
+            this.cdEditPnl.Controls.Add(this.textBox1);
+            this.cdEditPnl.Controls.Add(this.label1);
+            this.cdEditPnl.Controls.Add(this.comboBox1);
+            this.cdEditPnl.Location = new System.Drawing.Point(0, 0);
+            this.cdEditPnl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cdEditPnl.Name = "cdEditPnl";
+            this.cdEditPnl.Size = new System.Drawing.Size(453, 554);
+            this.cdEditPnl.TabIndex = 3;
             // 
             // switchToLoginPnlBtn
             // 
-            this.switchToLoginPnlBtn.Location = new System.Drawing.Point(69, 155);
+            this.switchToLoginPnlBtn.Location = new System.Drawing.Point(19, 149);
             this.switchToLoginPnlBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.switchToLoginPnlBtn.Name = "switchToLoginPnlBtn";
-            this.switchToLoginPnlBtn.Size = new System.Drawing.Size(75, 23);
+            this.switchToLoginPnlBtn.Size = new System.Drawing.Size(100, 33);
             this.switchToLoginPnlBtn.TabIndex = 11;
             this.switchToLoginPnlBtn.Text = "Login";
             this.switchToLoginPnlBtn.UseVisualStyleBackColor = true;
@@ -195,13 +197,13 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(109, 110);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(157, 17);
+            this.label7.Size = new System.Drawing.Size(95, 17);
             this.label7.TabIndex = 10;
-            this.label7.Text = "Guest Panel Read Only";
+            this.label7.Text = "CD Edit Panel";
             // 
             // searchBtN
             // 
-            this.searchBtN.Location = new System.Drawing.Point(283, 150);
+            this.searchBtN.Location = new System.Drawing.Point(125, 150);
             this.searchBtN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchBtN.Name = "searchBtN";
             this.searchBtN.Size = new System.Drawing.Size(100, 33);
@@ -288,7 +290,7 @@
             this.addCdPnL.Controls.Add(this.label11);
             this.addCdPnL.Controls.Add(this.label12);
             this.addCdPnL.Controls.Add(this.lgoutBtn);
-            this.addCdPnL.Location = new System.Drawing.Point(988, 150);
+            this.addCdPnL.Location = new System.Drawing.Point(969, 15);
             this.addCdPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addCdPnL.Name = "addCdPnL";
             this.addCdPnL.Size = new System.Drawing.Size(453, 194);
@@ -297,7 +299,7 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(331, 55);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(101, 22);
             this.textBox3.TabIndex = 24;
@@ -305,7 +307,7 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(331, 11);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(101, 22);
             this.textBox2.TabIndex = 23;
@@ -431,7 +433,7 @@
             this.AdminPnL.Controls.Add(this.label16);
             this.AdminPnL.Controls.Add(this.UserListBx);
             this.AdminPnL.Controls.Add(this.label5);
-            this.AdminPnL.Location = new System.Drawing.Point(988, 371);
+            this.AdminPnL.Location = new System.Drawing.Point(989, 223);
             this.AdminPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AdminPnL.Name = "AdminPnL";
             this.AdminPnL.Size = new System.Drawing.Size(312, 347);
@@ -516,24 +518,34 @@
             this.label5.TabIndex = 1;
             this.label5.Text = "Admin Panel";
             // 
-            // SwitchToAdminPnlBtn
+            // switchToAddCdPanelBtn
             // 
-            this.SwitchToAdminPnlBtn.Location = new System.Drawing.Point(197, 272);
-            this.SwitchToAdminPnlBtn.Name = "SwitchToAdminPnlBtn";
-            this.SwitchToAdminPnlBtn.Size = new System.Drawing.Size(75, 23);
-            this.SwitchToAdminPnlBtn.TabIndex = 7;
-            this.SwitchToAdminPnlBtn.Text = "button1";
-            this.SwitchToAdminPnlBtn.UseVisualStyleBackColor = true;
-            this.SwitchToAdminPnlBtn.Click += new System.EventHandler(this.SwitchToAdminPnlBtn_Click);
+            this.switchToAddCdPanelBtn.Location = new System.Drawing.Point(228, 149);
+            this.switchToAddCdPanelBtn.Name = "switchToAddCdPanelBtn";
+            this.switchToAddCdPanelBtn.Size = new System.Drawing.Size(100, 33);
+            this.switchToAddCdPanelBtn.TabIndex = 12;
+            this.switchToAddCdPanelBtn.Text = "Add CD";
+            this.switchToAddCdPanelBtn.UseVisualStyleBackColor = true;
+            this.switchToAddCdPanelBtn.Click += new System.EventHandler(this.switchToCdPanelBtn_Click);
+            // 
+            // swithToAdminPanelBtn
+            // 
+            this.swithToAdminPanelBtn.Location = new System.Drawing.Point(332, 149);
+            this.swithToAdminPanelBtn.Name = "swithToAdminPanelBtn";
+            this.swithToAdminPanelBtn.Size = new System.Drawing.Size(100, 33);
+            this.swithToAdminPanelBtn.TabIndex = 13;
+            this.swithToAdminPanelBtn.Text = "Permissons";
+            this.swithToAdminPanelBtn.UseVisualStyleBackColor = true;
+            this.swithToAdminPanelBtn.Click += new System.EventHandler(this.swithToAdminPanelBtn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1456, 706);
+            this.ClientSize = new System.Drawing.Size(1456, 575);
             this.Controls.Add(this.AdminPnL);
             this.Controls.Add(this.addCdPnL);
-            this.Controls.Add(this.guestPnL);
+            this.Controls.Add(this.cdEditPnl);
             this.Controls.Add(this.loginPnL);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
@@ -541,8 +553,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.loginPnL.ResumeLayout(false);
             this.loginPnL.PerformLayout();
-            this.guestPnL.ResumeLayout(false);
-            this.guestPnL.PerformLayout();
+            this.cdEditPnl.ResumeLayout(false);
+            this.cdEditPnl.PerformLayout();
             this.addCdPnL.ResumeLayout(false);
             this.addCdPnL.PerformLayout();
             this.AdminPnL.ResumeLayout(false);
@@ -554,7 +566,7 @@
         #endregion
 
         private System.Windows.Forms.Panel loginPnL;
-        private System.Windows.Forms.Panel guestPnL;
+        private System.Windows.Forms.Panel cdEditPnl;
         private System.Windows.Forms.Button searchBtN;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label label3;
@@ -596,7 +608,8 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ListBox UserListBx;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button SwitchToAdminPnlBtn;
+        private System.Windows.Forms.Button switchToAddCdPanelBtn;
+        private System.Windows.Forms.Button swithToAdminPanelBtn;
     }
 }
 
