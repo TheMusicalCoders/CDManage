@@ -62,3 +62,5 @@ C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csproj.Gene
 C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csproj.CoreCompileInputs.cache
 C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.exe
 C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.pdb
+C:\Users\autov\Documents\github\CDManage\CDManage\obj\Debug\CDManage.csprojAssemblyReference.cache
+C:\Users\autov\Documents\github\CDManage\CDManage\bin\Debug\Database\CDdtb.accdb

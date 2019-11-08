@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.loginPnL = new System.Windows.Forms.Panel();
+            this.InvLbl = new System.Windows.Forms.Label();
             this.CancelBtn = new System.Windows.Forms.Button();
             this.LoginBtn = new System.Windows.Forms.Button();
             this.PasswdBx = new System.Windows.Forms.TextBox();
@@ -37,19 +39,24 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cdEditPnl = new System.Windows.Forms.Panel();
+            this.swithToAdminPanelBtn = new System.Windows.Forms.Button();
+            this.switchToAddCdPanelBtn = new System.Windows.Forms.Button();
             this.switchToLoginPnlBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.searchBtN = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.ResultsList = new System.Windows.Forms.ListView();
+            this.AlbumCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ArtistCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.GenreCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.ArtistComboBx = new System.Windows.Forms.ComboBox();
+            this.searchBx = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.GenreComboBx = new System.Windows.Forms.ComboBox();
             this.addCdPnL = new System.Windows.Forms.Panel();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -71,8 +78,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.UserListBx = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.switchToAddCdPanelBtn = new System.Windows.Forms.Button();
-            this.swithToAdminPanelBtn = new System.Windows.Forms.Button();
             this.loginPnL.SuspendLayout();
             this.cdEditPnl.SuspendLayout();
             this.addCdPnL.SuspendLayout();
@@ -81,6 +86,7 @@
             // 
             // loginPnL
             // 
+            this.loginPnL.Controls.Add(this.InvLbl);
             this.loginPnL.Controls.Add(this.CancelBtn);
             this.loginPnL.Controls.Add(this.LoginBtn);
             this.loginPnL.Controls.Add(this.PasswdBx);
@@ -93,6 +99,16 @@
             this.loginPnL.Name = "loginPnL";
             this.loginPnL.Size = new System.Drawing.Size(453, 554);
             this.loginPnL.TabIndex = 0;
+            // 
+            // InvLbl
+            // 
+            this.InvLbl.AutoSize = true;
+            this.InvLbl.ForeColor = System.Drawing.Color.Red;
+            this.InvLbl.Location = new System.Drawing.Point(140, 192);
+            this.InvLbl.Name = "InvLbl";
+            this.InvLbl.Size = new System.Drawing.Size(0, 17);
+            this.InvLbl.TabIndex = 7;
+            this.InvLbl.Visible = false;
             // 
             // CancelBtn
             // 
@@ -168,18 +184,38 @@
             this.cdEditPnl.Controls.Add(this.switchToLoginPnlBtn);
             this.cdEditPnl.Controls.Add(this.label7);
             this.cdEditPnl.Controls.Add(this.searchBtN);
-            this.cdEditPnl.Controls.Add(this.listView1);
+            this.cdEditPnl.Controls.Add(this.ResultsList);
             this.cdEditPnl.Controls.Add(this.label3);
             this.cdEditPnl.Controls.Add(this.label2);
-            this.cdEditPnl.Controls.Add(this.comboBox2);
-            this.cdEditPnl.Controls.Add(this.textBox1);
+            this.cdEditPnl.Controls.Add(this.ArtistComboBx);
+            this.cdEditPnl.Controls.Add(this.searchBx);
             this.cdEditPnl.Controls.Add(this.label1);
-            this.cdEditPnl.Controls.Add(this.comboBox1);
+            this.cdEditPnl.Controls.Add(this.GenreComboBx);
             this.cdEditPnl.Location = new System.Drawing.Point(0, 0);
             this.cdEditPnl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cdEditPnl.Name = "cdEditPnl";
             this.cdEditPnl.Size = new System.Drawing.Size(453, 554);
             this.cdEditPnl.TabIndex = 3;
+            // 
+            // swithToAdminPanelBtn
+            // 
+            this.swithToAdminPanelBtn.Location = new System.Drawing.Point(332, 149);
+            this.swithToAdminPanelBtn.Name = "swithToAdminPanelBtn";
+            this.swithToAdminPanelBtn.Size = new System.Drawing.Size(100, 33);
+            this.swithToAdminPanelBtn.TabIndex = 13;
+            this.swithToAdminPanelBtn.Text = "Permissons";
+            this.swithToAdminPanelBtn.UseVisualStyleBackColor = true;
+            this.swithToAdminPanelBtn.Click += new System.EventHandler(this.swithToAdminPanelBtn_Click);
+            // 
+            // switchToAddCdPanelBtn
+            // 
+            this.switchToAddCdPanelBtn.Location = new System.Drawing.Point(228, 149);
+            this.switchToAddCdPanelBtn.Name = "switchToAddCdPanelBtn";
+            this.switchToAddCdPanelBtn.Size = new System.Drawing.Size(100, 33);
+            this.switchToAddCdPanelBtn.TabIndex = 12;
+            this.switchToAddCdPanelBtn.Text = "Add CD";
+            this.switchToAddCdPanelBtn.UseVisualStyleBackColor = true;
+            this.switchToAddCdPanelBtn.Click += new System.EventHandler(this.switchToCdPanelBtn_Click);
             // 
             // switchToLoginPnlBtn
             // 
@@ -210,16 +246,33 @@
             this.searchBtN.TabIndex = 8;
             this.searchBtN.Text = "SEARCH";
             this.searchBtN.UseVisualStyleBackColor = true;
+            this.searchBtN.Click += new System.EventHandler(this.searchBtN_Click);
             // 
-            // listView1
+            // ResultsList
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(19, 192);
-            this.listView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(413, 349);
-            this.listView1.TabIndex = 7;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.ResultsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.AlbumCol,
+            this.ArtistCol,
+            this.GenreCol});
+            this.ResultsList.HideSelection = false;
+            this.ResultsList.Location = new System.Drawing.Point(19, 192);
+            this.ResultsList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ResultsList.Name = "ResultsList";
+            this.ResultsList.Size = new System.Drawing.Size(413, 349);
+            this.ResultsList.TabIndex = 7;
+            this.ResultsList.UseCompatibleStateImageBehavior = false;
+            // 
+            // AlbumCol
+            // 
+            this.AlbumCol.Text = "Album";
+            // 
+            // ArtistCol
+            // 
+            this.ArtistCol.Text = "Artist";
+            // 
+            // GenreCol
+            // 
+            this.GenreCol.Text = "Genre";
             // 
             // label3
             // 
@@ -239,22 +292,23 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Genre";
             // 
-            // comboBox2
+            // ArtistComboBx
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(261, 53);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 24);
-            this.comboBox2.TabIndex = 3;
+            this.ArtistComboBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ArtistComboBx.FormattingEnabled = true;
+            this.ArtistComboBx.Location = new System.Drawing.Point(261, 53);
+            this.ArtistComboBx.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ArtistComboBx.Name = "ArtistComboBx";
+            this.ArtistComboBx.Size = new System.Drawing.Size(121, 24);
+            this.ArtistComboBx.TabIndex = 3;
             // 
-            // textBox1
+            // searchBx
             // 
-            this.textBox1.Location = new System.Drawing.Point(69, 12);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(313, 22);
-            this.textBox1.TabIndex = 2;
+            this.searchBx.Location = new System.Drawing.Point(69, 12);
+            this.searchBx.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.searchBx.Name = "searchBx";
+            this.searchBx.Size = new System.Drawing.Size(313, 22);
+            this.searchBx.TabIndex = 2;
             // 
             // label1
             // 
@@ -265,19 +319,23 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Search";
             // 
-            // comboBox1
+            // GenreComboBx
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(69, 53);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 0;
+            this.GenreComboBx.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.GenreComboBx.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.GenreComboBx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.GenreComboBx.FormattingEnabled = true;
+            this.GenreComboBx.Location = new System.Drawing.Point(69, 53);
+            this.GenreComboBx.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.GenreComboBx.Name = "GenreComboBx";
+            this.GenreComboBx.Size = new System.Drawing.Size(121, 24);
+            this.GenreComboBx.Sorted = true;
+            this.GenreComboBx.TabIndex = 0;
             // 
             // addCdPnL
             // 
+            this.addCdPnL.Controls.Add(this.dateTimePicker1);
             this.addCdPnL.Controls.Add(this.textBox3);
-            this.addCdPnL.Controls.Add(this.textBox2);
             this.addCdPnL.Controls.Add(this.label15);
             this.addCdPnL.Controls.Add(this.label13);
             this.addCdPnL.Controls.Add(this.label6);
@@ -296,6 +354,13 @@
             this.addCdPnL.Size = new System.Drawing.Size(453, 194);
             this.addCdPnL.TabIndex = 5;
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(215, 84);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePicker1.TabIndex = 25;
+            // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(331, 55);
@@ -303,14 +368,6 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(101, 22);
             this.textBox3.TabIndex = 24;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(331, 11);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(101, 22);
-            this.textBox2.TabIndex = 23;
             // 
             // label15
             // 
@@ -351,6 +408,7 @@
             this.AddCDBtn.TabIndex = 19;
             this.AddCDBtn.Text = "Add CD";
             this.AddCDBtn.UseVisualStyleBackColor = true;
+            this.AddCDBtn.Click += new System.EventHandler(this.AddCDBtn_Click);
             // 
             // addGenreBx
             // 
@@ -518,35 +576,17 @@
             this.label5.TabIndex = 1;
             this.label5.Text = "Admin Panel";
             // 
-            // switchToAddCdPanelBtn
-            // 
-            this.switchToAddCdPanelBtn.Location = new System.Drawing.Point(228, 149);
-            this.switchToAddCdPanelBtn.Name = "switchToAddCdPanelBtn";
-            this.switchToAddCdPanelBtn.Size = new System.Drawing.Size(100, 33);
-            this.switchToAddCdPanelBtn.TabIndex = 12;
-            this.switchToAddCdPanelBtn.Text = "Add CD";
-            this.switchToAddCdPanelBtn.UseVisualStyleBackColor = true;
-            this.switchToAddCdPanelBtn.Click += new System.EventHandler(this.switchToCdPanelBtn_Click);
-            // 
-            // swithToAdminPanelBtn
-            // 
-            this.swithToAdminPanelBtn.Location = new System.Drawing.Point(332, 149);
-            this.swithToAdminPanelBtn.Name = "swithToAdminPanelBtn";
-            this.swithToAdminPanelBtn.Size = new System.Drawing.Size(100, 33);
-            this.swithToAdminPanelBtn.TabIndex = 13;
-            this.swithToAdminPanelBtn.Text = "Permissons";
-            this.swithToAdminPanelBtn.UseVisualStyleBackColor = true;
-            this.swithToAdminPanelBtn.Click += new System.EventHandler(this.swithToAdminPanelBtn_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(1456, 575);
             this.Controls.Add(this.AdminPnL);
             this.Controls.Add(this.addCdPnL);
             this.Controls.Add(this.cdEditPnl);
             this.Controls.Add(this.loginPnL);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "CD Manager";
@@ -568,13 +608,13 @@
         private System.Windows.Forms.Panel loginPnL;
         private System.Windows.Forms.Panel cdEditPnl;
         private System.Windows.Forms.Button searchBtN;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView ResultsList;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox ArtistComboBx;
+        private System.Windows.Forms.TextBox searchBx;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox GenreComboBx;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button LoginBtn;
@@ -595,7 +635,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button lgoutBtn;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label6;
@@ -610,6 +649,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button switchToAddCdPanelBtn;
         private System.Windows.Forms.Button swithToAdminPanelBtn;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label InvLbl;
+        private System.Windows.Forms.ColumnHeader ArtistCol;
+        private System.Windows.Forms.ColumnHeader GenreCol;
+        private System.Windows.Forms.ColumnHeader AlbumCol;
     }
 }
 

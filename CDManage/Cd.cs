@@ -9,19 +9,30 @@ namespace CDManage
     class Cd
     {
         private string album;
-        private string date;
+        private DateTime date;
         private string id;
         private string artist;
         private string genre;
         private string songName;
         private int songNum;
 
+        public Cd() {
+
+        }
+
+        public Cd(string album, string artist, string genre, DateTime date) {
+            this.album = album;
+            this.artist = artist;
+            this.genre = genre;
+            this.date = date;
+        }
+
         public void setAlbum(string album)
         {
             this.album = album;
         }
 
-        public void setDate(string date)
+        public void setDate(DateTime date)
         {
             this.date = date;
         }
@@ -56,7 +67,7 @@ namespace CDManage
             return album;
         }
 
-        public string getDate()
+        public DateTime getDate()
         {
             return date;
         }
