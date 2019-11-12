@@ -443,11 +443,8 @@ namespace CDManage
 
                         while (reader.Read())
                         {
-<<<<<<< Updated upstream
                             UserListBx.Items.Add((string)reader["Username"]);// + " (" + (string)reader["UserLevel"] + ")");
-=======
-                            UserListBx.Items.Add((string)reader["Username"] + " (" + (string)reader["UserLevel"] + ")");
->>>>>>> Stashed changes
+
                         }
                     }
                     catch
