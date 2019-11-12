@@ -75,3 +75,10 @@ D:\C#\CDProjects\CDManage-DatabaseConn\CDManage\obj\Debug\CDManage.csproj.Genera
 D:\C#\CDProjects\CDManage-DatabaseConn\CDManage\obj\Debug\CDManage.csproj.CoreCompileInputs.cache
 D:\C#\CDProjects\CDManage-DatabaseConn\CDManage\obj\Debug\CDManage.exe
 D:\C#\CDProjects\CDManage-DatabaseConn\CDManage\obj\Debug\CDManage.pdb
+C:\Users\autov\Documents\github\CDManage\CDManage-NewUsers\CDManage\obj\Debug\CDManage.csprojAssemblyReference.cache
+C:\Users\autov\Documents\github\CDManage\CDManage-NewUsers\CDManage\obj\Debug\CDManage.Form1.resources
+C:\Users\autov\Documents\github\CDManage\CDManage-NewUsers\CDManage\obj\Debug\CDManage.Properties.Resources.resources
+C:\Users\autov\Documents\github\CDManage\CDManage-NewUsers\CDManage\obj\Debug\CDManage.csproj.GenerateResource.cache
+C:\Users\autov\Documents\github\CDManage\CDManage-NewUsers\CDManage\obj\Debug\CDManage.csproj.CoreCompileInputs.cache
+C:\Users\autov\Documents\github\CDManage\CDManage-NewUsers\CDManage\obj\Debug\CDManage.exe
+C:\Users\autov\Documents\github\CDManage\CDManage-NewUsers\CDManage\obj\Debug\CDManage.pdb

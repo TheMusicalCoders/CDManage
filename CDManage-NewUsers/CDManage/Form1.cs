@@ -18,10 +18,14 @@ namespace CDManage
     {
         string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../CDdtb.accdb");
         string userPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../LoginCheckDTB.accdb");
+        string songPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../SongListDB.accdb");
+
         string invalidLogin = "Invalid Username/password combination";
 
 
         LinkedList<Cd> CdList = new LinkedList<Cd>();
+        static User guestUsr = new User(1);
+        User currUsr = new User(guestUsr);
 
 
         public Form1()
@@ -39,11 +43,11 @@ namespace CDManage
              */
 
 
-            this.Size = new Size(360, 500);
+            this.Size = new Size(600, 500);
             foreach (Panel myPnl in this.Controls)
             {
                 myPnl.Location = new Point(0, 0);
-                myPnl.Size = new Size(360, 450);
+                myPnl.Size = new Size(600, 500);
             }
             loginPnL.Enabled = false;
             loginPnL.Visible = false;
@@ -54,36 +58,41 @@ namespace CDManage
             ResultsList.View = View.Details;
             ResultsList.GridLines = true;
             ResultsList.FullRowSelect = true;
+            SongListView.View = View.Details;
+            SongListView.GridLines = true;
+            SongListView.FullRowSelect = true;
+
 
 
 
             using (OleDbConnection conn = new OleDbConnection(pathStr))
             {
+                string sqlQuery = "SELECT * FROM CDdtb";
+                OleDbCommand cmd = new OleDbCommand(sqlQuery, conn);
+
                 try
                 {
-                    string sqlQuery = "SELECT * FROM CDdtb";
-                    OleDbCommand cmd = new OleDbCommand(sqlQuery, conn);
+
 
                     conn.Open();
-                    OleDbDataReader reader = cmd.ExecuteReader();
 
-
-                    while (reader.Read())
+                    try
                     {
-                        Cd newCd = new Cd();
-                        newCd.setAlbum((string)reader["Album"]);
-                        newCd.setArtist((string)reader["Artist"]);
-                        newCd.setGenre((string)reader["Genre"]);
-                        newCd.setDate((DateTime)reader["DateStr"]);
-                        CdList.AddLast(newCd);
-
+                        OleDbDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Cd newCd = new Cd();
+                            newCd.setAlbum((string)reader["Album"]);
+                            newCd.setArtist((string)reader["Artist"]);
+                            newCd.setGenre((string)reader["Genre"]);
+                            newCd.setDate((DateTime)reader["DateStr"]);
+                            CdList.AddLast(newCd);
+                        }
+                    }
+                    catch
+                    {
 
                     }
-                    //cmd.ExecuteNonQuery();
-                    conn.Close();
-
-
-
 
 
                     foreach (Cd x in CdList)
@@ -107,12 +116,59 @@ namespace CDManage
                     }
 
                 }
-                catch { MessageBox.Show("Error opening file"); }
+                catch
+                {
+                    MessageBox.Show("Error opening file");
+                }
+
+                finally { conn.Close(); }
             }
 
 
-            //switchToAddCdPanelBtn.Visible = false;
-            //swithToAdminPanelBtn.Visible = false;
+            using (OleDbConnection songConn = new OleDbConnection(songPathStr))
+            {
+                foreach (Cd x in CdList)
+                {
+                    string sqlQuery = @"SELECT * FROM SongListDTB where Album like @album and Artist like @artist";
+                    OleDbCommand cmd = new OleDbCommand(sqlQuery, songConn);
+                    cmd.Parameters.AddWithValue("@album", x.getAlbum());
+                    cmd.Parameters.AddWithValue("@artist", x.getArtist());
+                    try
+                    {
+                        songConn.Open();
+                        try
+                        {
+                            OleDbDataReader reader = cmd.ExecuteReader();
+                            List<string> tmpLst = new List<string>();
+                            string temp = "";
+                            while (reader.Read())
+                            {
+                                temp = (string)reader["Song Name"];
+                                temp = temp.Trim();
+                                tmpLst.Add(temp);
+                            }
+                            x.setSongName(tmpLst);
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    finally
+                    {
+                        songConn.Close();
+                    }
+                }
+
+            }
+
+
+            switchToAddCdPanelBtn.Visible = false;
+            switchToAdminPanelBtn.Visible = false;
         }
 
         private void switchToLoginPnlBtn_Click(object sender, EventArgs e)
@@ -154,24 +210,54 @@ namespace CDManage
 
                     conn.Open();
                     OleDbDataReader reader = cmd.ExecuteReader();
-
-
-                    if (reader.HasRows)
+                    while (reader.Read())
                     {
-                        //read/assign userlevel here?
-                        cdEditPnl.Enabled = true;
-                        cdEditPnl.Visible = true;
-                        loginPnL.Visible = false;
-                        InvLbl.Visible = false;
 
+
+
+                        if (reader.HasRows)
+                        {
+
+                            int usrLvl = 0;
+                            string usrLvlStr = "";
+                            usrLvlStr = (string)reader["UserLevel"];
+                            usrLvl = int.Parse(usrLvlStr);
+
+                            currUsr.setUserLevel(usrLvl);
+
+                            if (currUsr.getUserLevel() == 1)
+                            {
+                                switchToAddCdPanelBtn.Visible = false;
+                                switchToAddCdPanelBtn.Enabled = false;
+                                switchToAdminPanelBtn.Visible = false;
+                                switchToAdminPanelBtn.Enabled = false;
+                            }
+
+                            if (currUsr.getUserLevel() > 1)
+                            {
+                                switchToAddCdPanelBtn.Visible = true;
+                                switchToAddCdPanelBtn.Enabled = true;
+                            }
+                            if (currUsr.getUserLevel() > 2)
+                            {
+                                switchToAdminPanelBtn.Visible = true;
+                                switchToAdminPanelBtn.Enabled = true;
+                            }
+                            cdEditPnl.Enabled = true;
+                            cdEditPnl.Visible = true;
+                            loginPnL.Visible = false;
+                            InvLbl.Visible = false;
+
+
+
+                        }
+                        else
+                        {
+                            InvLbl.Text = invalidLogin;
+                            InvLbl.Visible = true;
+                        }
 
                     }
-                    else
-                    {
-                        InvLbl.Text = invalidLogin;
-                        InvLbl.Visible = true;
-                    }
-
                 }
                 catch
                 {
@@ -211,19 +297,16 @@ namespace CDManage
             loginPnL.Visible = true;
         }
 
-        private void SwitchToAdminPnlBtn_Click(object sender, EventArgs e)
-        {
-            //Switch to the admin Panel
-            AdminPnL.Enabled = true;
-            AdminPnL.Visible = true;
-            loginPnL.Enabled = false;
-            loginPnL.Visible = false;
-        }
+
 
 
         private void UserListBx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedUserBx.Text = UserListBx.SelectedItem.ToString();
+            if (UserListBx.SelectedItem != null)
+            {
+                SelectedUserBx.Text = UserListBx.SelectedItem.ToString();
+            }
+
         }
 
 
@@ -233,7 +316,42 @@ namespace CDManage
             {
                 string AddCptn = "Confirmation";
                 string AddMsg = "Are you sure you want to give " + SelectedUserBx.Text.Trim() + " edit permissions?";
-                MessageBox.Show(AddMsg, AddCptn, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dialog = MessageBox.Show(AddMsg, AddCptn, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialog == DialogResult.Yes)
+                {
+                    using (OleDbConnection connLg = new OleDbConnection(userPathStr))
+                    {
+                        string sqlUpd = @"UPDATE LoginDTB SET UserLevel = 2 WHERE Username like @Username";
+                        using (OleDbCommand UpdCmd = new OleDbCommand(sqlUpd, connLg))
+                        {
+
+
+                            try
+                            {
+                                connLg.Open();
+                            }
+
+                            catch
+                            {
+
+                            }
+                            try
+                            {
+                                UpdCmd.Parameters.AddWithValue("@Username", this.SelectedUserBx.Text.Trim());
+                                UpdCmd.ExecuteNonQuery();
+                            }
+                            catch
+                            {
+
+                            }
+                            finally
+                            {
+                                UpdCmd.Dispose();
+                                connLg.Close();
+                            }
+                        }
+                    }
+                }
             }
             else { MessageBox.Show("Please Select a user"); }
         }
@@ -244,7 +362,42 @@ namespace CDManage
             {
                 string RemoveCptn = "Confirmation";
                 string RemoveMsg = "Are you sure you want to remove " + SelectedUserBx.Text.Trim() + "'s edit permissions?";
-                MessageBox.Show(RemoveMsg, RemoveCptn, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dialog = MessageBox.Show(RemoveMsg, RemoveCptn, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialog == DialogResult.Yes)
+                {
+                    using (OleDbConnection connLg = new OleDbConnection(userPathStr))
+                    {
+                        string sqlUpd = @"UPDATE LoginDTB SET UserLevel = 1 WHERE Username like @Username";
+                        OleDbCommand UpdCmd = new OleDbCommand(sqlUpd, connLg);
+
+                        try
+                        {
+                            connLg.Open();
+
+                            try
+                            {
+                                UpdCmd.Parameters.AddWithValue("@Username", this.SelectedUserBx.Text.Trim());
+                                UpdCmd.ExecuteNonQuery();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Unable to update");
+                            }
+                        }
+
+                        catch
+                        {
+                            MessageBox.Show("unable to connect");
+                        }
+                        finally
+                        {
+                            connLg.Close();
+                            UpdCmd.Dispose();
+                        }
+
+
+                    }
+                }
             }
             else { MessageBox.Show("Please Select a user"); }
         }
@@ -266,36 +419,72 @@ namespace CDManage
             addCdPnL.BringToFront();
         }
 
-        private void swithToAdminPanelBtn_Click(object sender, EventArgs e)
+        private void switchToAdminPanelBtn_Click(object sender, EventArgs e)
         {
             //Switch to the admin Panel
             AdminPnL.BringToFront();
             AdminPnL.Visible = true;
             AdminPnL.Enabled = true;
+            UserListBx.Items.Clear();
+            using (OleDbConnection connLg = new OleDbConnection(userPathStr))
+            {
+
+
+                string sqlQuery = @"SELECT * from LoginDTB";
+                OleDbCommand cmd = new OleDbCommand(sqlQuery, connLg);
+
+                try
+                {
+                    connLg.Open();
+
+                    try
+                    {
+                        OleDbDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            UserListBx.Items.Add((string)reader["Username"]);// + " (" + (string)reader["UserLevel"] + ")");
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Could not connect to database");
+                }
+            }
         }
 
         private void AddCDBtn_Click(object sender, EventArgs e)
         {
             bool canAdd = true;
             string sqlQuery = @"INSERT INTO CDdtb (`Album`,`Artist`,`Genre`,`DateStr`) values (?,?,?,?)";
+            string addSongs = @"INSERT INTO SongListDTB ( `Album`, `Artist`,`Song Name`) values (?,?,?)";
 
-            while(canAdd == true) {
-                using (OleDbConnection conn = new OleDbConnection(pathStr))
+
+
+            using (OleDbConnection conn = new OleDbConnection(pathStr))
+            {
+                using (OleDbCommand cmd = new OleDbCommand(sqlQuery, conn))
                 {
-                    using (OleDbCommand cmd = new OleDbCommand(sqlQuery, conn))
+                    foreach (Cd x in CdList)
                     {
-                        foreach (Cd x in CdList)
+                        if (this.addAlbumBx.Text.Trim() == x.getAlbum() &&
+                            this.addArtistBx.Text.Trim() == x.getArtist() &&
+                            this.addGenreBx.Text.Trim() == x.getGenre())
                         {
-                            if (this.addAlbumBx.Text.Trim() == x.getAlbum() &&
-                                this.addArtistBx.Text.Trim() == x.getArtist() &&
-                                this.addGenreBx.Text.Trim() == x.getGenre())
-                            {
-                                MessageBox.Show("CD already exists.");
-                                canAdd = false;
-                                break;
-                            }
-
+                            MessageBox.Show("CD already exists.");
+                            canAdd = false;
+                            break;
                         }
+
+                    }
+                    if (canAdd)
+                    {
+
 
                         try
                         {
@@ -309,6 +498,13 @@ namespace CDManage
                             cmd.Dispose();
 
                             conn.Close();
+                            Cd x = new Cd();
+                            x.setAlbum(this.addAlbumBx.Text.Trim());
+                            x.setArtist(this.addArtistBx.Text.Trim());
+                            x.setDate(this.dateTimePicker1.Value.Date);
+                            x.setGenre(this.addGenreBx.Text.Trim());
+                            
+                            CdList.AddLast(x);
                             if (this.addGenreBx.Text.Trim() != "")
                             {
                                 if (!GenreComboBx.Items.Contains(this.addGenreBx.Text.Trim()))
@@ -325,27 +521,75 @@ namespace CDManage
                                 }
                             }
 
+                            using (OleDbConnection songConn = new OleDbConnection(songPathStr))
+                            {
+                                using (OleDbCommand songCmd = new OleDbCommand(addSongs, songConn))
+                                {
+                                    try
+                                    {
+                                        songConn.Open();
+                                        songCmd.Parameters.AddWithValue("@Album", x.getAlbum());
+                                        songCmd.Parameters.AddWithValue("@Artist", x.getArtist());
+                                        List<string> tmpSngLst = new List<string>();
+                                        string z = "";
+                                        songCmd.Parameters.AddWithValue("@SongName", z);
+                                        foreach (string y in AddSongBx.Lines)
+                                        {
+                                            z = y.Trim();
+                                            songCmd.Parameters["@SongName"].Value = z;
+                                            songCmd.ExecuteNonQuery();
+                                            tmpSngLst.Add(y);
+                                           
+                                        }
+                                        
+                                        x.setSongName(tmpSngLst);
 
+                                        //foreach(string x in AddSongBx.Text)
+
+                                    }
+                                    catch
+                                    {
+
+                                    }
+                                    finally
+                                    {
+                                        songConn.Close();
+                                    }
+                                }
+                            }
 
                         }
 
                         catch { MessageBox.Show("Error opening file"); }
 
 
+
+
+
                     }
+
                 }
             }
 
+
+
+
+
         }
+
+
+
+
 
         private void searchBtN_Click(object sender, EventArgs e)
         {
+            ResultsList.Items.Clear();
             const int nonexisting = -1;
             LinkedList<Cd> SearchResults = new LinkedList<Cd>();
             string album = searchBx.Text.Trim();
             string genre = "";
             string artist = "";
-            string displayStr = "";
+
             if (GenreComboBx.SelectedIndex > nonexisting)
             {
                 genre = GenreComboBx.SelectedItem.ToString();
@@ -357,7 +601,7 @@ namespace CDManage
 
             foreach (Cd x in CdList)
             {
-                if ((GenreComboBx.SelectedIndex > -1) || (ArtistComboBx.SelectedIndex > -1) || (album != ""))
+                if ((GenreComboBx.SelectedIndex > nonexisting) || (ArtistComboBx.SelectedIndex > nonexisting) || (album != ""))
                 {
                     if (x.getAlbum() == album || album == "")
                     {
@@ -373,17 +617,18 @@ namespace CDManage
 
             }
 
-            foreach(Cd x in SearchResults)
+            foreach (Cd x in SearchResults)
             {
                 String[] arrayStr;
-                arrayStr = new String[3] { x.getAlbum(), x.getArtist(), x.getGenre() };
+                string tmpDate = x.getDate().ToShortDateString();
+                arrayStr = new String[4] { x.getAlbum(), x.getArtist(), x.getGenre(), tmpDate };
                 ListViewItem item = new ListViewItem(arrayStr);
                 ResultsList.Items.Add(item);
-                
+
                 //displayStr += x.getAlbum() + " by " + x.getArtist() + "(" + x.getGenre() + ")\n\n";
             }
 
-            
+
         }
 
         private void signUpBtn_Click(object sender, EventArgs e)
@@ -394,43 +639,45 @@ namespace CDManage
                 {
                     const int noEditPms = 0;
                     bool canAddUser = true;
-                    string sqlQueryUser = "SELECT Username FROM LoginCheckDtb";
-                    string sqlQueryEmail = "SELECT EmailAddress FROM LoginCheckDtb";
-                    string sqlQueryPwd = "SELECT Password FROM LoginCheckDtb";
-                    string sqlQueryLevel = "SELECT UserLevel FROM LoginCheckDtb";
-                    string sqlQuery = @"INSERT INTO LoginCheckDtb (`Username`,`EmailAddress`,`Password`) values (?,?,?)";
-                    OleDbCommand cmd = new OleDbCommand(sqlQueryUser, connLg);
-                    OleDbCommand cmd2 = new OleDbCommand(sqlQueryEmail, connLg);
-                    OleDbCommand cmd3 = new OleDbCommand(sqlQueryPwd, connLg);
-                    OleDbCommand cmd4 = new OleDbCommand(sqlQueryLevel, connLg);
+                    string sqlIns = @"INSERT INTO LoginDTB (`Username`,`EmailAddress`,`Password`) values (?,?,?)";
+                    string sqlQuery = @"SELECT * FROM LoginDTB";
+                    OleDbCommand cmd = new OleDbCommand(sqlQuery, connLg);
+                    OleDbCommand InsertCmd = new OleDbCommand(sqlIns, connLg);
+
 
                     connLg.Open();
                     OleDbDataReader reader = cmd.ExecuteReader();
-                    OleDbDataReader reader2 = cmd2.ExecuteReader();
 
-                    while (reader.Read() && reader2.Read()) {
-                        if (txtNewUsrName.Text.Trim() == reader["Username"].ToString() || 
-                            txtNewUsrEmail.Text.Trim() == reader2["EmailAddress"].ToString())
+
+                    while (reader.Read())
+                    {
+                        if (txtNewUsrName.Text.Trim() == reader["Username"].ToString())
                         {
-                            MessageBox.Show("Username or email address already exists.");
+                            newUsrLbl.Text = "Sorry, that Username is already taken.";
                             canAddUser = false;
+                            break;
+                        }
+                        else if (txtNewUsrEmail.Text.Trim() == reader["EmailAddress"].ToString())
+                        {
+                            newUsrLbl.Text = "Sorry, that email is already associated with a user.";
+                            canAddUser = false;
+                            break;
                         }
                     }
 
-                    if(canAddUser == true)
+                    if (canAddUser == true)
                     {
-                        cmd.Parameters.AddWithValue("@Username", this.txtNewUsrName.Text.Trim());
-                        cmd2.Parameters.AddWithValue("@EmailAddress", this.txtNewUsrEmail.Text.Trim());
-                        cmd3.Parameters.AddWithValue("@Password", this.txtNewUsrPwd.Text.Trim());
-                        cmd4.Parameters.AddWithValue("UserLevel", noEditPms);
+                        InsertCmd.Parameters.AddWithValue("@Username", this.txtNewUsrName.Text.Trim());
+                        InsertCmd.Parameters.AddWithValue("@EmailAddress", this.txtNewUsrEmail.Text.Trim());
+                        InsertCmd.Parameters.AddWithValue("@Password", this.txtNewUsrPwd.Text.Trim());
+                        InsertCmd.Parameters.AddWithValue("UserLevel", noEditPms);
 
-                        cmd.ExecuteNonQuery();
-                        cmd2.ExecuteNonQuery();
-                        cmd3.ExecuteNonQuery();
+                        InsertCmd.ExecuteNonQuery();
+
                         cmd.Dispose();
-                        cmd2.Dispose();
-                        cmd3.Dispose();
-                        MessageBox.Show("New User Created.");
+                        InsertCmd.Dispose();
+
+                        newUsrLbl.Text = "New user? Sign up here!";
                     }
                 }
 
@@ -444,6 +691,48 @@ namespace CDManage
                 }
             }
         }
+
+        private void clrBtn_Click(object sender, EventArgs e)
+        {
+            GenreComboBx.SelectedIndex = -1;
+            ArtistComboBx.SelectedIndex = -1;
+            searchBx.Clear();
+        }
+
+        private void ResultsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ResultsList.FocusedItem == null)
+            {
+                return;
+            }
+            else
+            {
+                string tmpAlbum = ResultsList.SelectedItems[0].Text;
+                foreach (Cd x in CdList)
+                {
+                    if (x.getAlbum() == tmpAlbum)
+                    {
+                        SongListView.Items.Clear();
+                        foreach (string y in x.getSongName())
+                        {
+                            int indx = 0;
+                            indx = x.getSongName().IndexOf(y) + 1;
+                            string tmp = indx.ToString();
+                            string[] newrow = { y, tmp };
+                            ListViewItem newItem = new ListViewItem(newrow);
+                            SongListView.Items.Add(newItem);
+                        }
+
+
+
+                    }
+                    //string songName = "";
+
+                }
+            }
+
+        }
     }
 }
+
 

@@ -278,7 +278,7 @@
             this.swithToAdminPanelBtn.TabIndex = 13;
             this.swithToAdminPanelBtn.Text = "Permissons";
             this.swithToAdminPanelBtn.UseVisualStyleBackColor = true;
-            this.swithToAdminPanelBtn.Click += new System.EventHandler(this.swithToAdminPanelBtn_Click);
+            this.swithToAdminPanelBtn.Click += new System.EventHandler(this.switchToAdminPanelBtn_Click);
             // 
             // switchToAddCdPanelBtn
             // 
