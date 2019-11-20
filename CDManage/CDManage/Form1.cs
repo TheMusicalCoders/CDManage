@@ -10,12 +10,19 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.IO;
 using System.Diagnostics;
+using System.Net;
+using CSFreeDB;
+
+
+
 
 //D:\C#\CDProjects\CDManage-DatabaseConn
 namespace CDManage
 {
+
     public partial class Form1 : Form
     {
+
         string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../CDdtb.accdb");
         string userPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../LoginCheckDTB.accdb");
         string songPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../SongListDB.accdb");
@@ -165,8 +172,6 @@ namespace CDManage
                 }
 
             }
-
-
             switchToAddCdPanelBtn.Visible = false;
             switchToAdminPanelBtn.Visible = false;
         }
@@ -247,24 +252,17 @@ namespace CDManage
                             cdEditPnl.Visible = true;
                             loginPnL.Visible = false;
                             InvLbl.Visible = false;
-
-
-
                         }
                         else
                         {
                             InvLbl.Text = invalidLogin;
                             InvLbl.Visible = true;
                         }
-
                     }
                 }
                 catch
                 {
                     MessageBox.Show("Error opening file");
-                    {
-
-                    }
                 }
 
                 finally
@@ -272,9 +270,6 @@ namespace CDManage
                     conn.Close();
                 }
             }
-
-
-
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)
@@ -324,8 +319,6 @@ namespace CDManage
                         string sqlUpd = @"UPDATE LoginDTB SET UserLevel = 2 WHERE Username like @Username";
                         using (OleDbCommand UpdCmd = new OleDbCommand(sqlUpd, connLg))
                         {
-
-
                             try
                             {
                                 connLg.Open();
@@ -394,8 +387,6 @@ namespace CDManage
                             connLg.Close();
                             UpdCmd.Dispose();
                         }
-
-
                     }
                 }
             }
@@ -428,15 +419,12 @@ namespace CDManage
             UserListBx.Items.Clear();
             using (OleDbConnection connLg = new OleDbConnection(userPathStr))
             {
-
-
                 string sqlQuery = @"SELECT * from LoginDTB";
                 OleDbCommand cmd = new OleDbCommand(sqlQuery, connLg);
 
                 try
                 {
                     connLg.Open();
-
                     try
                     {
                         OleDbDataReader reader = cmd.ExecuteReader();
@@ -465,8 +453,6 @@ namespace CDManage
             string sqlQuery = @"INSERT INTO CDdtb (`Album`,`Artist`,`Genre`,`DateStr`) values (?,?,?,?)";
             string addSongs = @"INSERT INTO SongListDTB ( `Album`, `Artist`,`Song Name`) values (?,?,?)";
 
-
-
             using (OleDbConnection conn = new OleDbConnection(pathStr))
             {
                 using (OleDbCommand cmd = new OleDbCommand(sqlQuery, conn))
@@ -486,7 +472,6 @@ namespace CDManage
                     if (canAdd)
                     {
 
-
                         try
                         {
                             conn.Open();
@@ -504,7 +489,7 @@ namespace CDManage
                             x.setArtist(this.addArtistBx.Text.Trim());
                             x.setDate(this.dateTimePicker1.Value.Date);
                             x.setGenre(this.addGenreBx.Text.Trim());
-                            
+
                             CdList.AddLast(x);
                             if (this.addGenreBx.Text.Trim() != "")
                             {
@@ -540,9 +525,9 @@ namespace CDManage
                                             songCmd.Parameters["@SongName"].Value = z;
                                             songCmd.ExecuteNonQuery();
                                             tmpSngLst.Add(y);
-                                           
+
                                         }
-                                        
+
                                         x.setSongName(tmpSngLst);
 
                                         //foreach(string x in AddSongBx.Text)
@@ -562,20 +547,10 @@ namespace CDManage
                         }
 
                         catch { MessageBox.Show("Error opening file"); }
-
-
-
-
-
                     }
 
                 }
             }
-
-
-
-
-
         }
 
 
@@ -628,8 +603,6 @@ namespace CDManage
 
                 //displayStr += x.getAlbum() + " by " + x.getArtist() + "(" + x.getGenre() + ")\n\n";
             }
-
-
         }
 
         private void signUpBtn_Click(object sender, EventArgs e)
@@ -645,10 +618,8 @@ namespace CDManage
                     OleDbCommand cmd = new OleDbCommand(sqlQuery, connLg);
                     OleDbCommand InsertCmd = new OleDbCommand(sqlIns, connLg);
 
-
                     connLg.Open();
                     OleDbDataReader reader = cmd.ExecuteReader();
-
 
                     while (reader.Read())
                     {
@@ -698,6 +669,9 @@ namespace CDManage
             GenreComboBx.SelectedIndex = -1;
             ArtistComboBx.SelectedIndex = -1;
             searchBx.Clear();
+            ResultsList.Items.Clear();
+            SongListView.Items.Clear();
+           
         }
 
         private void ResultsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -723,15 +697,11 @@ namespace CDManage
                             ListViewItem newItem = new ListViewItem(newrow);
                             SongListView.Items.Add(newItem);
                         }
-
-
-
                     }
                     //string songName = "";
 
                 }
             }
-
         }
     }
 }

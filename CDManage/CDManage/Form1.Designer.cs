@@ -47,6 +47,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cdEditPnl = new System.Windows.Forms.Panel();
+            this.SongListView = new System.Windows.Forms.ListView();
+            this.SongNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TrackNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clrBtn = new System.Windows.Forms.Button();
             this.switchToAdminPanelBtn = new System.Windows.Forms.Button();
             this.switchToAddCdPanelBtn = new System.Windows.Forms.Button();
             this.switchToLoginPnlBtn = new System.Windows.Forms.Button();
@@ -64,6 +68,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.GenreComboBx = new System.Windows.Forms.ComboBox();
             this.addCdPnL = new System.Windows.Forms.Panel();
+            this.AddSongBx = new System.Windows.Forms.RichTextBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.TrackNumBx = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -87,11 +92,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.UserListBx = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.clrBtn = new System.Windows.Forms.Button();
-            this.SongListView = new System.Windows.Forms.ListView();
-            this.SongNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.TrackNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.AddSongBx = new System.Windows.Forms.RichTextBox();
             this.loginPnL.SuspendLayout();
             this.cdEditPnl.SuspendLayout();
             this.addCdPnL.SuspendLayout();
@@ -104,6 +104,7 @@
             this.loginPnL.Controls.Add(this.label21);
             this.loginPnL.Controls.Add(this.label20);
             this.loginPnL.Controls.Add(this.label19);
+            this.loginPnL.Controls.Add(this.label4);
             this.loginPnL.Controls.Add(this.newUsrLbl);
             this.loginPnL.Controls.Add(this.txtNewUsrEmail);
             this.loginPnL.Controls.Add(this.txtNewUsrPwd);
@@ -115,8 +116,7 @@
             this.loginPnL.Controls.Add(this.UsrBx);
             this.loginPnL.Controls.Add(this.label9);
             this.loginPnL.Controls.Add(this.label8);
-            this.loginPnL.Controls.Add(this.label4);
-            this.loginPnL.Location = new System.Drawing.Point(485, 0);
+            this.loginPnL.Location = new System.Drawing.Point(757, 14);
             this.loginPnL.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.loginPnL.Name = "loginPnL";
             this.loginPnL.Size = new System.Drawing.Size(453, 554);
@@ -260,7 +260,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 9);
+            this.label4.Location = new System.Drawing.Point(22, 39);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(83, 17);
             this.label4.TabIndex = 0;
@@ -288,6 +288,36 @@
             this.cdEditPnl.Size = new System.Drawing.Size(741, 554);
             this.cdEditPnl.TabIndex = 3;
             // 
+            // SongListView
+            // 
+            this.SongListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.SongNameCol,
+            this.TrackNum});
+            this.SongListView.HideSelection = false;
+            this.SongListView.Location = new System.Drawing.Point(452, 192);
+            this.SongListView.Name = "SongListView";
+            this.SongListView.Size = new System.Drawing.Size(261, 349);
+            this.SongListView.TabIndex = 15;
+            this.SongListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // SongNameCol
+            // 
+            this.SongNameCol.Text = "Song Name";
+            // 
+            // TrackNum
+            // 
+            this.TrackNum.Text = "Track";
+            // 
+            // clrBtn
+            // 
+            this.clrBtn.Location = new System.Drawing.Point(125, 149);
+            this.clrBtn.Name = "clrBtn";
+            this.clrBtn.Size = new System.Drawing.Size(100, 34);
+            this.clrBtn.TabIndex = 14;
+            this.clrBtn.Text = "Clear";
+            this.clrBtn.UseVisualStyleBackColor = true;
+            this.clrBtn.Click += new System.EventHandler(this.clrBtn_Click);
+            // 
             // switchToAdminPanelBtn
             // 
             this.switchToAdminPanelBtn.Location = new System.Drawing.Point(332, 149);
@@ -310,7 +340,7 @@
             // 
             // switchToLoginPnlBtn
             // 
-            this.switchToLoginPnlBtn.Location = new System.Drawing.Point(19, 149);
+            this.switchToLoginPnlBtn.Location = new System.Drawing.Point(452, 12);
             this.switchToLoginPnlBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.switchToLoginPnlBtn.Name = "switchToLoginPnlBtn";
             this.switchToLoginPnlBtn.Size = new System.Drawing.Size(100, 33);
@@ -330,7 +360,7 @@
             // 
             // searchBtN
             // 
-            this.searchBtN.Location = new System.Drawing.Point(125, 150);
+            this.searchBtN.Location = new System.Drawing.Point(19, 149);
             this.searchBtN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchBtN.Name = "searchBtN";
             this.searchBtN.Size = new System.Drawing.Size(100, 33);
@@ -454,6 +484,14 @@
             this.addCdPnL.Name = "addCdPnL";
             this.addCdPnL.Size = new System.Drawing.Size(453, 359);
             this.addCdPnL.TabIndex = 5;
+            // 
+            // AddSongBx
+            // 
+            this.AddSongBx.Location = new System.Drawing.Point(354, 214);
+            this.AddSongBx.Name = "AddSongBx";
+            this.AddSongBx.Size = new System.Drawing.Size(100, 96);
+            this.AddSongBx.TabIndex = 26;
+            this.AddSongBx.Text = "";
             // 
             // dateTimePicker1
             // 
@@ -673,54 +711,16 @@
             this.label5.TabIndex = 1;
             this.label5.Text = "Admin Panel";
             // 
-            // clrBtn
-            // 
-            this.clrBtn.Location = new System.Drawing.Point(332, 110);
-            this.clrBtn.Name = "clrBtn";
-            this.clrBtn.Size = new System.Drawing.Size(100, 34);
-            this.clrBtn.TabIndex = 14;
-            this.clrBtn.Text = "Clear";
-            this.clrBtn.UseVisualStyleBackColor = true;
-            this.clrBtn.Click += new System.EventHandler(this.clrBtn_Click);
-            // 
-            // SongListView
-            // 
-            this.SongListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.SongNameCol,
-            this.TrackNum});
-            this.SongListView.HideSelection = false;
-            this.SongListView.Location = new System.Drawing.Point(452, 192);
-            this.SongListView.Name = "SongListView";
-            this.SongListView.Size = new System.Drawing.Size(261, 349);
-            this.SongListView.TabIndex = 15;
-            this.SongListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // SongNameCol
-            // 
-            this.SongNameCol.Text = "Song Name";
-            // 
-            // TrackNum
-            // 
-            this.TrackNum.Text = "Track";
-            // 
-            // AddSongBx
-            // 
-            this.AddSongBx.Location = new System.Drawing.Point(354, 214);
-            this.AddSongBx.Name = "AddSongBx";
-            this.AddSongBx.Size = new System.Drawing.Size(100, 96);
-            this.AddSongBx.TabIndex = 26;
-            this.AddSongBx.Text = "";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(1456, 575);
+            this.Controls.Add(this.loginPnL);
             this.Controls.Add(this.AdminPnL);
             this.Controls.Add(this.addCdPnL);
             this.Controls.Add(this.cdEditPnl);
-            this.Controls.Add(this.loginPnL);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
