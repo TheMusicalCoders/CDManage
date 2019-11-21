@@ -13,27 +13,21 @@ using System.Diagnostics;
 using System.Net;
 using CSFreeDB;
 
-
-
-
 //D:\C#\CDProjects\CDManage-DatabaseConn
 namespace CDManage
 {
 
     public partial class Form1 : Form
     {
+        string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/CDdtb.accdb");
+        string userPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/LoginCheckDTB.accdb");
+        string songPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/SongListDB.accdb");
 
-        string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../CDdtb.accdb");
-        string userPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../LoginCheckDTB.accdb");
-        string songPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../SongListDB.accdb");
-
-        string invalidLogin = "Invalid Username/password combination";
-
+        const string invalidLogin = "Invalid Username/password combination";
 
         LinkedList<Cd> CdList = new LinkedList<Cd>();
         static User guestUsr = new User(1);
         User currUsr = new User(guestUsr);
-
 
         public Form1()
         {
@@ -43,25 +37,30 @@ namespace CDManage
         private void Form1_Load(object sender, EventArgs e)
         {
             /**
-             * Todo add load in CDs from the database
-             * Fill in the genre and artist combo boxes based on details from CDs
-             * Set user level to guess
-             * Set Display to match user level
+             * Add load in CDs from the database [X]
+             * Fill in the genre and artist combo boxes based on details from CDs [X]
+             * Set user level to guess [x]
+             * Set Display to match user level [x]
+             * Clean up 
              */
 
-
-            this.Size = new Size(600, 500);
-            foreach (Panel myPnl in this.Controls)
+            this.Size = new Size(550, 450);
+            foreach (Control myPnl in this.Controls)
             {
-                myPnl.Location = new Point(0, 0);
-                myPnl.Size = new Size(600, 500);
+                var temp = myPnl.GetType();
+                if ( myPnl.Name == "cdManagemns") //Not a panel
+                {
+                    continue;
+                }
+                myPnl.Location = new Point(0, 10);
+                myPnl.Size = new Size(700, 550);
             }
-            loginPnL.Enabled = false;
-            loginPnL.Visible = false;
-            AdminPnL.Enabled = false;
-            AdminPnL.Visible = false;
-            addCdPnL.Enabled = false;
-            addCdPnL.Visible = false;
+            loginPnl.Enabled = false;
+            loginPnl.Visible = false;
+            AdminPnl.Enabled = false;
+            AdminPnl.Visible = false;
+            addCdPnl.Enabled = false;
+            addCdPnl.Visible = false;
             ResultsList.View = View.Details;
             ResultsList.GridLines = true;
             ResultsList.FullRowSelect = true;
@@ -69,8 +68,9 @@ namespace CDManage
             SongListView.GridLines = true;
             SongListView.FullRowSelect = true;
 
-
-
+            //Default Menu Strip View [Guess View]
+            currentUserTsr.Visible = false;
+            SwitchToAddCdPanleTsr.Visible = false;
 
             using (OleDbConnection conn = new OleDbConnection(pathStr))
             {
@@ -79,8 +79,6 @@ namespace CDManage
 
                 try
                 {
-
-
                     conn.Open();
 
                     try
@@ -96,11 +94,11 @@ namespace CDManage
                             CdList.AddLast(newCd);
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
-
+                        Console.WriteLine(ex.StackTrace);
+                        Console.WriteLine(ex.Message);
                     }
-
 
                     foreach (Cd x in CdList)
                     {
@@ -118,19 +116,17 @@ namespace CDManage
                                 ArtistComboBx.Items.Add(x.getArtist());
                             }
                         }
-
-
                     }
-
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.StackTrace);
+                    Console.WriteLine(ex.Message);
                     MessageBox.Show("Error opening file");
                 }
 
                 finally { conn.Close(); }
             }
-
 
             using (OleDbConnection songConn = new OleDbConnection(songPathStr))
             {
@@ -172,17 +168,6 @@ namespace CDManage
                 }
 
             }
-            switchToAddCdPanelBtn.Visible = false;
-            switchToAdminPanelBtn.Visible = false;
-        }
-
-        private void switchToLoginPnlBtn_Click(object sender, EventArgs e)
-        {
-            //Switch to the Login Panel
-            cdEditPnl.Enabled = false;
-            cdEditPnl.Visible = false;
-            loginPnL.Enabled = true;
-            loginPnL.Visible = true;
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
@@ -202,10 +187,9 @@ namespace CDManage
 
             //Switch to the Panels
 
-
             using (OleDbConnection conn = new OleDbConnection(userPathStr))
             {
-
+                //todo Add a promp to tell user if password failed
                 try
                 {
                     string sqlQuery = "select * from LoginDTB where Username like @username and Password = @password";
@@ -217,41 +201,35 @@ namespace CDManage
                     OleDbDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-
-
-
                         if (reader.HasRows)
                         {
-
                             int usrLvl = 0;
                             string usrLvlStr = "";
                             usrLvlStr = (string)reader["UserLevel"];
-                            usrLvl = int.Parse(usrLvlStr);
+                            int.TryParse(usrLvlStr,out usrLvl); //Todo add catch
 
                             currUsr.setUserLevel(usrLvl);
 
-                            if (currUsr.getUserLevel() == 1)
+                            if (currUsr.getUserLevel() > 0)
                             {
-                                switchToAddCdPanelBtn.Visible = false;
-                                switchToAddCdPanelBtn.Enabled = false;
-                                switchToAdminPanelBtn.Visible = false;
-                                switchToAdminPanelBtn.Enabled = false;
+                                // switchToAdminPanelBtn.Visible = false;
+                                //  switchToAdminPanelBtn.Enabled = false;
+                                currentUserTsr.Visible = true;
+                                SwtichToLoginPanelTsr.Visible = false;
+                                switchToAdminPanelTsr.Visible = false;   
                             }
-
                             if (currUsr.getUserLevel() > 1)
                             {
-                                switchToAddCdPanelBtn.Visible = true;
-                                switchToAddCdPanelBtn.Enabled = true;
+                                SwitchToAddCdPanleTsr.Visible = true;
                             }
                             if (currUsr.getUserLevel() > 2)
                             {
-                                switchToAdminPanelBtn.Visible = true;
-                                switchToAdminPanelBtn.Enabled = true;
+                                // switchToAdminPanelBtn.Visible = true;
+                                //   switchToAdminPanelBtn.Enabled = true;
+                                switchToAdminPanelTsr.Visible = true;
                             }
-                            cdEditPnl.Enabled = true;
-                            cdEditPnl.Visible = true;
-                            loginPnL.Visible = false;
-                            InvLbl.Visible = false;
+
+                            PanelSwitch(cdEditPnl.Name);
                         }
                         else
                         {
@@ -272,29 +250,6 @@ namespace CDManage
             }
         }
 
-        private void CancelBtn_Click(object sender, EventArgs e)
-        {
-            //Swicth to the CD Edit Panel
-            cdEditPnl.Enabled = true;
-            cdEditPnl.Visible = true;
-            loginPnL.Enabled = false;
-            loginPnL.Visible = false;
-        }
-
-
-
-        private void LgoutBtn_Click(object sender, EventArgs e)
-        {
-            //Sets the user level to Guess
-            addCdPnL.Enabled = false;
-            addCdPnL.Visible = false;
-            loginPnL.Enabled = true;
-            loginPnL.Visible = true;
-        }
-
-
-
-
         private void UserListBx_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (UserListBx.SelectedItem != null)
@@ -303,7 +258,6 @@ namespace CDManage
             }
 
         }
-
 
         private void AddPermissionBtn_Click_1(object sender, EventArgs e)
         {
@@ -393,62 +347,10 @@ namespace CDManage
             else { MessageBox.Show("Please Select a user"); }
         }
 
-        private void ReturnBtn_Click(object sender, EventArgs e)
-        {
-            //Switch to the Login Panel
-            AdminPnL.Enabled = false;
-            AdminPnL.Visible = false;
-            loginPnL.Enabled = true;
-            loginPnL.Visible = true;
-        }
-
-        private void switchToCdPanelBtn_Click(object sender, EventArgs e)
-        {
-            //Switch to the Add CD Panel
-            addCdPnL.Visible = true;
-            addCdPnL.Enabled = true;
-            addCdPnL.BringToFront();
-        }
-
-        private void switchToAdminPanelBtn_Click(object sender, EventArgs e)
-        {
-            //Switch to the admin Panel
-            AdminPnL.BringToFront();
-            AdminPnL.Visible = true;
-            AdminPnL.Enabled = true;
-            UserListBx.Items.Clear();
-            using (OleDbConnection connLg = new OleDbConnection(userPathStr))
-            {
-                string sqlQuery = @"SELECT * from LoginDTB";
-                OleDbCommand cmd = new OleDbCommand(sqlQuery, connLg);
-
-                try
-                {
-                    connLg.Open();
-                    try
-                    {
-                        OleDbDataReader reader = cmd.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            UserListBx.Items.Add((string)reader["Username"]);// + " (" + (string)reader["UserLevel"] + ")");
-
-                        }
-                    }
-                    catch
-                    {
-
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Could not connect to database");
-                }
-            }
-        }
-
         private void AddCDBtn_Click(object sender, EventArgs e)
         {
+           //TODO Add in a confirmation button
+
             bool canAdd = true;
             string sqlQuery = @"INSERT INTO CDdtb (`Album`,`Artist`,`Genre`,`DateStr`) values (?,?,?,?)";
             string addSongs = @"INSERT INTO SongListDTB ( `Album`, `Artist`,`Song Name`) values (?,?,?)";
@@ -552,10 +454,6 @@ namespace CDManage
                 }
             }
         }
-
-
-
-
 
         private void searchBtN_Click(object sender, EventArgs e)
         {
@@ -670,8 +568,7 @@ namespace CDManage
             ArtistComboBx.SelectedIndex = -1;
             searchBx.Clear();
             ResultsList.Items.Clear();
-            SongListView.Items.Clear();
-           
+            SongListView.Items.Clear();  
         }
 
         private void ResultsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -700,6 +597,112 @@ namespace CDManage
                     }
                     //string songName = "";
 
+                }
+            }
+        }
+
+        private void exitTsr_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void SwtichToLoginPanelTsr_Click(object sender, EventArgs e)
+        {
+            //Switch to login Panel
+            PanelSwitch(loginPnl.Name);
+        }
+
+        private void SwitchToCdeditPanelTsr_Click(object sender, EventArgs e)
+        {
+            PanelSwitch(cdEditPnl.Name);
+        }
+        
+        ///<param name="passPanel"> Used to determine want visible </param>
+        ///<summary>Makes all panels invivble except for the one with the same name as the passed in value</summary>
+        private void PanelSwitch(string passPanel)
+        {
+            string currentPanel;
+            string ignorePanel = passPanel;
+            foreach (Control pnl in this.Controls)
+            {
+                currentPanel = pnl.Name;
+                if (currentPanel == "cdManagermns") //Not a panel
+                {
+                    continue;
+                }
+                if (currentPanel == ignorePanel)
+                {
+                    pnl.Visible = true;
+                    pnl.Enabled = true;
+                    continue;
+                }
+                pnl.Visible = false;
+                pnl.Enabled = false;
+            }
+        }
+
+        private void SwitchToAddCdPnl_Click(object sender, EventArgs e)
+        {
+            int x = currUsr.getUserLevel();
+            if (currUsr.getUserLevel() >= 2)
+            {
+                PanelSwitch(addCdPnl.Name);
+            }
+        }
+
+        private void PasswdBx_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r')
+            {
+                LoginBtn_Click(this, new EventArgs());
+            }
+        }
+
+        /// <summary>
+        /// Changes Userlevel to 1 [Guess]
+        /// Edits the menu strip to reflect the user level
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void logoutTsr_Click(object sender, EventArgs e)
+        {
+            //todo make sure the user is sure in loging out
+            currUsr.setUserLevel(1);
+            SwtichToLoginPanelTsr.Visible = true;
+            currentUserTsr.Visible = false;
+            SwitchToAddCdPanleTsr.Visible = false;
+        }
+
+        private void switchToAdminPanelTsr_Click(object sender, EventArgs e)
+        {
+            PanelSwitch(AdminPnl.Name);
+
+            using (OleDbConnection connLg = new OleDbConnection(userPathStr))
+            {
+                string sqlQuery = @"SELECT * from LoginDTB";
+                OleDbCommand cmd = new OleDbCommand(sqlQuery, connLg);
+
+                try
+                {
+                    connLg.Open();
+                    try
+                    {
+                        OleDbDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            UserListBx.Items.Add((string)reader["Username"]);// + " (" + (string)reader["UserLevel"] + ")");
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Could not connect to database");
                 }
             }
         }
