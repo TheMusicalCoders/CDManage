@@ -91,12 +91,12 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cdManagermns = new System.Windows.Forms.MenuStrip();
             this.switchToCdeditPanelTsr = new System.Windows.Forms.ToolStripMenuItem();
-            this.SwtichToLoginPanelTsr = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.SwitchToAddCdPanleTsr = new System.Windows.Forms.ToolStripMenuItem();
+            this.SwtichToLoginPanelTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.currentUserTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.switchToAdminPanelTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutTsr = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.loginPnl.SuspendLayout();
             this.cdEditPnl.SuspendLayout();
             this.addCdPnl.SuspendLayout();
@@ -682,30 +682,23 @@
             // switchToCdeditPanelTsr
             // 
             this.switchToCdeditPanelTsr.Name = "switchToCdeditPanelTsr";
-            this.switchToCdeditPanelTsr.Size = new System.Drawing.Size(67, 24);
+            this.switchToCdeditPanelTsr.Size = new System.Drawing.Size(65, 24);
             this.switchToCdeditPanelTsr.Text = "Search";
             this.switchToCdeditPanelTsr.Click += new System.EventHandler(this.SwitchToCdeditPanelTsr_Click);
-            // 
-            // SwtichToLoginPanelTsr
-            // 
-            this.SwtichToLoginPanelTsr.Name = "SwtichToLoginPanelTsr";
-            this.SwtichToLoginPanelTsr.Size = new System.Drawing.Size(60, 24);
-            this.SwtichToLoginPanelTsr.Text = "Login";
-            this.SwtichToLoginPanelTsr.Click += new System.EventHandler(this.SwtichToLoginPanelTsr_Click);
-            // 
-            // exitTsr
-            // 
-            this.exitTsr.Name = "exitTsr";
-            this.exitTsr.Size = new System.Drawing.Size(47, 24);
-            this.exitTsr.Text = "Exit";
-            this.exitTsr.Click += new System.EventHandler(this.exitTsr_Click);
             // 
             // SwitchToAddCdPanleTsr
             // 
             this.SwitchToAddCdPanleTsr.Name = "SwitchToAddCdPanleTsr";
-            this.SwitchToAddCdPanleTsr.Size = new System.Drawing.Size(75, 24);
+            this.SwitchToAddCdPanleTsr.Size = new System.Drawing.Size(73, 24);
             this.SwitchToAddCdPanleTsr.Text = "Add CD";
             this.SwitchToAddCdPanleTsr.Click += new System.EventHandler(this.SwitchToAddCdPnl_Click);
+            // 
+            // SwtichToLoginPanelTsr
+            // 
+            this.SwtichToLoginPanelTsr.Name = "SwtichToLoginPanelTsr";
+            this.SwtichToLoginPanelTsr.Size = new System.Drawing.Size(58, 24);
+            this.SwtichToLoginPanelTsr.Text = "Login";
+            this.SwtichToLoginPanelTsr.Click += new System.EventHandler(this.SwtichToLoginPanelTsr_Click);
             // 
             // currentUserTsr
             // 
@@ -713,22 +706,29 @@
             this.switchToAdminPanelTsr,
             this.logoutTsr});
             this.currentUserTsr.Name = "currentUserTsr";
-            this.currentUserTsr.Size = new System.Drawing.Size(104, 24);
+            this.currentUserTsr.Size = new System.Drawing.Size(102, 24);
             this.currentUserTsr.Text = "Current User";
             // 
             // switchToAdminPanelTsr
             // 
             this.switchToAdminPanelTsr.Name = "switchToAdminPanelTsr";
-            this.switchToAdminPanelTsr.Size = new System.Drawing.Size(224, 26);
+            this.switchToAdminPanelTsr.Size = new System.Drawing.Size(190, 26);
             this.switchToAdminPanelTsr.Text = "Edit Permissions";
             this.switchToAdminPanelTsr.Click += new System.EventHandler(this.switchToAdminPanelTsr_Click);
             // 
             // logoutTsr
             // 
             this.logoutTsr.Name = "logoutTsr";
-            this.logoutTsr.Size = new System.Drawing.Size(224, 26);
+            this.logoutTsr.Size = new System.Drawing.Size(190, 26);
             this.logoutTsr.Text = "Logout";
             this.logoutTsr.Click += new System.EventHandler(this.logoutTsr_Click);
+            // 
+            // exitTsr
+            // 
+            this.exitTsr.Name = "exitTsr";
+            this.exitTsr.Size = new System.Drawing.Size(45, 24);
+            this.exitTsr.Text = "Exit";
+            this.exitTsr.Click += new System.EventHandler(this.exitTsr_Click);
             // 
             // Form1
             // 

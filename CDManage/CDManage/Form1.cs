@@ -19,19 +19,57 @@ namespace CDManage
 
     public partial class Form1 : Form
     {
+
+
+        //connection path strings for each of the three databases
         string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/CDdtb.accdb");
         string userPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/LoginCheckDTB.accdb");
         string songPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/SongListDB.accdb");
 
         const string invalidLogin = "Invalid Username/password combination";
-
+        //linked list to hold cd information
         LinkedList<Cd> CdList = new LinkedList<Cd>();
+        //guest user instantiation
         static User guestUsr = new User(1);
         User currUsr = new User(guestUsr);
 
         public Form1()
         {
             InitializeComponent();
+        }
+
+        //functions to clear textboxes in form
+        //to be called when switching panels
+        /// <summary>
+        /// cleanup function calls clearFields function to 
+        /// recursively clear textboxes throughout form
+        /// </summary>
+        private void Cleanup()
+        {
+            ClearFields(this);
+        }
+        private void ClearFields(Control control)
+        {
+            foreach (Control cont in control.Controls)
+            {
+                if (cont is TextBoxBase)
+                {
+                    ((TextBoxBase)cont).Text = String.Empty;
+                }
+                else if (cont is ComboBox)
+                {
+                    ((ComboBox)cont).SelectedIndex = -1;
+                }
+                else if (cont is ListView)
+                {
+                    ((ListView)cont).Items.Clear();
+                }
+
+                if (cont.Controls.Count > 0)
+                {
+                    ClearFields(cont);
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -94,10 +132,9 @@ namespace CDManage
                             CdList.AddLast(newCd);
                         }
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
-                        Console.WriteLine(ex.StackTrace);
-                        Console.WriteLine(ex.Message);
+                        Debug.WriteLine("Error reading from database\n" + ex.StackTrace.ToString());
                     }
 
                     foreach (Cd x in CdList)
@@ -120,9 +157,9 @@ namespace CDManage
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.StackTrace);
-                    Console.WriteLine(ex.Message);
-                    MessageBox.Show("Error opening file");
+                    Debug.WriteLine(ex.StackTrace);
+                    Debug.WriteLine(ex.Message);
+                    
                 }
 
                 finally { conn.Close(); }
@@ -238,9 +275,9 @@ namespace CDManage
                         }
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Error opening file");
+                    MessageBox.Show("Error opening file\n" + ex.StackTrace.ToString());
                 }
 
                 finally
@@ -249,7 +286,11 @@ namespace CDManage
                 }
             }
         }
-
+        /// <summary>
+        /// fill selected user text box with selected item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserListBx_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (UserListBx.SelectedItem != null)
@@ -278,18 +319,18 @@ namespace CDManage
                                 connLg.Open();
                             }
 
-                            catch
+                            catch (Exception ex)
                             {
-
+                                Debug.WriteLine("Error: Cannot connect to database\n" + ex.StackTrace.ToString());
                             }
                             try
                             {
                                 UpdCmd.Parameters.AddWithValue("@Username", this.SelectedUserBx.Text.Trim());
                                 UpdCmd.ExecuteNonQuery();
                             }
-                            catch
+                            catch (Exception ex)
                             {
-
+                                Debug.WriteLine("Error: Unable to update user level\n" + ex.StackTrace.ToString());
                             }
                             finally
                             {
@@ -326,15 +367,15 @@ namespace CDManage
                                 UpdCmd.Parameters.AddWithValue("@Username", this.SelectedUserBx.Text.Trim());
                                 UpdCmd.ExecuteNonQuery();
                             }
-                            catch
+                            catch (Exception ex)
                             {
-                                MessageBox.Show("Unable to update");
+                                Debug.WriteLine("Unable to update\n" + ex.StackTrace.ToString());
                             }
                         }
 
-                        catch
+                        catch (Exception ex)
                         {
-                            MessageBox.Show("unable to connect");
+                            Debug.WriteLine("unable to connect to database\n" + ex.StackTrace.ToString());
                         }
                         finally
                         {
@@ -435,9 +476,9 @@ namespace CDManage
                                         //foreach(string x in AddSongBx.Text)
 
                                     }
-                                    catch
+                                    catch(Exception ex)
                                     {
-
+                                        Debug.WriteLine(ex.StackTrace);
                                     }
                                     finally
                                     {
@@ -448,7 +489,14 @@ namespace CDManage
 
                         }
 
-                        catch { MessageBox.Show("Error opening file"); }
+                        catch(Exception ex)
+                        {
+                            Debug.WriteLine("Error opening file" + ex.StackTrace);
+                        }
+                        finally
+                        {
+                            conn.Close();
+                        }
                     }
 
                 }
@@ -495,7 +543,7 @@ namespace CDManage
             {
                 String[] arrayStr;
                 string tmpDate = x.getDate().ToShortDateString();
-                arrayStr = new String[4] { x.getAlbum(), x.getArtist(), x.getGenre(), tmpDate };
+                arrayStr = new String[4] { x.getArtist(), x.getAlbum(), x.getGenre(), tmpDate };
                 ListViewItem item = new ListViewItem(arrayStr);
                 ResultsList.Items.Add(item);
 
@@ -551,9 +599,9 @@ namespace CDManage
                     }
                 }
 
-                catch
+                catch(Exception ex)
                 {
-                    MessageBox.Show("Error opening file.");
+                    Debug.WriteLine("Error opening file.\n" + ex.StackTrace);
                 }
                 finally
                 {
@@ -564,11 +612,7 @@ namespace CDManage
 
         private void clrBtn_Click(object sender, EventArgs e)
         {
-            GenreComboBx.SelectedIndex = -1;
-            ArtistComboBx.SelectedIndex = -1;
-            searchBx.Clear();
-            ResultsList.Items.Clear();
-            SongListView.Items.Clear();  
+            Cleanup();  
         }
 
         private void ResultsList_SelectedIndexChanged(object sender, EventArgs e)
@@ -639,6 +683,8 @@ namespace CDManage
                 pnl.Visible = false;
                 pnl.Enabled = false;
             }
+
+            Cleanup();
         }
 
         private void SwitchToAddCdPnl_Click(object sender, EventArgs e)
@@ -676,6 +722,7 @@ namespace CDManage
         private void switchToAdminPanelTsr_Click(object sender, EventArgs e)
         {
             PanelSwitch(AdminPnl.Name);
+            UserListBx.Items.Clear();
 
             using (OleDbConnection connLg = new OleDbConnection(userPathStr))
             {
