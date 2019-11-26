@@ -246,11 +246,10 @@ namespace CDManage
                             int.TryParse(usrLvlStr,out usrLvl); //Todo add catch
 
                             currUsr.setUserLevel(usrLvl);
-
+                            currentUserTsr.Text = UsrBx.Text.Trim();
                             if (currUsr.getUserLevel() > 0)
                             {
-                                // switchToAdminPanelBtn.Visible = false;
-                                //  switchToAdminPanelBtn.Enabled = false;
+                                
                                 currentUserTsr.Visible = true;
                                 SwtichToLoginPanelTsr.Visible = false;
                                 switchToAdminPanelTsr.Visible = false;   
@@ -261,12 +260,11 @@ namespace CDManage
                             }
                             if (currUsr.getUserLevel() > 2)
                             {
-                                // switchToAdminPanelBtn.Visible = true;
-                                //   switchToAdminPanelBtn.Enabled = true;
                                 switchToAdminPanelTsr.Visible = true;
                             }
 
                             PanelSwitch(cdEditPnl.Name);
+                            
                         }
                         else
                         {
@@ -617,13 +615,18 @@ namespace CDManage
 
         private void ResultsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ResultsList.FocusedItem == null)
+            if (ResultsList.FocusedItem == null || ResultsList.SelectedIndices.Count == 0)
             {
                 return;
             }
+
             else
             {
-                string tmpAlbum = ResultsList.SelectedItems[0].Text;
+
+                //string tmpAlbum = ResultsList.Columns[AlbumCol.Name].ToString();
+
+                string tmpAlbum = ResultsList.SelectedItems[0].SubItems[1].Text.ToString();
+               
                 foreach (Cd x in CdList)
                 {
                     if (x.getAlbum() == tmpAlbum)
@@ -717,6 +720,7 @@ namespace CDManage
             SwtichToLoginPanelTsr.Visible = true;
             currentUserTsr.Visible = false;
             SwitchToAddCdPanleTsr.Visible = false;
+            PanelSwitch(loginPnl.Name);
         }
 
         private void switchToAdminPanelTsr_Click(object sender, EventArgs e)
@@ -752,6 +756,11 @@ namespace CDManage
                     MessageBox.Show("Error: Could not connect to database");
                 }
             }
+        }
+
+        private void switchToRegisterPanelTsr_Click(object sender, EventArgs e)
+        {
+            PanelSwitch(registerPnl.Name);
         }
     }
 }

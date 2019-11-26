@@ -31,15 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.loginPnl = new System.Windows.Forms.Panel();
-            this.signUpBtn = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.InvalidLoginLbl = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.newUsrLbl = new System.Windows.Forms.Label();
-            this.txtNewUsrEmail = new System.Windows.Forms.TextBox();
-            this.txtNewUsrPwd = new System.Windows.Forms.TextBox();
-            this.txtNewUsrName = new System.Windows.Forms.TextBox();
             this.InvLbl = new System.Windows.Forms.Label();
             this.LoginBtn = new System.Windows.Forms.Button();
             this.PasswdBx = new System.Windows.Forms.TextBox();
@@ -93,77 +86,54 @@
             this.switchToCdeditPanelTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.SwitchToAddCdPanleTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.SwtichToLoginPanelTsr = new System.Windows.Forms.ToolStripMenuItem();
+            this.loginTsr = new System.Windows.Forms.ToolStripMenuItem();
+            this.switchToRegisterPanelTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.currentUserTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.switchToAdminPanelTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.exitTsr = new System.Windows.Forms.ToolStripMenuItem();
+            this.registerPnl = new System.Windows.Forms.Panel();
+            this.signUpBtn = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.newUsrLbl = new System.Windows.Forms.Label();
+            this.txtNewUsrEmail = new System.Windows.Forms.TextBox();
+            this.txtNewUsrPwd = new System.Windows.Forms.TextBox();
+            this.txtNewUsrName = new System.Windows.Forms.TextBox();
             this.loginPnl.SuspendLayout();
             this.cdEditPnl.SuspendLayout();
             this.addCdPnl.SuspendLayout();
             this.AdminPnl.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.cdManagermns.SuspendLayout();
+            this.registerPnl.SuspendLayout();
             this.SuspendLayout();
             // 
             // loginPnl
             // 
-            this.loginPnl.Controls.Add(this.signUpBtn);
-            this.loginPnl.Controls.Add(this.label21);
-            this.loginPnl.Controls.Add(this.label20);
-            this.loginPnl.Controls.Add(this.label19);
+            this.loginPnl.Controls.Add(this.InvalidLoginLbl);
             this.loginPnl.Controls.Add(this.label4);
-            this.loginPnl.Controls.Add(this.newUsrLbl);
-            this.loginPnl.Controls.Add(this.txtNewUsrEmail);
-            this.loginPnl.Controls.Add(this.txtNewUsrPwd);
-            this.loginPnl.Controls.Add(this.txtNewUsrName);
             this.loginPnl.Controls.Add(this.InvLbl);
             this.loginPnl.Controls.Add(this.LoginBtn);
             this.loginPnl.Controls.Add(this.PasswdBx);
             this.loginPnl.Controls.Add(this.UsrBx);
             this.loginPnl.Controls.Add(this.label9);
             this.loginPnl.Controls.Add(this.label8);
-            this.loginPnl.Location = new System.Drawing.Point(732, 415);
+            this.loginPnl.Location = new System.Drawing.Point(1049, 477);
             this.loginPnl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.loginPnl.Name = "loginPnl";
-            this.loginPnl.Size = new System.Drawing.Size(453, 554);
+            this.loginPnl.Size = new System.Drawing.Size(306, 286);
             this.loginPnl.TabIndex = 0;
             // 
-            // signUpBtn
+            // InvalidLoginLbl
             // 
-            this.signUpBtn.Location = new System.Drawing.Point(174, 402);
-            this.signUpBtn.Name = "signUpBtn";
-            this.signUpBtn.Size = new System.Drawing.Size(75, 33);
-            this.signUpBtn.TabIndex = 15;
-            this.signUpBtn.Text = "Sign Up!";
-            this.signUpBtn.UseVisualStyleBackColor = true;
-            this.signUpBtn.Click += new System.EventHandler(this.signUpBtn_Click);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(77, 369);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(46, 17);
-            this.label21.TabIndex = 14;
-            this.label21.Text = "Email:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(77, 330);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(73, 17);
-            this.label20.TabIndex = 13;
-            this.label20.Text = "Password:";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(77, 290);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(77, 17);
-            this.label19.TabIndex = 12;
-            this.label19.Text = "Username:";
+            this.InvalidLoginLbl.AutoSize = true;
+            this.InvalidLoginLbl.Location = new System.Drawing.Point(103, 184);
+            this.InvalidLoginLbl.Name = "InvalidLoginLbl";
+            this.InvalidLoginLbl.Size = new System.Drawing.Size(42, 17);
+            this.InvalidLoginLbl.TabIndex = 16;
+            this.InvalidLoginLbl.Text = "Sorry";
             // 
             // label4
             // 
@@ -173,36 +143,6 @@
             this.label4.Size = new System.Drawing.Size(83, 17);
             this.label4.TabIndex = 0;
             this.label4.Text = "Login Panel";
-            // 
-            // newUsrLbl
-            // 
-            this.newUsrLbl.AutoSize = true;
-            this.newUsrLbl.Location = new System.Drawing.Point(117, 255);
-            this.newUsrLbl.Name = "newUsrLbl";
-            this.newUsrLbl.Size = new System.Drawing.Size(149, 17);
-            this.newUsrLbl.TabIndex = 11;
-            this.newUsrLbl.Text = "Create A New Account";
-            // 
-            // txtNewUsrEmail
-            // 
-            this.txtNewUsrEmail.Location = new System.Drawing.Point(174, 369);
-            this.txtNewUsrEmail.Name = "txtNewUsrEmail";
-            this.txtNewUsrEmail.Size = new System.Drawing.Size(100, 22);
-            this.txtNewUsrEmail.TabIndex = 10;
-            // 
-            // txtNewUsrPwd
-            // 
-            this.txtNewUsrPwd.Location = new System.Drawing.Point(174, 330);
-            this.txtNewUsrPwd.Name = "txtNewUsrPwd";
-            this.txtNewUsrPwd.Size = new System.Drawing.Size(100, 22);
-            this.txtNewUsrPwd.TabIndex = 9;
-            // 
-            // txtNewUsrName
-            // 
-            this.txtNewUsrName.Location = new System.Drawing.Point(174, 290);
-            this.txtNewUsrName.Name = "txtNewUsrName";
-            this.txtNewUsrName.Size = new System.Drawing.Size(100, 22);
-            this.txtNewUsrName.TabIndex = 8;
             // 
             // InvLbl
             // 
@@ -350,12 +290,10 @@
             // 
             // ArtistCol
             // 
-            this.ArtistCol.DisplayIndex = 1;
             this.ArtistCol.Text = "Artist";
             // 
             // AlbumCol
             // 
-            this.AlbumCol.DisplayIndex = 0;
             this.AlbumCol.Text = "Album";
             // 
             // GenreCol
@@ -675,7 +613,7 @@
             this.exitTsr});
             this.cdManagermns.Location = new System.Drawing.Point(0, 0);
             this.cdManagermns.Name = "cdManagermns";
-            this.cdManagermns.Size = new System.Drawing.Size(1456, 28);
+            this.cdManagermns.Size = new System.Drawing.Size(1541, 28);
             this.cdManagermns.TabIndex = 12;
             this.cdManagermns.Text = "CDmns";
             // 
@@ -695,10 +633,26 @@
             // 
             // SwtichToLoginPanelTsr
             // 
+            this.SwtichToLoginPanelTsr.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loginTsr,
+            this.switchToRegisterPanelTsr});
             this.SwtichToLoginPanelTsr.Name = "SwtichToLoginPanelTsr";
             this.SwtichToLoginPanelTsr.Size = new System.Drawing.Size(58, 24);
             this.SwtichToLoginPanelTsr.Text = "Login";
-            this.SwtichToLoginPanelTsr.Click += new System.EventHandler(this.SwtichToLoginPanelTsr_Click);
+            // 
+            // loginTsr
+            // 
+            this.loginTsr.Name = "loginTsr";
+            this.loginTsr.Size = new System.Drawing.Size(216, 26);
+            this.loginTsr.Text = "Login";
+            this.loginTsr.Click += new System.EventHandler(this.SwtichToLoginPanelTsr_Click);
+            // 
+            // switchToRegisterPanelTsr
+            // 
+            this.switchToRegisterPanelTsr.Name = "switchToRegisterPanelTsr";
+            this.switchToRegisterPanelTsr.Size = new System.Drawing.Size(216, 26);
+            this.switchToRegisterPanelTsr.Text = "Register";
+            this.switchToRegisterPanelTsr.Click += new System.EventHandler(this.switchToRegisterPanelTsr_Click);
             // 
             // currentUserTsr
             // 
@@ -730,18 +684,100 @@
             this.exitTsr.Text = "Exit";
             this.exitTsr.Click += new System.EventHandler(this.exitTsr_Click);
             // 
+            // registerPnl
+            // 
+            this.registerPnl.Controls.Add(this.signUpBtn);
+            this.registerPnl.Controls.Add(this.label21);
+            this.registerPnl.Controls.Add(this.label20);
+            this.registerPnl.Controls.Add(this.label19);
+            this.registerPnl.Controls.Add(this.newUsrLbl);
+            this.registerPnl.Controls.Add(this.txtNewUsrEmail);
+            this.registerPnl.Controls.Add(this.txtNewUsrPwd);
+            this.registerPnl.Controls.Add(this.txtNewUsrName);
+            this.registerPnl.Location = new System.Drawing.Point(752, 477);
+            this.registerPnl.Name = "registerPnl";
+            this.registerPnl.Size = new System.Drawing.Size(235, 245);
+            this.registerPnl.TabIndex = 13;
+            // 
+            // signUpBtn
+            // 
+            this.signUpBtn.Location = new System.Drawing.Point(99, 190);
+            this.signUpBtn.Name = "signUpBtn";
+            this.signUpBtn.Size = new System.Drawing.Size(75, 33);
+            this.signUpBtn.TabIndex = 23;
+            this.signUpBtn.Text = "Sign Up!";
+            this.signUpBtn.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(2, 159);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(46, 17);
+            this.label21.TabIndex = 22;
+            this.label21.Text = "Email:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(2, 120);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(73, 17);
+            this.label20.TabIndex = 21;
+            this.label20.Text = "Password:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(2, 80);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(77, 17);
+            this.label19.TabIndex = 20;
+            this.label19.Text = "Username:";
+            // 
+            // newUsrLbl
+            // 
+            this.newUsrLbl.AutoSize = true;
+            this.newUsrLbl.Location = new System.Drawing.Point(42, 43);
+            this.newUsrLbl.Name = "newUsrLbl";
+            this.newUsrLbl.Size = new System.Drawing.Size(149, 17);
+            this.newUsrLbl.TabIndex = 19;
+            this.newUsrLbl.Text = "Create A New Account";
+            // 
+            // txtNewUsrEmail
+            // 
+            this.txtNewUsrEmail.Location = new System.Drawing.Point(99, 157);
+            this.txtNewUsrEmail.Name = "txtNewUsrEmail";
+            this.txtNewUsrEmail.Size = new System.Drawing.Size(100, 22);
+            this.txtNewUsrEmail.TabIndex = 18;
+            // 
+            // txtNewUsrPwd
+            // 
+            this.txtNewUsrPwd.Location = new System.Drawing.Point(99, 118);
+            this.txtNewUsrPwd.Name = "txtNewUsrPwd";
+            this.txtNewUsrPwd.Size = new System.Drawing.Size(100, 22);
+            this.txtNewUsrPwd.TabIndex = 17;
+            // 
+            // txtNewUsrName
+            // 
+            this.txtNewUsrName.Location = new System.Drawing.Point(99, 78);
+            this.txtNewUsrName.Name = "txtNewUsrName";
+            this.txtNewUsrName.Size = new System.Drawing.Size(100, 22);
+            this.txtNewUsrName.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.BurlyWood;
-            this.ClientSize = new System.Drawing.Size(1456, 575);
+            this.ClientSize = new System.Drawing.Size(1541, 820);
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.cdManagermns);
             this.Controls.Add(this.addCdPnl);
             this.Controls.Add(this.AdminPnl);
             this.Controls.Add(this.loginPnl);
             this.Controls.Add(this.cdEditPnl);
+            this.Controls.Add(this.registerPnl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.cdManagermns;
@@ -760,6 +796,8 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.cdManagermns.ResumeLayout(false);
             this.cdManagermns.PerformLayout();
+            this.registerPnl.ResumeLayout(false);
+            this.registerPnl.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -810,14 +848,6 @@
         private System.Windows.Forms.ColumnHeader ArtistCol;
         private System.Windows.Forms.ColumnHeader GenreCol;
         private System.Windows.Forms.ColumnHeader AlbumCol;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label newUsrLbl;
-        private System.Windows.Forms.TextBox txtNewUsrEmail;
-        private System.Windows.Forms.TextBox txtNewUsrPwd;
-        private System.Windows.Forms.TextBox txtNewUsrName;
-        private System.Windows.Forms.Button signUpBtn;
         private System.Windows.Forms.ColumnHeader DateCol;
         private System.Windows.Forms.Button clrBtn;
         private System.Windows.Forms.ListView SongListView;
@@ -834,6 +864,18 @@
         private System.Windows.Forms.ToolStripMenuItem currentUserTsr;
         private System.Windows.Forms.ToolStripMenuItem switchToAdminPanelTsr;
         private System.Windows.Forms.ToolStripMenuItem logoutTsr;
+        private System.Windows.Forms.Label InvalidLoginLbl;
+        private System.Windows.Forms.Panel registerPnl;
+        private System.Windows.Forms.Button signUpBtn;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label newUsrLbl;
+        private System.Windows.Forms.TextBox txtNewUsrEmail;
+        private System.Windows.Forms.TextBox txtNewUsrPwd;
+        private System.Windows.Forms.TextBox txtNewUsrName;
+        private System.Windows.Forms.ToolStripMenuItem loginTsr;
+        private System.Windows.Forms.ToolStripMenuItem switchToRegisterPanelTsr;
     }
 }
 
