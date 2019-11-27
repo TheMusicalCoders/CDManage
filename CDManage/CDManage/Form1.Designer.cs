@@ -40,17 +40,14 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.cdEditPnl = new System.Windows.Forms.Panel();
-            this.SongListView = new System.Windows.Forms.ListView();
-            this.SongNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.TrackNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ResultsList = new System.Windows.Forms.DataGridView();
+            this.AlbumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ArtistCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenreCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clrBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.searchBtN = new System.Windows.Forms.Button();
-            this.ResultsList = new System.Windows.Forms.ListView();
-            this.ArtistCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.AlbumCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.GenreCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DateCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ArtistComboBx = new System.Windows.Forms.ComboBox();
@@ -101,13 +98,18 @@
             this.txtNewUsrEmail = new System.Windows.Forms.TextBox();
             this.txtNewUsrPwd = new System.Windows.Forms.TextBox();
             this.txtNewUsrName = new System.Windows.Forms.TextBox();
+            this.SongListView = new System.Windows.Forms.DataGridView();
+            this.NameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TrackNumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.loginPnl.SuspendLayout();
             this.cdEditPnl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResultsList)).BeginInit();
             this.addCdPnl.SuspendLayout();
             this.AdminPnl.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.cdManagermns.SuspendLayout();
             this.registerPnl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SongListView)).BeginInit();
             this.SuspendLayout();
             // 
             // loginPnl
@@ -205,10 +207,10 @@
             // cdEditPnl
             // 
             this.cdEditPnl.Controls.Add(this.SongListView);
+            this.cdEditPnl.Controls.Add(this.ResultsList);
             this.cdEditPnl.Controls.Add(this.clrBtn);
             this.cdEditPnl.Controls.Add(this.label7);
             this.cdEditPnl.Controls.Add(this.searchBtN);
-            this.cdEditPnl.Controls.Add(this.ResultsList);
             this.cdEditPnl.Controls.Add(this.label3);
             this.cdEditPnl.Controls.Add(this.label2);
             this.cdEditPnl.Controls.Add(this.ArtistComboBx);
@@ -221,25 +223,43 @@
             this.cdEditPnl.Size = new System.Drawing.Size(700, 550);
             this.cdEditPnl.TabIndex = 3;
             // 
-            // SongListView
+            // ResultsList
             // 
-            this.SongListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.SongNameCol,
-            this.TrackNum});
-            this.SongListView.HideSelection = false;
-            this.SongListView.Location = new System.Drawing.Point(434, 138);
-            this.SongListView.Name = "SongListView";
-            this.SongListView.Size = new System.Drawing.Size(261, 349);
-            this.SongListView.TabIndex = 9;
-            this.SongListView.UseCompatibleStateImageBehavior = false;
+            this.ResultsList.AllowUserToAddRows = false;
+            this.ResultsList.AllowUserToDeleteRows = false;
+            this.ResultsList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ResultsList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.AlbumCol,
+            this.ArtistCol,
+            this.GenreCol,
+            this.DateCol});
+            this.ResultsList.Location = new System.Drawing.Point(3, 138);
+            this.ResultsList.MultiSelect = false;
+            this.ResultsList.Name = "ResultsList";
+            this.ResultsList.RowTemplate.Height = 24;
+            this.ResultsList.Size = new System.Drawing.Size(425, 272);
+            this.ResultsList.TabIndex = 11;
+            this.ResultsList.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.ResultsList_CellContentClick);
             // 
-            // SongNameCol
+            // AlbumCol
             // 
-            this.SongNameCol.Text = "Song Name";
+            this.AlbumCol.HeaderText = "Album";
+            this.AlbumCol.Name = "AlbumCol";
             // 
-            // TrackNum
+            // ArtistCol
             // 
-            this.TrackNum.Text = "Track";
+            this.ArtistCol.HeaderText = "Artist";
+            this.ArtistCol.Name = "ArtistCol";
+            // 
+            // GenreCol
+            // 
+            this.GenreCol.HeaderText = "Genre";
+            this.GenreCol.Name = "GenreCol";
+            // 
+            // DateCol
+            // 
+            this.DateCol.HeaderText = "Date";
+            this.DateCol.Name = "DateCol";
             // 
             // clrBtn
             // 
@@ -270,39 +290,6 @@
             this.searchBtN.Text = "SEARCH";
             this.searchBtN.UseVisualStyleBackColor = true;
             this.searchBtN.Click += new System.EventHandler(this.searchBtN_Click);
-            // 
-            // ResultsList
-            // 
-            this.ResultsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ArtistCol,
-            this.AlbumCol,
-            this.GenreCol,
-            this.DateCol});
-            this.ResultsList.HideSelection = false;
-            this.ResultsList.Location = new System.Drawing.Point(19, 138);
-            this.ResultsList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ResultsList.MultiSelect = false;
-            this.ResultsList.Name = "ResultsList";
-            this.ResultsList.Size = new System.Drawing.Size(413, 349);
-            this.ResultsList.TabIndex = 8;
-            this.ResultsList.UseCompatibleStateImageBehavior = false;
-            this.ResultsList.SelectedIndexChanged += new System.EventHandler(this.ResultsList_SelectedIndexChanged);
-            // 
-            // ArtistCol
-            // 
-            this.ArtistCol.Text = "Artist";
-            // 
-            // AlbumCol
-            // 
-            this.AlbumCol.Text = "Album";
-            // 
-            // GenreCol
-            // 
-            this.GenreCol.Text = "Genre";
-            // 
-            // DateCol
-            // 
-            this.DateCol.Text = "Release Date";
             // 
             // label3
             // 
@@ -594,7 +581,7 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(212, 28);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(212, 56);
             // 
             // toolStripMenuItem1
             // 
@@ -643,14 +630,14 @@
             // loginTsr
             // 
             this.loginTsr.Name = "loginTsr";
-            this.loginTsr.Size = new System.Drawing.Size(216, 26);
+            this.loginTsr.Size = new System.Drawing.Size(138, 26);
             this.loginTsr.Text = "Login";
             this.loginTsr.Click += new System.EventHandler(this.SwtichToLoginPanelTsr_Click);
             // 
             // switchToRegisterPanelTsr
             // 
             this.switchToRegisterPanelTsr.Name = "switchToRegisterPanelTsr";
-            this.switchToRegisterPanelTsr.Size = new System.Drawing.Size(216, 26);
+            this.switchToRegisterPanelTsr.Size = new System.Drawing.Size(138, 26);
             this.switchToRegisterPanelTsr.Text = "Register";
             this.switchToRegisterPanelTsr.Click += new System.EventHandler(this.switchToRegisterPanelTsr_Click);
             // 
@@ -765,6 +752,28 @@
             this.txtNewUsrName.Size = new System.Drawing.Size(100, 22);
             this.txtNewUsrName.TabIndex = 16;
             // 
+            // SongListView
+            // 
+            this.SongListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.SongListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.NameCol,
+            this.TrackNumCol});
+            this.SongListView.Location = new System.Drawing.Point(446, 138);
+            this.SongListView.Name = "SongListView";
+            this.SongListView.RowTemplate.Height = 24;
+            this.SongListView.Size = new System.Drawing.Size(251, 272);
+            this.SongListView.TabIndex = 12;
+            // 
+            // NameCol
+            // 
+            this.NameCol.HeaderText = "Song Name";
+            this.NameCol.Name = "NameCol";
+            // 
+            // TrackNumCol
+            // 
+            this.TrackNumCol.HeaderText = "Track#";
+            this.TrackNumCol.Name = "TrackNumCol";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -789,6 +798,7 @@
             this.loginPnl.PerformLayout();
             this.cdEditPnl.ResumeLayout(false);
             this.cdEditPnl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResultsList)).EndInit();
             this.addCdPnl.ResumeLayout(false);
             this.addCdPnl.PerformLayout();
             this.AdminPnl.ResumeLayout(false);
@@ -798,6 +808,7 @@
             this.cdManagermns.PerformLayout();
             this.registerPnl.ResumeLayout(false);
             this.registerPnl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SongListView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -808,7 +819,6 @@
         private System.Windows.Forms.Panel loginPnl;
         private System.Windows.Forms.Panel cdEditPnl;
         private System.Windows.Forms.Button searchBtN;
-        private System.Windows.Forms.ListView ResultsList;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox ArtistComboBx;
@@ -845,14 +855,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label InvLbl;
-        private System.Windows.Forms.ColumnHeader ArtistCol;
-        private System.Windows.Forms.ColumnHeader GenreCol;
-        private System.Windows.Forms.ColumnHeader AlbumCol;
-        private System.Windows.Forms.ColumnHeader DateCol;
         private System.Windows.Forms.Button clrBtn;
-        private System.Windows.Forms.ListView SongListView;
-        private System.Windows.Forms.ColumnHeader SongNameCol;
-        private System.Windows.Forms.ColumnHeader TrackNum;
         private System.Windows.Forms.RichTextBox AddSongBx;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
@@ -876,6 +879,14 @@
         private System.Windows.Forms.TextBox txtNewUsrName;
         private System.Windows.Forms.ToolStripMenuItem loginTsr;
         private System.Windows.Forms.ToolStripMenuItem switchToRegisterPanelTsr;
+        private System.Windows.Forms.DataGridView ResultsList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AlbumCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ArtistCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GenreCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateCol;
+        private System.Windows.Forms.DataGridView SongListView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TrackNumCol;
     }
 }
 

@@ -64,6 +64,10 @@ namespace CDManage
                 {
                     ((ListView)cont).Items.Clear();
                 }
+                else if (cont is DataGridView)
+                {
+                    ((DataGridView)cont).Rows.Clear();
+                }
 
                 if (cont.Controls.Count > 0)
                 {
@@ -86,7 +90,7 @@ namespace CDManage
             foreach (Control myPnl in this.Controls)
             {
                 var temp = myPnl.GetType();
-                if ( myPnl.Name == "cdManagemns") //Not a panel
+                if (myPnl.Name == "cdManagemns") //Not a panel
                 {
                     continue;
                 }
@@ -99,12 +103,13 @@ namespace CDManage
             AdminPnl.Visible = false;
             addCdPnl.Enabled = false;
             addCdPnl.Visible = false;
-            ResultsList.View = View.Details;
-            ResultsList.GridLines = true;
-            ResultsList.FullRowSelect = true;
-            SongListView.View = View.Details;
-            SongListView.GridLines = true;
-            SongListView.FullRowSelect = true;
+            //ResultsList.View = View.Details;
+            //ResultsList.GridLines = true;
+
+            ResultsList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+           // SongListView.View = View.Details;
+            //SongListView.GridLines = true;
+            //SongListView.FullRowSelect = true;
 
             //Default Menu Strip View [Guess View]
             currentUserTsr.Visible = false;
@@ -132,7 +137,7 @@ namespace CDManage
                             CdList.AddLast(newCd);
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Debug.WriteLine("Error reading from database\n" + ex.StackTrace.ToString());
                     }
@@ -159,7 +164,7 @@ namespace CDManage
                 {
                     Debug.WriteLine(ex.StackTrace);
                     Debug.WriteLine(ex.Message);
-                    
+
                 }
 
                 finally { conn.Close(); }
@@ -243,16 +248,16 @@ namespace CDManage
                             int usrLvl = 0;
                             string usrLvlStr = "";
                             usrLvlStr = (string)reader["UserLevel"];
-                            int.TryParse(usrLvlStr,out usrLvl); //Todo add catch
+                            int.TryParse(usrLvlStr, out usrLvl); //Todo add catch
 
                             currUsr.setUserLevel(usrLvl);
                             currentUserTsr.Text = UsrBx.Text.Trim();
                             if (currUsr.getUserLevel() > 0)
                             {
-                                
+
                                 currentUserTsr.Visible = true;
                                 SwtichToLoginPanelTsr.Visible = false;
-                                switchToAdminPanelTsr.Visible = false;   
+                                switchToAdminPanelTsr.Visible = false;
                             }
                             if (currUsr.getUserLevel() > 1)
                             {
@@ -264,7 +269,7 @@ namespace CDManage
                             }
 
                             PanelSwitch(cdEditPnl.Name);
-                            
+
                         }
                         else
                         {
@@ -388,7 +393,7 @@ namespace CDManage
 
         private void AddCDBtn_Click(object sender, EventArgs e)
         {
-           //TODO Add in a confirmation button
+            //TODO Add in a confirmation button
 
             bool canAdd = true;
             string sqlQuery = @"INSERT INTO CDdtb (`Album`,`Artist`,`Genre`,`DateStr`) values (?,?,?,?)";
@@ -474,7 +479,7 @@ namespace CDManage
                                         //foreach(string x in AddSongBx.Text)
 
                                     }
-                                    catch(Exception ex)
+                                    catch (Exception ex)
                                     {
                                         Debug.WriteLine(ex.StackTrace);
                                     }
@@ -487,7 +492,7 @@ namespace CDManage
 
                         }
 
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Debug.WriteLine("Error opening file" + ex.StackTrace);
                         }
@@ -503,7 +508,7 @@ namespace CDManage
 
         private void searchBtN_Click(object sender, EventArgs e)
         {
-            ResultsList.Items.Clear();
+            ResultsList.Rows.Clear();
             const int nonexisting = -1;
             LinkedList<Cd> SearchResults = new LinkedList<Cd>();
             string album = searchBx.Text.Trim();
@@ -541,12 +546,18 @@ namespace CDManage
             {
                 String[] arrayStr;
                 string tmpDate = x.getDate().ToShortDateString();
-                arrayStr = new String[4] { x.getArtist(), x.getAlbum(), x.getGenre(), tmpDate };
-                ListViewItem item = new ListViewItem(arrayStr);
-                ResultsList.Items.Add(item);
+                arrayStr = new String[4] { x.getAlbum(), x.getArtist(), x.getGenre(), tmpDate };
+                ;
+                DataGridViewRow derp = new DataGridViewRow();
+                derp.CreateCells(ResultsList, arrayStr);
+
+                ResultsList.Rows.Add(derp);
 
                 //displayStr += x.getAlbum() + " by " + x.getArtist() + "(" + x.getGenre() + ")\n\n";
             }
+
+            //ResultsList.ClearSelection();
+            ResultsList.CurrentCell = null;
         }
 
         private void signUpBtn_Click(object sender, EventArgs e)
@@ -597,7 +608,7 @@ namespace CDManage
                     }
                 }
 
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.WriteLine("Error opening file.\n" + ex.StackTrace);
                 }
@@ -610,42 +621,7 @@ namespace CDManage
 
         private void clrBtn_Click(object sender, EventArgs e)
         {
-            Cleanup();  
-        }
-
-        private void ResultsList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ResultsList.FocusedItem == null || ResultsList.SelectedIndices.Count == 0)
-            {
-                return;
-            }
-
-            else
-            {
-
-                //string tmpAlbum = ResultsList.Columns[AlbumCol.Name].ToString();
-
-                string tmpAlbum = ResultsList.SelectedItems[0].SubItems[1].Text.ToString();
-               
-                foreach (Cd x in CdList)
-                {
-                    if (x.getAlbum() == tmpAlbum)
-                    {
-                        SongListView.Items.Clear();
-                        foreach (string y in x.getSongName())
-                        {
-                            int indx = 0;
-                            indx = x.getSongName().IndexOf(y) + 1;
-                            string tmp = indx.ToString();
-                            string[] newrow = { y, tmp };
-                            ListViewItem newItem = new ListViewItem(newrow);
-                            SongListView.Items.Add(newItem);
-                        }
-                    }
-                    //string songName = "";
-
-                }
-            }
+            Cleanup();
         }
 
         private void exitTsr_Click(object sender, EventArgs e)
@@ -663,7 +639,7 @@ namespace CDManage
         {
             PanelSwitch(cdEditPnl.Name);
         }
-        
+
         ///<param name="passPanel"> Used to determine want visible </param>
         ///<summary>Makes all panels invivble except for the one with the same name as the passed in value</summary>
         private void PanelSwitch(string passPanel)
@@ -761,6 +737,38 @@ namespace CDManage
         private void switchToRegisterPanelTsr_Click(object sender, EventArgs e)
         {
             PanelSwitch(registerPnl.Name);
+        }
+
+        private void ResultsList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            string tmpAlbum = "";
+            try
+            {
+                tmpAlbum = ResultsList.SelectedCells[0].Value.ToString();
+
+                foreach (Cd x in CdList)
+                {
+                    if (x.getAlbum() == tmpAlbum)
+                    {
+                        SongListView.Rows.Clear();
+                        foreach (string y in x.getSongName())
+                        {
+                            int indx = 0;
+                            indx = x.getSongName().IndexOf(y) + 1;
+                            string tmp = indx.ToString();
+                            string[] newrow = { y, tmp };
+                            DataGridViewRow newItem = new DataGridViewRow();
+                            newItem.CreateCells(SongListView,newrow);
+                            SongListView.Rows.Add(newItem);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                
+            }
         }
     }
 }

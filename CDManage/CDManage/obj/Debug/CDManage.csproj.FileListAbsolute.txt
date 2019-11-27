@@ -123,9 +123,6 @@ C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\bin\Debug\D
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\bin\Debug\CDManage.exe.config
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\bin\Debug\CDManage.exe
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\bin\Debug\CDManage.pdb
-C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\bin\Debug\CSFreeDB.pdb
-C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\bin\Debug\CSFreeDB.xml
-C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\CDManage.csprojAssemblyReference.cache
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\CDManage.Form1.resources
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\CDManage.Properties.Resources.resources
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\CDManage.csproj.GenerateResource.cache
@@ -133,3 +130,4 @@ C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\C
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\CDManage.csproj.CopyComplete
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\CDManage.exe
 C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\CDManage.pdb
+C:\Users\autov\Documents\github\menustrip\CDManage\CDManage\CDManage\obj\Debug\CDManage.csprojAssemblyReference.cache
