@@ -782,6 +782,7 @@
             this.BackColor = System.Drawing.Color.BurlyWood;
             this.ClientSize = new System.Drawing.Size(1156, 666);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.ControlBox = false;
             this.Controls.Add(this.cdManagermns);
             this.Controls.Add(this.addCdPnl);
             this.Controls.Add(this.AdminPnl);
