@@ -19,8 +19,6 @@ namespace CDManage
 
     public partial class Form1 : Form
     {
-
-
         //connection path strings for each of the three databases
         string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/CDdtb.accdb");
         string userPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/LoginCheckDTB.accdb");
@@ -36,6 +34,7 @@ namespace CDManage
         public Form1()
         {
             InitializeComponent();
+            AutoCompleteNewCD();
         }
 
         //functions to clear textboxes in form
@@ -159,6 +158,7 @@ namespace CDManage
                             }
                         }
                     }
+                    AutoCompleteSearchTB();
                 }
                 catch (Exception ex)
                 {
@@ -768,6 +768,70 @@ namespace CDManage
             catch
             {
                 
+            }
+        }
+        void AutoCompleteSearchTB()
+        {
+            string album;
+            searchBx.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            searchBx.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            AutoCompleteStringCollection collect = new AutoCompleteStringCollection();
+
+            foreach (Cd x in CdList)
+            {
+                album = x.getAlbum();
+                collect.Add(album);
+            }
+            searchBx.AutoCompleteCustomSource = collect;
+        }
+        void AutoCompleteNewCD()
+        {
+            using (OleDbConnection conn = new OleDbConnection(pathStr))
+            {
+                string pAlbum;
+                string pArtist;
+                string pGenre;
+                string sqlQuery = "SELECT `Album`,`Artist`,`Genre` FROM CDdtb";
+                OleDbCommand cmd = new OleDbCommand(sqlQuery, conn);
+                addAlbumBx.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                addAlbumBx.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                AutoCompleteStringCollection collectA = new AutoCompleteStringCollection();
+                AutoCompleteStringCollection collectArt = new AutoCompleteStringCollection();
+                AutoCompleteStringCollection collectG = new AutoCompleteStringCollection();
+
+                try
+                {
+                    conn.Open();
+
+                    try
+                    {
+                        OleDbDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            pAlbum = ((string)reader["Album"]);
+                            pArtist = ((string)reader["Artist"]);
+                            pGenre = ((string)reader["Genre"]);
+                            collectA.Add(pAlbum);
+                            collectArt.Add(pArtist);
+                            collectG.Add(pGenre);
+                        }
+                        addAlbumBx.AutoCompleteCustomSource = collectA;
+                        addArtistBx.AutoCompleteCustomSource = collectArt;
+                        addGenreBx.AutoCompleteCustomSource = collectG;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error reading from database\n" + ex.StackTrace.ToString());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error opening database file\n" + ex.StackTrace.ToString());
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
         }
     }
