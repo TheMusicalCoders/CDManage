@@ -12,6 +12,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Net;
 using CSFreeDB;
+using System.Text.RegularExpressions;
 
 //D:\C#\CDProjects\CDManage-DatabaseConn
 namespace CDManage
@@ -20,10 +21,15 @@ namespace CDManage
     public partial class Form1 : Form
     {
         //connection path strings for each of the three databases
-        string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/CDdtb.accdb");
-        string userPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/LoginCheckDTB.accdb");
-        string songPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Database/SongListDB.accdb");
 
+        static string dirStr = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory.ToString()).ToString()).ToString();
+        string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + dirStr + @"\Database\Cddtb.accdb";
+        string userPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + dirStr + @"\Database\LoginCheckDTB.accdb";
+        string songPathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + dirStr + @"\Database\SongListDB.accdb";
+        int nextID = 0;
+
+
+        //string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\autov\Documents\Temp\CDManage\CDManage\Database\CDdtb.accdb";
         const string invalidLogin = "Invalid Username/password combination";
         //linked list to hold cd information
         LinkedList<Cd> CdList = new LinkedList<Cd>();
@@ -74,6 +80,12 @@ namespace CDManage
                 }
             }
         }
+        private void StandardizeText(ref string text)
+        {
+            text = text.ToLower();
+            text = Regex.Replace(text, @"(^\w)|(\s\w)", ch => ch.Value.ToUpper());
+
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -84,7 +96,8 @@ namespace CDManage
              * Set Display to match user level [x]
              * Clean up 
              */
-
+            //newUsrLbl.Text = "HEYYYYYY";
+            //newUsrLbl.Visible = true;
             this.Size = new Size(550, 450);
             foreach (Control myPnl in this.Controls)
             {
@@ -106,7 +119,7 @@ namespace CDManage
             //ResultsList.GridLines = true;
 
             ResultsList.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-           // SongListView.View = View.Details;
+            // SongListView.View = View.Details;
             //SongListView.GridLines = true;
             //SongListView.FullRowSelect = true;
 
@@ -128,14 +141,26 @@ namespace CDManage
                         OleDbDataReader reader = cmd.ExecuteReader();
                         while (reader.Read())
                         {
+                            int temp = (int)reader["AlbumID"];
                             Cd newCd = new Cd();
                             newCd.setAlbum((string)reader["Album"]);
                             newCd.setArtist((string)reader["Artist"]);
                             newCd.setGenre((string)reader["Genre"]);
                             newCd.setDate((DateTime)reader["DateStr"]);
+                            newCd.setId(temp.ToString());
                             CdList.AddLast(newCd);
+
+                            if (temp > nextID)
+                            {
+                                nextID = temp;
+                            }
                         }
+                        nextID++;
+
                     }
+
+
+                    // string nextAlbumID = CdList.L
                     catch (Exception ex)
                     {
                         Debug.WriteLine("Error reading from database\n" + ex.StackTrace.ToString());
@@ -188,7 +213,7 @@ namespace CDManage
                             string temp = "";
                             while (reader.Read())
                             {
-                                temp = (string)reader["Song Name"];
+                                temp = (string)reader["Song_Name"];
                                 temp = temp.Trim();
                                 tmpLst.Add(temp);
                             }
@@ -397,17 +422,21 @@ namespace CDManage
 
             bool canAdd = true;
             string sqlQuery = @"INSERT INTO CDdtb (`Album`,`Artist`,`Genre`,`DateStr`) values (?,?,?,?)";
-            string addSongs = @"INSERT INTO SongListDTB ( `Album`, `Artist`,`Song Name`) values (?,?,?)";
-
+            string addSongs = @"INSERT INTO SongListDTB ( `Album`, `Artist`,`Song_Name`, `AlbumID`) values (?,?,?,?)";
+            string newAlbum = addAlbumBx.Text.Trim();
+            StandardizeText(ref newAlbum);
+            string newArtist = addArtistBx.Text.Trim();
+            StandardizeText(ref newArtist);
+            string newGenre = addGenreBx.Text.Trim();
+            StandardizeText(ref newGenre);
             using (OleDbConnection conn = new OleDbConnection(pathStr))
             {
                 using (OleDbCommand cmd = new OleDbCommand(sqlQuery, conn))
                 {
                     foreach (Cd x in CdList)
                     {
-                        if (this.addAlbumBx.Text.Trim() == x.getAlbum() &&
-                            this.addArtistBx.Text.Trim() == x.getArtist() &&
-                            this.addGenreBx.Text.Trim() == x.getGenre())
+                        if (newAlbum == x.getAlbum() &&
+                            newArtist == x.getArtist())
                         {
                             MessageBox.Show("CD already exists.");
                             canAdd = false;
@@ -422,34 +451,34 @@ namespace CDManage
                         {
                             conn.Open();
 
-                            cmd.Parameters.AddWithValue("@Album", this.addAlbumBx.Text.Trim());
-                            cmd.Parameters.AddWithValue("@Artist", this.addArtistBx.Text.Trim());
-                            cmd.Parameters.AddWithValue("@Genre", this.addGenreBx.Text.Trim());
+                            cmd.Parameters.AddWithValue("@Album", newAlbum);
+                            cmd.Parameters.AddWithValue("@Artist", newArtist);
+                            cmd.Parameters.AddWithValue("@Genre", newGenre);
                             cmd.Parameters.AddWithValue("@DateStr", this.dateTimePicker1.Value.Date);
                             cmd.ExecuteNonQuery();
                             cmd.Dispose();
 
                             conn.Close();
                             Cd x = new Cd();
-                            x.setAlbum(this.addAlbumBx.Text.Trim());
-                            x.setArtist(this.addArtistBx.Text.Trim());
+                            x.setAlbum(newAlbum);
+                            x.setArtist(newArtist);
                             x.setDate(this.dateTimePicker1.Value.Date);
-                            x.setGenre(this.addGenreBx.Text.Trim());
+                            x.setGenre(newGenre);
 
                             CdList.AddLast(x);
-                            if (this.addGenreBx.Text.Trim() != "")
+                            if (newGenre != "")
                             {
-                                if (!GenreComboBx.Items.Contains(this.addGenreBx.Text.Trim()))
+                                if (!GenreComboBx.Items.Contains(newGenre))
                                 {
-                                    GenreComboBx.Items.Add(this.addGenreBx.Text.Trim());
+                                    GenreComboBx.Items.Add(newGenre);
                                 }
                             }
 
-                            if (this.addArtistBx.Text.Trim() != "")
+                            if (newArtist != "")
                             {
-                                if (!ArtistComboBx.Items.Contains(this.addArtistBx.Text.Trim()))
+                                if (!ArtistComboBx.Items.Contains(newArtist))
                                 {
-                                    ArtistComboBx.Items.Add(this.addArtistBx.Text.Trim());
+                                    ArtistComboBx.Items.Add(newArtist);
                                 }
                             }
 
@@ -468,11 +497,14 @@ namespace CDManage
                                         foreach (string y in AddSongBx.Lines)
                                         {
                                             z = y.Trim();
+                                            StandardizeText(ref z);
                                             songCmd.Parameters["@SongName"].Value = z;
+                                            songCmd.Parameters.AddWithValue("@AlbumID", nextID);
                                             songCmd.ExecuteNonQuery();
                                             tmpSngLst.Add(y);
 
                                         }
+                                        nextID++;
 
                                         x.setSongName(tmpSngLst);
 
@@ -556,65 +588,88 @@ namespace CDManage
                 //displayStr += x.getAlbum() + " by " + x.getArtist() + "(" + x.getGenre() + ")\n\n";
             }
 
-            //ResultsList.ClearSelection();
             ResultsList.CurrentCell = null;
         }
 
         private void signUpBtn_Click(object sender, EventArgs e)
         {
+            string sqlIns = @"INSERT INTO LoginDTB (`Username`,`Password`,`UserLevel`, `EmailAddress`) values (?,?,?,?)";
+            string sqlQuery = @"SELECT * FROM LoginDTB";
+            const int noEditPms = 0;
+            bool canAddUser = true;
             using (OleDbConnection connLg = new OleDbConnection(userPathStr))
             {
-                try
+                using (OleDbCommand cmd = new OleDbCommand(sqlQuery, connLg))
                 {
-                    const int noEditPms = 0;
-                    bool canAddUser = true;
-                    string sqlIns = @"INSERT INTO LoginDTB (`Username`,`EmailAddress`,`Password`) values (?,?,?)";
-                    string sqlQuery = @"SELECT * FROM LoginDTB";
-                    OleDbCommand cmd = new OleDbCommand(sqlQuery, connLg);
-                    OleDbCommand InsertCmd = new OleDbCommand(sqlIns, connLg);
 
-                    connLg.Open();
-                    OleDbDataReader reader = cmd.ExecuteReader();
 
-                    while (reader.Read())
+                    try
                     {
-                        if (txtNewUsrName.Text.Trim() == reader["Username"].ToString())
+                        //OleDbCommand InsertCmd = new OleDbCommand(sqlIns, connLg);
+
+                        connLg.Open();
+                        OleDbDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
                         {
-                            newUsrLbl.Text = "Sorry, that Username is already taken.";
-                            canAddUser = false;
-                            break;
+
+                            if (txtNewUsrName.Text.Trim() == reader["Username"].ToString())
+                            {
+                                newUsrLbl.Text = "Sorry, that Username is already taken.";
+                                canAddUser = false;
+                                break;
+                            }
+                            else if (txtNewUsrEmail.Text.Trim() == reader["EmailAddress"].ToString())
+                            {
+                                newUsrLbl.Text = "Sorry, that email is already associated with a user.";
+                                canAddUser = false;
+                                break;
+                            }
                         }
-                        else if (txtNewUsrEmail.Text.Trim() == reader["EmailAddress"].ToString())
-                        {
-                            newUsrLbl.Text = "Sorry, that email is already associated with a user.";
-                            canAddUser = false;
-                            break;
-                        }
+                        cmd.Dispose();
+                        connLg.Close();
                     }
+
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error opening file.\n" + ex.StackTrace);
+                    }
+
 
                     if (canAddUser == true)
                     {
-                        InsertCmd.Parameters.AddWithValue("@Username", this.txtNewUsrName.Text.Trim());
-                        InsertCmd.Parameters.AddWithValue("@EmailAddress", this.txtNewUsrEmail.Text.Trim());
-                        InsertCmd.Parameters.AddWithValue("@Password", this.txtNewUsrPwd.Text.Trim());
-                        InsertCmd.Parameters.AddWithValue("UserLevel", noEditPms);
 
-                        InsertCmd.ExecuteNonQuery();
+                        try
+                        {
 
-                        cmd.Dispose();
-                        InsertCmd.Dispose();
 
-                        newUsrLbl.Text = "New user? Sign up here!";
+                            using (OleDbCommand InsertCmd = new OleDbCommand(sqlIns, connLg))
+                            {
+
+
+                                connLg.Open();
+
+                                InsertCmd.Parameters.AddWithValue("@Username", this.txtNewUsrName.Text.Trim());
+                                InsertCmd.Parameters.AddWithValue("@Password", this.txtNewUsrPwd.Text.Trim());
+                                InsertCmd.Parameters.AddWithValue("@UserLevel", noEditPms.ToString());
+                                InsertCmd.Parameters.AddWithValue("@EmailAddress", this.txtNewUsrEmail.Text.Trim());
+
+                                InsertCmd.ExecuteNonQuery();
+
+
+                                InsertCmd.Dispose();
+
+                                newUsrLbl.Text = "New user? Sign up here!";
+                            }
+                            Cleanup();
+                            PanelSwitch(loginPnl.Name);
+                        }
+
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex.StackTrace);
+                        }
                     }
-                }
-
-                catch (Exception ex)
-                {
-                    Debug.WriteLine("Error opening file.\n" + ex.StackTrace);
-                }
-                finally
-                {
-                    connLg.Close();
                 }
             }
         }
@@ -626,10 +681,11 @@ namespace CDManage
 
         private void exitTsr_Click(object sender, EventArgs e)
         {
+            //Cleanup();
             this.Close();
         }
 
-        private void SwtichToLoginPanelTsr_Click(object sender, EventArgs e)
+        private void SwitchToLoginPanelTsr_Click(object sender, EventArgs e)
         {
             //Switch to login Panel
             PanelSwitch(loginPnl.Name);
@@ -718,7 +774,7 @@ namespace CDManage
 
                         while (reader.Read())
                         {
-                            UserListBx.Items.Add((string)reader["Username"]);// + " (" + (string)reader["UserLevel"] + ")");
+                            UserListBx.Items.Add((string)reader["Username"]);
 
                         }
                     }
@@ -742,32 +798,48 @@ namespace CDManage
         private void ResultsList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            string tmpAlbum = "";
-            try
+            if (ResultsList.SelectedCells.Count == 0)
             {
-                tmpAlbum = ResultsList.SelectedCells[0].Value.ToString();
-
-                foreach (Cd x in CdList)
-                {
-                    if (x.getAlbum() == tmpAlbum)
-                    {
-                        SongListView.Rows.Clear();
-                        foreach (string y in x.getSongName())
-                        {
-                            int indx = 0;
-                            indx = x.getSongName().IndexOf(y) + 1;
-                            string tmp = indx.ToString();
-                            string[] newrow = { y, tmp };
-                            DataGridViewRow newItem = new DataGridViewRow();
-                            newItem.CreateCells(SongListView,newrow);
-                            SongListView.Rows.Add(newItem);
-                        }
-                    }
-                }
+                return;
             }
-            catch
+            else
             {
-                
+               
+                string tempArtist = "";
+                string tmpAlbum = "";
+                try
+                {
+
+                    tmpAlbum = ResultsList.SelectedRows[0].Cells["AlbumCol"].Value.ToString();
+                    tempArtist = ResultsList.SelectedRows[0].Cells["ArtistCol"].Value.ToString();
+
+                            foreach (Cd x in CdList)
+                            {
+                                if (x.getAlbum() == tmpAlbum)
+                                {
+                                    SongListView.Rows.Clear();
+                                    foreach (string y in x.getSongName())
+                                    {
+                                        int indx = 0;
+                                        indx = x.getSongName().IndexOf(y) + 1;
+                                        string tmp = indx.ToString();
+                                        string[] newrow = { y, tmp};
+                                        DataGridViewRow newItem = new DataGridViewRow();
+                                        newItem.CreateCells(SongListView, newrow);
+                                        SongListView.Rows.Add(newItem);
+
+                                    }
+                                    break;
+                                }
+                            }
+                             
+                    
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.StackTrace);
+                }
+
             }
         }
         void AutoCompleteSearchTB()
@@ -833,6 +905,225 @@ namespace CDManage
                     conn.Close();
                 }
             }
+        }
+
+
+
+
+        private void ShowAllBtn_Click(object sender, EventArgs e)
+        {
+            ResultsList.Rows.Clear();
+            foreach (Cd x in CdList)
+            {
+                String[] arrayStr;
+                string tmpDate = x.getDate().ToShortDateString();
+                arrayStr = new String[5] { x.getAlbum(), x.getArtist(), x.getGenre(), tmpDate, x.getID() };
+
+                DataGridViewRow derp = new DataGridViewRow();
+                derp.CreateCells(ResultsList, arrayStr);
+
+                ResultsList.Rows.Add(derp);
+
+
+            }
+            ResultsList.CurrentCell = null;
+        }
+
+        private void ResultsList_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            ResultsList.ClearSelection();
+            return;
+        }
+
+        private void EditToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ResultsList.CurrentCell == null)
+            {
+                return;
+            }
+            else
+            {
+                ResultsList.ReadOnly = false;
+                ResultsList.SelectedRows[0].ReadOnly = false;
+                foreach (DataGridViewRow x in ResultsList.Rows)
+                {
+                    if (x != ResultsList.SelectedRows[0])
+                    {
+                        x.ReadOnly = true;
+                    }
+
+                }
+            }
+
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ResultsList.CurrentCell == null)
+            {
+                return;
+            }
+            else
+            {
+                string SongDeleteStr = @"DELETE FROM SongListDTB WHERE AlbumID = @AlbumID";
+
+                using (OleDbConnection conn = new OleDbConnection(songPathStr))
+                {
+                    using (OleDbCommand DelCmd = new OleDbCommand(SongDeleteStr, conn))
+                    {
+                        DelCmd.Parameters.AddWithValue("@AlbumID", ResultsList.SelectedRows[0].Cells["IdCol"].Value);
+                        conn.Open();
+                        DelCmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        SongListView.Rows.Clear();
+                    }
+                }
+                string DeleteStr = @"DELETE FROM CDdtb WHERE AlbumID = @AlbumID";
+
+                using (OleDbConnection conn = new OleDbConnection(pathStr))
+                {
+                    using (OleDbCommand DelCmd = new OleDbCommand(DeleteStr, conn))
+                    {
+                        DelCmd.Parameters.AddWithValue("@AlbumID", ResultsList.SelectedRows[0].Cells["IdCol"].Value);
+                        conn.Open();
+                        DelCmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        for (int i = 0; i < CdList.Count; i++)
+                        {
+                            if (CdList.ElementAt<Cd>(i).getID() == ResultsList.SelectedRows[0].Cells["IdCol"].Value.ToString())
+                            {
+                                CdList.Remove(CdList.ElementAt<Cd>(i));
+                                break;
+                            }
+                        }
+
+                        ResultsList.Rows.Remove(ResultsList.SelectedRows[0]);
+                    }
+                }
+
+
+
+
+            }
+        }
+
+        private void applyChangesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LinkedList<Cd> EditCdList = new LinkedList<Cd>();
+            foreach (DataGridViewRow x in ResultsList.Rows)
+            {
+                string tempAlbum = (x.Cells["AlbumCol"].Value.ToString());
+                string tempArtist = (x.Cells["ArtistCol"].Value.ToString());
+                string tempGenre = (x.Cells["GenreCol"].Value.ToString());
+                string tempId = (x.Cells["IdCol"].Value.ToString());
+                StandardizeText(ref tempAlbum);
+                StandardizeText(ref tempArtist);
+                StandardizeText(ref tempGenre);
+
+                Cd tempCd = new Cd();
+                tempCd.setAlbum(tempAlbum);
+                tempCd.setArtist(tempArtist);
+                tempCd.setGenre(tempGenre);
+                tempCd.setId(tempId);
+
+                if (!CdList.Contains(tempCd))
+                {
+                    EditCdList.AddLast(tempCd);
+                }
+
+
+            }
+
+            string UpdCmdStr = @"UPDATE CDdtb SET Album = @Album, Artist = @Artist, Genre = @Genre, DateStr = @DateStr Where AlbumID = @AlbumID";
+            string SongListUpdCmdStr = "UPDATE SongListDTB SET Album = @Album, Artist = @Artist Where AlbumID = @AlbumID";
+            using (OleDbConnection conn = new OleDbConnection(pathStr))
+            {
+                using (OleDbCommand UpdCmd = new OleDbCommand(UpdCmdStr, conn))
+                {
+
+                    conn.Open();
+                    foreach (Cd x in EditCdList)
+                    {
+                        UpdCmd.Parameters.Clear();
+                        UpdCmd.Parameters.AddWithValue("@Album", x.getAlbum());
+                        UpdCmd.Parameters.AddWithValue("@Artist", x.getArtist());
+                        UpdCmd.Parameters.AddWithValue("@Genre", x.getGenre());
+                        UpdCmd.Parameters.AddWithValue("@DateStr", x.getDate());
+                        UpdCmd.Parameters.AddWithValue("@AlbumID", x.getID());
+                        UpdCmd.ExecuteNonQuery();
+
+
+                        foreach (Cd y in CdList)
+                        {
+                            if (y.getID() == x.getID())
+                            {
+                                y.setAlbum(x.getAlbum());
+                                y.setArtist(x.getArtist());
+                                y.setGenre(x.getGenre());
+                                break;
+
+                            }
+                        }
+                    }
+                }
+                conn.Close();
+                //List<string> tmpLst = new List<string>();
+
+                using (OleDbConnection SongListConn = new OleDbConnection(songPathStr))
+                {
+                    using (OleDbCommand SongUpdCmd = new OleDbCommand(SongListUpdCmdStr, SongListConn))
+                    {
+                        SongListConn.Open();
+                        foreach (Cd x in EditCdList)
+                        {
+
+                            SongUpdCmd.Parameters.Clear();
+                            SongUpdCmd.Parameters.AddWithValue("@Album", x.getAlbum());
+                            SongUpdCmd.Parameters.AddWithValue("@Artist", x.getArtist());
+                            SongUpdCmd.ExecuteNonQuery();
+                        }
+                        SongListConn.Close();
+
+
+                    }
+                }
+            }
+        }
+
+        private void SongListToolStripMenuItemEdit_Click(object sender, EventArgs e)
+        {
+            if (SongListView.CurrentCell == null || SongListView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                SongListView.ReadOnly = false;
+                SongListView.SelectedRows[0].ReadOnly = false;
+                foreach (DataGridViewRow x in SongListView.Rows)
+                {
+                    if (x != SongListView.SelectedRows[0])
+                    {
+                        x.ReadOnly = true;
+                    }
+
+                }
+            }
+        }
+
+        private void SongListView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (ResultsList.SelectedCells.Count == 0)
+            {
+                return;
+            }
+        }
+
+        private void SongListToolStripMenuItemApplyChanges_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
