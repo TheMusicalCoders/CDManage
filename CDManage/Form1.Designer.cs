@@ -39,6 +39,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.cdEditPnl = new System.Windows.Forms.Panel();
+            this.ErrorLabel = new System.Windows.Forms.Label();
             this.ShowAllBtn = new System.Windows.Forms.Button();
             this.SongListView = new System.Windows.Forms.DataGridView();
             this.SongListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -46,11 +47,6 @@
             this.SongListToolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.SongListToolStripMenuItemApplyChanges = new System.Windows.Forms.ToolStripMenuItem();
             this.ResultsList = new System.Windows.Forms.DataGridView();
-            this.AlbumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ArtistCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GenreCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +60,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.GenreComboBx = new System.Windows.Forms.ComboBox();
             this.addCdPnl = new System.Windows.Forms.Panel();
+            this.AlreadyExistsLbl = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.AddSongBx = new System.Windows.Forms.RichTextBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -95,7 +92,6 @@
             this.logoutTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.exitTsr = new System.Windows.Forms.ToolStripMenuItem();
             this.registerPnl = new System.Windows.Forms.Panel();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.signUpBtn = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -107,6 +103,11 @@
             this.NameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TrackNumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SongNumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AlbumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ArtistCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenreCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.loginPnl.SuspendLayout();
             this.cdEditPnl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SongListView)).BeginInit();
@@ -129,7 +130,7 @@
             this.loginPnl.Controls.Add(this.UsrBx);
             this.loginPnl.Controls.Add(this.label9);
             this.loginPnl.Controls.Add(this.label8);
-            this.loginPnl.Location = new System.Drawing.Point(273, 647);
+            this.loginPnl.Location = new System.Drawing.Point(796, 288);
             this.loginPnl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.loginPnl.Name = "loginPnl";
             this.loginPnl.Size = new System.Drawing.Size(700, 491);
@@ -138,11 +139,12 @@
             // InvalidLoginLbl
             // 
             this.InvalidLoginLbl.AutoSize = true;
-            this.InvalidLoginLbl.Location = new System.Drawing.Point(269, 272);
+            this.InvalidLoginLbl.Location = new System.Drawing.Point(239, 153);
             this.InvalidLoginLbl.Name = "InvalidLoginLbl";
-            this.InvalidLoginLbl.Size = new System.Drawing.Size(42, 17);
+            this.InvalidLoginLbl.Size = new System.Drawing.Size(264, 17);
             this.InvalidLoginLbl.TabIndex = 16;
-            this.InvalidLoginLbl.Text = "Sorry";
+            this.InvalidLoginLbl.Text = "Invalid Username/Password Combination";
+            this.InvalidLoginLbl.Visible = false;
             // 
             // InvLbl
             // 
@@ -156,10 +158,10 @@
             // 
             // LoginBtn
             // 
-            this.LoginBtn.Location = new System.Drawing.Point(309, 234);
+            this.LoginBtn.Location = new System.Drawing.Point(258, 235);
             this.LoginBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LoginBtn.Name = "LoginBtn";
-            this.LoginBtn.Size = new System.Drawing.Size(75, 30);
+            this.LoginBtn.Size = new System.Drawing.Size(103, 30);
             this.LoginBtn.TabIndex = 5;
             this.LoginBtn.Text = "Login";
             this.LoginBtn.UseVisualStyleBackColor = true;
@@ -167,43 +169,46 @@
             // 
             // PasswdBx
             // 
-            this.PasswdBx.Location = new System.Drawing.Point(309, 202);
+            this.PasswdBx.Location = new System.Drawing.Point(309, 203);
             this.PasswdBx.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PasswdBx.Name = "PasswdBx";
             this.PasswdBx.PasswordChar = '*';
-            this.PasswdBx.Size = new System.Drawing.Size(100, 22);
+            this.PasswdBx.Size = new System.Drawing.Size(137, 22);
             this.PasswdBx.TabIndex = 4;
             this.PasswdBx.UseSystemPasswordChar = true;
             this.PasswdBx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PasswdBx_KeyPress);
             // 
             // UsrBx
             // 
-            this.UsrBx.Location = new System.Drawing.Point(309, 165);
+            this.UsrBx.Location = new System.Drawing.Point(309, 173);
             this.UsrBx.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.UsrBx.Name = "UsrBx";
-            this.UsrBx.Size = new System.Drawing.Size(100, 22);
+            this.UsrBx.Size = new System.Drawing.Size(135, 22);
             this.UsrBx.TabIndex = 3;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(196, 208);
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(188, 200);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(73, 17);
+            this.label9.Size = new System.Drawing.Size(104, 25);
             this.label9.TabIndex = 2;
             this.label9.Text = "Password:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(189, 170);
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(188, 175);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(77, 17);
+            this.label8.Size = new System.Drawing.Size(108, 25);
             this.label8.TabIndex = 1;
             this.label8.Text = "Username:";
             // 
             // cdEditPnl
             // 
+            this.cdEditPnl.Controls.Add(this.ErrorLabel);
             this.cdEditPnl.Controls.Add(this.ShowAllBtn);
             this.cdEditPnl.Controls.Add(this.SongListView);
             this.cdEditPnl.Controls.Add(this.ResultsList);
@@ -221,18 +226,28 @@
             this.cdEditPnl.Size = new System.Drawing.Size(700, 550);
             this.cdEditPnl.TabIndex = 3;
             // 
+            // ErrorLabel
+            // 
+            this.ErrorLabel.AutoSize = true;
+            this.ErrorLabel.Location = new System.Drawing.Point(12, 119);
+            this.ErrorLabel.Name = "ErrorLabel";
+            this.ErrorLabel.Size = new System.Drawing.Size(75, 17);
+            this.ErrorLabel.TabIndex = 14;
+            this.ErrorLabel.Text = "ErrorLabel";
+            // 
             // ShowAllBtn
             // 
-            this.ShowAllBtn.Location = new System.Drawing.Point(15, 110);
+            this.ShowAllBtn.Location = new System.Drawing.Point(533, 30);
             this.ShowAllBtn.Name = "ShowAllBtn";
-            this.ShowAllBtn.Size = new System.Drawing.Size(75, 23);
-            this.ShowAllBtn.TabIndex = 13;
+            this.ShowAllBtn.Size = new System.Drawing.Size(112, 32);
+            this.ShowAllBtn.TabIndex = 5;
             this.ShowAllBtn.Text = "Show All";
             this.ShowAllBtn.UseVisualStyleBackColor = true;
             this.ShowAllBtn.Click += new System.EventHandler(this.ShowAllBtn_Click);
             // 
             // SongListView
             // 
+            this.SongListView.AllowUserToAddRows = false;
             this.SongListView.BackgroundColor = System.Drawing.Color.LemonChiffon;
             this.SongListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.SongListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -274,6 +289,7 @@
             this.SongListToolStripMenuItemDelete.Name = "SongListToolStripMenuItemDelete";
             this.SongListToolStripMenuItemDelete.Size = new System.Drawing.Size(177, 24);
             this.SongListToolStripMenuItemDelete.Text = "Delete";
+            this.SongListToolStripMenuItemDelete.Click += new System.EventHandler(this.SongListToolStripMenuItemDelete_Click);
             // 
             // SongListToolStripMenuItemApplyChanges
             // 
@@ -309,40 +325,6 @@
             this.ResultsList.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.ResultsList_CellContentClick);
             this.ResultsList.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ResultsList_RowsAdded);
             // 
-            // AlbumCol
-            // 
-            this.AlbumCol.HeaderText = "Album";
-            this.AlbumCol.Name = "AlbumCol";
-            this.AlbumCol.ReadOnly = true;
-            this.AlbumCol.Width = 140;
-            // 
-            // ArtistCol
-            // 
-            this.ArtistCol.HeaderText = "Artist";
-            this.ArtistCol.Name = "ArtistCol";
-            this.ArtistCol.ReadOnly = true;
-            this.ArtistCol.Width = 60;
-            // 
-            // GenreCol
-            // 
-            this.GenreCol.HeaderText = "Genre";
-            this.GenreCol.Name = "GenreCol";
-            this.GenreCol.ReadOnly = true;
-            this.GenreCol.Width = 50;
-            // 
-            // DateCol
-            // 
-            this.DateCol.HeaderText = "Date";
-            this.DateCol.Name = "DateCol";
-            this.DateCol.ReadOnly = true;
-            // 
-            // IdCol
-            // 
-            this.IdCol.HeaderText = "AlbumId";
-            this.IdCol.Name = "IdCol";
-            this.IdCol.ReadOnly = true;
-            this.IdCol.Visible = false;
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -376,23 +358,23 @@
             // 
             // clrBtn
             // 
-            this.clrBtn.Location = new System.Drawing.Point(537, 46);
+            this.clrBtn.Location = new System.Drawing.Point(413, 63);
             this.clrBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.clrBtn.Name = "clrBtn";
-            this.clrBtn.Size = new System.Drawing.Size(100, 34);
-            this.clrBtn.TabIndex = 4;
+            this.clrBtn.Size = new System.Drawing.Size(232, 31);
+            this.clrBtn.TabIndex = 5;
             this.clrBtn.Text = "Clear";
             this.clrBtn.UseVisualStyleBackColor = true;
             this.clrBtn.Click += new System.EventHandler(this.clrBtn_Click);
             // 
             // searchBtN
             // 
-            this.searchBtN.Location = new System.Drawing.Point(413, 46);
+            this.searchBtN.Location = new System.Drawing.Point(413, 30);
             this.searchBtN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.searchBtN.Name = "searchBtN";
-            this.searchBtN.Size = new System.Drawing.Size(100, 33);
+            this.searchBtN.Size = new System.Drawing.Size(114, 32);
             this.searchBtN.TabIndex = 3;
-            this.searchBtN.Text = "SEARCH";
+            this.searchBtN.Text = "Search";
             this.searchBtN.UseVisualStyleBackColor = true;
             this.searchBtN.Click += new System.EventHandler(this.searchBtN_Click);
             // 
@@ -456,6 +438,7 @@
             // 
             // addCdPnl
             // 
+            this.addCdPnl.Controls.Add(this.AlreadyExistsLbl);
             this.addCdPnl.Controls.Add(this.label4);
             this.addCdPnl.Controls.Add(this.AddSongBx);
             this.addCdPnl.Controls.Add(this.dateTimePicker1);
@@ -469,11 +452,21 @@
             this.addCdPnl.Controls.Add(this.label14);
             this.addCdPnl.Controls.Add(this.label10);
             this.addCdPnl.Controls.Add(this.label11);
-            this.addCdPnl.Location = new System.Drawing.Point(908, 624);
+            this.addCdPnl.Location = new System.Drawing.Point(718, 557);
             this.addCdPnl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addCdPnl.Name = "addCdPnl";
             this.addCdPnl.Size = new System.Drawing.Size(700, 491);
             this.addCdPnl.TabIndex = 5;
+            // 
+            // AlreadyExistsLbl
+            // 
+            this.AlreadyExistsLbl.AutoSize = true;
+            this.AlreadyExistsLbl.Location = new System.Drawing.Point(94, 183);
+            this.AlreadyExistsLbl.Name = "AlreadyExistsLbl";
+            this.AlreadyExistsLbl.Size = new System.Drawing.Size(119, 17);
+            this.AlreadyExistsLbl.TabIndex = 28;
+            this.AlreadyExistsLbl.Text = "CD Already Exists";
+            this.AlreadyExistsLbl.Visible = false;
             // 
             // label4
             // 
@@ -491,7 +484,7 @@
             this.AddSongBx.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddSongBx.Name = "AddSongBx";
             this.AddSongBx.Size = new System.Drawing.Size(275, 184);
-            this.AddSongBx.TabIndex = 26;
+            this.AddSongBx.TabIndex = 20;
             this.AddSongBx.Text = "";
             // 
             // dateTimePicker1
@@ -500,7 +493,7 @@
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker1.TabIndex = 25;
+            this.dateTimePicker1.TabIndex = 18;
             // 
             // TrackNumBx
             // 
@@ -508,7 +501,7 @@
             this.TrackNumBx.Margin = new System.Windows.Forms.Padding(4);
             this.TrackNumBx.Name = "TrackNumBx";
             this.TrackNumBx.Size = new System.Drawing.Size(41, 22);
-            this.TrackNumBx.TabIndex = 24;
+            this.TrackNumBx.TabIndex = 19;
             // 
             // label15
             // 
@@ -536,7 +529,7 @@
             this.AddCDBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddCDBtn.Name = "AddCDBtn";
             this.AddCDBtn.Size = new System.Drawing.Size(103, 28);
-            this.AddCDBtn.TabIndex = 19;
+            this.AddCDBtn.TabIndex = 21;
             this.AddCDBtn.Text = "Add CD";
             this.AddCDBtn.UseVisualStyleBackColor = true;
             this.AddCDBtn.Click += new System.EventHandler(this.AddCDBtn_Click);
@@ -600,7 +593,7 @@
             this.AdminPnl.Controls.Add(this.SelectedUserBx);
             this.AdminPnl.Controls.Add(this.label16);
             this.AdminPnl.Controls.Add(this.UserListBx);
-            this.AdminPnl.Location = new System.Drawing.Point(581, 626);
+            this.AdminPnl.Location = new System.Drawing.Point(1119, 180);
             this.AdminPnl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AdminPnl.Name = "AdminPnl";
             this.AdminPnl.Size = new System.Drawing.Size(700, 550);
@@ -751,7 +744,6 @@
             // 
             // registerPnl
             // 
-            this.registerPnl.Controls.Add(this.dateTimePicker2);
             this.registerPnl.Controls.Add(this.signUpBtn);
             this.registerPnl.Controls.Add(this.label21);
             this.registerPnl.Controls.Add(this.label20);
@@ -760,26 +752,20 @@
             this.registerPnl.Controls.Add(this.txtNewUsrEmail);
             this.registerPnl.Controls.Add(this.txtNewUsrPwd);
             this.registerPnl.Controls.Add(this.txtNewUsrName);
-            this.registerPnl.Location = new System.Drawing.Point(731, 42);
+            this.registerPnl.Location = new System.Drawing.Point(156, 596);
             this.registerPnl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.registerPnl.Name = "registerPnl";
             this.registerPnl.Size = new System.Drawing.Size(700, 491);
             this.registerPnl.TabIndex = 13;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(12, 74);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker2.TabIndex = 14;
+            this.registerPnl.Paint += new System.Windows.Forms.PaintEventHandler(this.registerPnl_Paint);
             // 
             // signUpBtn
             // 
-            this.signUpBtn.Location = new System.Drawing.Point(324, 287);
+            this.signUpBtn.Location = new System.Drawing.Point(286, 283);
             this.signUpBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.signUpBtn.Name = "signUpBtn";
-            this.signUpBtn.Size = new System.Drawing.Size(75, 33);
-            this.signUpBtn.TabIndex = 23;
+            this.signUpBtn.Size = new System.Drawing.Size(109, 45);
+            this.signUpBtn.TabIndex = 19;
             this.signUpBtn.Text = "Sign Up!";
             this.signUpBtn.UseVisualStyleBackColor = true;
             this.signUpBtn.Click += new System.EventHandler(this.signUpBtn_Click);
@@ -787,61 +773,65 @@
             // label21
             // 
             this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.Location = new System.Drawing.Point(228, 256);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(46, 17);
+            this.label21.Size = new System.Drawing.Size(66, 25);
             this.label21.TabIndex = 22;
             this.label21.Text = "Email:";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.Location = new System.Drawing.Point(228, 218);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(73, 17);
+            this.label20.Size = new System.Drawing.Size(104, 25);
             this.label20.TabIndex = 21;
             this.label20.Text = "Password:";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.Location = new System.Drawing.Point(228, 177);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(77, 17);
+            this.label19.Size = new System.Drawing.Size(108, 25);
             this.label19.TabIndex = 20;
             this.label19.Text = "Username:";
             // 
             // newUsrLbl
             // 
             this.newUsrLbl.AutoSize = true;
+            this.newUsrLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newUsrLbl.Location = new System.Drawing.Point(268, 140);
             this.newUsrLbl.Name = "newUsrLbl";
-            this.newUsrLbl.Size = new System.Drawing.Size(149, 17);
+            this.newUsrLbl.Size = new System.Drawing.Size(211, 25);
             this.newUsrLbl.TabIndex = 19;
             this.newUsrLbl.Text = "Create A New Account";
             // 
             // txtNewUsrEmail
             // 
-            this.txtNewUsrEmail.Location = new System.Drawing.Point(324, 255);
+            this.txtNewUsrEmail.Location = new System.Drawing.Point(337, 255);
             this.txtNewUsrEmail.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtNewUsrEmail.Name = "txtNewUsrEmail";
-            this.txtNewUsrEmail.Size = new System.Drawing.Size(100, 22);
+            this.txtNewUsrEmail.Size = new System.Drawing.Size(142, 22);
             this.txtNewUsrEmail.TabIndex = 18;
             // 
             // txtNewUsrPwd
             // 
-            this.txtNewUsrPwd.Location = new System.Drawing.Point(324, 215);
+            this.txtNewUsrPwd.Location = new System.Drawing.Point(340, 215);
             this.txtNewUsrPwd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtNewUsrPwd.Name = "txtNewUsrPwd";
-            this.txtNewUsrPwd.Size = new System.Drawing.Size(100, 22);
+            this.txtNewUsrPwd.Size = new System.Drawing.Size(142, 22);
             this.txtNewUsrPwd.TabIndex = 17;
             // 
             // txtNewUsrName
             // 
-            this.txtNewUsrName.Location = new System.Drawing.Point(324, 175);
+            this.txtNewUsrName.Location = new System.Drawing.Point(340, 175);
             this.txtNewUsrName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtNewUsrName.Name = "txtNewUsrName";
-            this.txtNewUsrName.Size = new System.Drawing.Size(100, 22);
+            this.txtNewUsrName.Size = new System.Drawing.Size(142, 22);
             this.txtNewUsrName.TabIndex = 16;
             // 
             // NameCol
@@ -862,6 +852,41 @@
             this.SongNumCol.HeaderText = "Column1";
             this.SongNumCol.Name = "SongNumCol";
             this.SongNumCol.ReadOnly = true;
+            this.SongNumCol.Visible = false;
+            // 
+            // AlbumCol
+            // 
+            this.AlbumCol.HeaderText = "Album";
+            this.AlbumCol.Name = "AlbumCol";
+            this.AlbumCol.ReadOnly = true;
+            this.AlbumCol.Visible = false;
+            this.AlbumCol.Width = 140;
+            // 
+            // ArtistCol
+            // 
+            this.ArtistCol.HeaderText = "Artist";
+            this.ArtistCol.Name = "ArtistCol";
+            this.ArtistCol.ReadOnly = true;
+            this.ArtistCol.Width = 60;
+            // 
+            // GenreCol
+            // 
+            this.GenreCol.HeaderText = "Genre";
+            this.GenreCol.Name = "GenreCol";
+            this.GenreCol.ReadOnly = true;
+            this.GenreCol.Width = 50;
+            // 
+            // DateCol
+            // 
+            this.DateCol.HeaderText = "Date";
+            this.DateCol.Name = "DateCol";
+            this.DateCol.ReadOnly = true;
+            // 
+            // IdCol
+            // 
+            this.IdCol.HeaderText = "AlbumId";
+            this.IdCol.Name = "IdCol";
+            this.IdCol.ReadOnly = true;
             // 
             // Form1
             // 
@@ -966,23 +991,24 @@
         private System.Windows.Forms.ToolStripMenuItem switchToRegisterPanelTsr;
         private System.Windows.Forms.DataGridView ResultsList;
         private System.Windows.Forms.DataGridView SongListView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AlbumCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ArtistCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GenreCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateCol;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button ShowAllBtn;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdCol;
         private System.Windows.Forms.ToolStripMenuItem applyChangesToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip SongListContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem SongListToolStripMenuItemEdit;
         private System.Windows.Forms.ToolStripMenuItem SongListToolStripMenuItemDelete;
         private System.Windows.Forms.ToolStripMenuItem SongListToolStripMenuItemApplyChanges;
+        private System.Windows.Forms.Label ErrorLabel;
+        private System.Windows.Forms.Label AlreadyExistsLbl;
         private System.Windows.Forms.DataGridViewTextBoxColumn NameCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn TrackNumCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn SongNumCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AlbumCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ArtistCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GenreCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdCol;
     }
 }
 

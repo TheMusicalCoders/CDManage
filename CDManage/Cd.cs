@@ -14,7 +14,8 @@ namespace CDManage
         private string artist;
         private string genre;
         private List <string> songName;
-        private int songNum;
+        private List <string> songNumber;
+       // private int songNum;
 
         public Cd() {
 
@@ -52,11 +53,6 @@ namespace CDManage
             this.genre = genre;
         }
 
-        public void setSongNum(int songNum)
-        {
-            this.songNum = songNum;
-        }
-
         public void setSongName(List<string> songName)
         {
             this.songName = songName;
@@ -86,15 +82,30 @@ namespace CDManage
         {
             return genre;
         }
-
+        /*
+        public void setSongNum(int songNum)
+        {
+            this.songNum = songNum;
+        }
+     
         public int getSongNum()
         {
             return songNum;
         }
-
+        */
         public List <string> getSongName()
         {
             return songName;
         }
+
+        public List <string> getSongNumber()
+        {
+            return songNumber;
+        }
+        public void setSongNumber(List<string> songNumber)
+        {
+            this.songNumber = songNumber;
+        }
+
     }
 }
