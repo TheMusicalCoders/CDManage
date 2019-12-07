@@ -11,7 +11,6 @@ using System.Data.OleDb;
 using System.IO;
 using System.Diagnostics;
 using System.Net;
-using CSFreeDB;
 using System.Text.RegularExpressions;
 
 //D:\C#\CDProjects\CDManage-DatabaseConn
@@ -20,7 +19,9 @@ namespace CDManage
 
     public partial class Form1 : Form
     {
-        //connection path strings for each of the three databases
+        /// <summary>
+        ///  connection path strings for each of the three databases
+        /// </summary>
 
         static string dirStr = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory.ToString()).ToString()).ToString();
         string pathStr = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + dirStr + @"\Database\Cddtb.accdb";
@@ -81,6 +82,10 @@ namespace CDManage
                 }
             }
         }
+        /// <summary>
+        /// StandardizeText function ensures uniform entries in database
+        /// </summary>
+        /// <param name="text"></param>
         private void StandardizeText(ref string text)
         {
             text = text.ToLower();
@@ -107,6 +112,7 @@ namespace CDManage
                 {
                     continue;
                 }
+                myPnl.BackgroundImage = CDManage.Properties.Resources.recordBackground;
                 myPnl.Location = new Point(0, 10);
                 myPnl.Size = new Size(700, 550);
             }
@@ -338,6 +344,8 @@ namespace CDManage
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+
+
         private void UserListBx_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (UserListBx.SelectedItem != null)
@@ -346,7 +354,11 @@ namespace CDManage
             }
 
         }
-
+        /// <summary>
+        /// Eventhandlers for buttons updating user permission levels in database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddPermissionBtn_Click_1(object sender, EventArgs e)
         {
             if (SelectedUserBx.Text.Trim() != "")
@@ -390,7 +402,6 @@ namespace CDManage
             }
             else { MessageBox.Show("Please Select a user"); }
         }
-
         private void RemovePermissionBtn_Click_1(object sender, EventArgs e)
         {
             if (SelectedUserBx.Text.Trim() != "")
@@ -435,6 +446,14 @@ namespace CDManage
             else { MessageBox.Show("Please Select a user"); }
         }
 
+
+        /// <summary>
+        /// AddCdBtn makes connections to Cd and Song databases
+        /// adds information to both
+        /// reads automatically generated Songnumbers from song Dtb
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddCDBtn_Click(object sender, EventArgs e)
         {
             //TODO Add in a confirmation button
@@ -443,7 +462,6 @@ namespace CDManage
             string sqlQuery = @"INSERT INTO CDdtb (`Album`,`Artist`,`Genre`,`DateStr`) values (@Album,@Artist,@Genre,@DateStr)";
             string addSongs = @"INSERT INTO SongListDTB ( `Album`, `Artist`, `AlbumID`, `Song_Name`) values (@Album,@Artist,@SongName,@AlbumID)";
             string SongNumQuery = @"SELECT * from SongListDTB WHERE AlbumID = @AlbumID";
-            //string SongNumQuery = @"SELECT SongNumber from SongListDTB WHERE Song_Name = @SongName AND Album = @Album and Artist = @Artist AND AlbumID = @AlbumID";
             string newAlbum = addAlbumBx.Text.Trim();
             StandardizeText(ref newAlbum);
             string newArtist = addArtistBx.Text.Trim();
@@ -535,11 +553,7 @@ namespace CDManage
                                             songCmd.Parameters["@SongName"].Value = z;
 
                                             songCmd.ExecuteNonQuery();
-
-
                                         }
-
-
                                     }
                                     catch (Exception ex)
                                     {
@@ -580,7 +594,7 @@ namespace CDManage
                                     }
                                     finally
                                     {
-                                         songConn.Close();
+                                        songConn.Close();
                                     }
                                 }
                             }
@@ -600,6 +614,13 @@ namespace CDManage
             }
         }
 
+
+        /// <summary>
+        /// CD information is read in from the linkedlist populated on form_load
+        /// no connection to the database is made here
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void searchBtN_Click(object sender, EventArgs e)
         {
             ResultsList.Rows.Clear();
@@ -648,12 +669,18 @@ namespace CDManage
 
                 ResultsList.Rows.Add(derp);
 
-                //displayStr += x.getAlbum() + " by " + x.getArtist() + "(" + x.getGenre() + ")\n\n";
             }
 
             ResultsList.CurrentCell = null;
         }
 
+
+        /// <summary>
+        /// signUpBtn first reads from database to check if user information already exists
+        /// if it does not, user information is inserted into database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void signUpBtn_Click(object sender, EventArgs e)
         {
             string sqlIns = @"INSERT INTO LoginDTB (`Username`,`Password`,`UserLevel`, `EmailAddress`) values (?,?,?,?)";
@@ -668,7 +695,6 @@ namespace CDManage
 
                     try
                     {
-                        //OleDbCommand InsertCmd = new OleDbCommand(sqlIns, connLg);
 
                         connLg.Open();
                         OleDbDataReader reader = cmd.ExecuteReader();
@@ -737,12 +763,24 @@ namespace CDManage
             }
         }
 
+
+        /// <summary>
+        /// clrBtn simply calls Cleanup function and clears Errorlabel text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clrBtn_Click(object sender, EventArgs e)
         {
             ErrorLabel.Visible = false;
             Cleanup();
         }
 
+
+        /// <summary>
+        /// Handler for closing form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitTsr_Click(object sender, EventArgs e)
         {
 
@@ -757,16 +795,14 @@ namespace CDManage
 
         }
 
-        private void SwitchToLoginPanelTsr_Click(object sender, EventArgs e)
-        {
-            //Switch to login Panel
-            PanelSwitch(loginPnl.Name);
-        }
 
-        private void SwitchToCdeditPanelTsr_Click(object sender, EventArgs e)
-        {
-            PanelSwitch(cdEditPnl.Name);
-        }
+        /// <summary>
+        /// following functions are used to navigate between panels
+        /// basis is the PanelSwitch method, other event handlers call PanelSwitch with the appropriate panel name as argument
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
 
         ///<param name="passPanel"> Used to determine want visible </param>
         ///<summary>Makes all panels invivble except for the one with the same name as the passed in value</summary>
@@ -792,6 +828,17 @@ namespace CDManage
             }
 
             Cleanup();
+        }
+
+        private void SwitchToLoginPanelTsr_Click(object sender, EventArgs e)
+        {
+            //Switch to login Panel
+            PanelSwitch(loginPnl.Name);
+        }
+
+        private void SwitchToCdeditPanelTsr_Click(object sender, EventArgs e)
+        {
+            PanelSwitch(cdEditPnl.Name);
         }
 
         private void SwitchToAddCdPnl_Click(object sender, EventArgs e)
@@ -869,10 +916,16 @@ namespace CDManage
             PanelSwitch(registerPnl.Name);
         }
 
+
+        /// <summary>
+        /// Method populates SongList with songs from selected CD when clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ResultsList_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            if (ResultsList.SelectedCells.Count == 0)
+            if (ResultsList.SelectedCells.Count == 0)       //This is to ensure that a CD has been selected
             {
                 return;
             }
@@ -984,6 +1037,12 @@ namespace CDManage
             }
         }
 
+
+        /// <summary>
+        /// ShowAll Eventhandler populates ResultsList with all CD entries pulled from database on form_load or added since
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowAllBtn_Click(object sender, EventArgs e)
         {
             ResultsList.Rows.Clear();
@@ -1003,12 +1062,25 @@ namespace CDManage
             ResultsList.CurrentCell = null;
         }
 
+
+        /// <summary>
+        /// Prevents first cd in display from being selected on search
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ResultsList_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             ResultsList.ClearSelection();
             return;
         }
 
+
+        /// <summary>
+        /// Enables editing of selected Cd in results list 
+        /// changes are not automatically sent to database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ResultsList.CurrentCell == null)
@@ -1031,6 +1103,12 @@ namespace CDManage
 
         }
 
+
+        /// <summary>
+        /// eventhandler asks for confirmation before deleting selected entry
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ResultsList.CurrentCell == null)
@@ -1039,64 +1117,80 @@ namespace CDManage
             }
             else
             {
-                string SongDeleteStr = @"DELETE FROM SongListDTB WHERE AlbumID = @AlbumID";
-                try
+
+
+                string deleteCptn = "Confirm Deletion";
+                string deleteMsg = "Are you sure you want to delete this album?";
+                DialogResult dialog = MessageBox.Show(deleteMsg, deleteCptn, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialog == DialogResult.Yes)
                 {
 
-                    using (OleDbConnection conn = new OleDbConnection(songPathStr))
+                    string SongDeleteStr = @"DELETE FROM SongListDTB WHERE AlbumID = @AlbumID";
+                    try
                     {
-                        using (OleDbCommand DelCmd = new OleDbCommand(SongDeleteStr, conn))
+
+                        using (OleDbConnection conn = new OleDbConnection(songPathStr))
                         {
-                            DelCmd.Parameters.AddWithValue("@AlbumID", ResultsList.SelectedRows[0].Cells["IdCol"].Value);
-                            conn.Open();
-                            DelCmd.ExecuteNonQuery();
-                            conn.Close();
-
-                            SongListView.Rows.Clear();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.StackTrace);
-                }
-
-                string DeleteStr = @"DELETE FROM CDdtb WHERE AlbumID = @AlbumID";
-
-                try
-                {
-
-                    using (OleDbConnection conn = new OleDbConnection(pathStr))
-                    {
-                        using (OleDbCommand DelCmd = new OleDbCommand(DeleteStr, conn))
-                        {
-                            DelCmd.Parameters.AddWithValue("@AlbumID", ResultsList.SelectedRows[0].Cells["IdCol"].Value);
-                            conn.Open();
-                            DelCmd.ExecuteNonQuery();
-                            conn.Close();
-
-                            for (int i = 0; i < CdList.Count; i++)
+                            using (OleDbCommand DelCmd = new OleDbCommand(SongDeleteStr, conn))
                             {
-                                if (CdList.ElementAt<Cd>(i).getID() == ResultsList.SelectedRows[0].Cells["IdCol"].Value.ToString())
-                                {
-                                    CdList.Remove(CdList.ElementAt<Cd>(i));
-                                    break;
-                                }
-                            }
+                                DelCmd.Parameters.AddWithValue("@AlbumID", ResultsList.SelectedRows[0].Cells["IdCol"].Value);
+                                conn.Open();
+                                DelCmd.ExecuteNonQuery();
+                                conn.Close();
 
-                            ResultsList.Rows.Remove(ResultsList.SelectedRows[0]);
+                                SongListView.Rows.Clear();
+                            }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.StackTrace);
+                    }
 
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.StackTrace);
+                    string DeleteStr = @"DELETE FROM CDdtb WHERE AlbumID = @AlbumID";
+
+                    try
+                    {
+
+                        using (OleDbConnection conn = new OleDbConnection(pathStr))
+                        {
+                            using (OleDbCommand DelCmd = new OleDbCommand(DeleteStr, conn))
+                            {
+                                DelCmd.Parameters.AddWithValue("@AlbumID", ResultsList.SelectedRows[0].Cells["IdCol"].Value);
+                                conn.Open();
+                                DelCmd.ExecuteNonQuery();
+                                conn.Close();
+
+                                for (int i = 0; i < CdList.Count; i++)
+                                {
+                                    if (CdList.ElementAt<Cd>(i).getID() == ResultsList.SelectedRows[0].Cells["IdCol"].Value.ToString())
+                                    {
+                                        CdList.Remove(CdList.ElementAt<Cd>(i));
+                                        break;
+                                    }
+                                }
+
+                                ResultsList.Rows.Remove(ResultsList.SelectedRows[0]);
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.StackTrace);
+                    }
                 }
 
             }
         }
 
+
+        /// <summary>
+        /// Applies to both databases any changes made to display
+        /// does not allow null entries to be applied to databases
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void applyChangesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ErrorLabel.Visible = false;
@@ -1203,6 +1297,12 @@ namespace CDManage
             }
         }
 
+
+        /// <summary>
+        /// Allows for selected entry in songlist to be edited
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SongListToolStripMenuItemEdit_Click(object sender, EventArgs e)
         {
             if (SongListView.CurrentCell == null || SongListView.SelectedRows.Count == 0)
@@ -1224,6 +1324,12 @@ namespace CDManage
             }
         }
 
+
+        /// <summary>
+        /// Prevents exceptions if selectedcells is accessed when there is none selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SongListView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (ResultsList.SelectedCells.Count == 0)
@@ -1232,6 +1338,11 @@ namespace CDManage
             }
         }
 
+        /// <summary>
+        /// applies to Song database all changes made in song display
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SongListToolStripMenuItemApplyChanges_Click(object sender, EventArgs e)
         {
             ErrorLabel.Visible = false;
@@ -1248,7 +1359,6 @@ namespace CDManage
                 string tempId = (ResultsList.SelectedRows[0].Cells["IdCol"].Value.ToString());
                 foreach (DataGridViewRow x in SongListView.Rows)
                 {
-
 
                     if (x.Cells["NameCol"].Value == null || x.Cells["NameCol"].Value == null)
                     {
@@ -1308,6 +1418,12 @@ namespace CDManage
             }
         }
 
+
+        /// <summary>
+        /// deletes selected item from song database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SongListToolStripMenuItemDelete_Click(object sender, EventArgs e)
         {
             if (ResultsList.CurrentCell == null || SongListView.CurrentCell == null)
@@ -1316,56 +1432,60 @@ namespace CDManage
             }
             else
             {
-                string SongDeleteStr = @"DELETE FROM SongListDTB WHERE SongNumber = @SongNumber";
-                string SongToDel = SongListView.SelectedRows[0].Cells["NameCol"].Value.ToString();
-                try
+
+                string deleteCptn = "Confirm Deletion";
+                string deleteMsg = "Are you sure you want to delete this album?";
+                DialogResult dialog = MessageBox.Show(deleteMsg, deleteCptn, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialog == DialogResult.Yes)
                 {
 
-
-                    using (OleDbConnection conn = new OleDbConnection(songPathStr))
+                    string SongDeleteStr = @"DELETE FROM SongListDTB WHERE SongNumber = @SongNumber";
+                    string SongToDel = SongListView.SelectedRows[0].Cells["NameCol"].Value.ToString();
+                    try
                     {
-                        using (OleDbCommand DelCmd = new OleDbCommand(SongDeleteStr, conn))
-                        {
-                            string SongNum = SongListView.SelectedRows[0].Cells["SongNumCol"].Value.ToString();
-                            DelCmd.Parameters.AddWithValue("@SongNumber", SongListView.SelectedRows[0].Cells["SongNumCol"].Value);
-                            conn.Open();
-                            DelCmd.ExecuteNonQuery();
-                            conn.Close();
 
-                            SongListView.Rows.Remove(SongListView.SelectedRows[0]);
-                            List<string> swapNumList = new List<string>();
-                            List<string> swapSongList = new List<string>();
-                            for (int i = 0; i < CdList.Count; i++)
+                        using (OleDbConnection conn = new OleDbConnection(songPathStr))
+                        {
+                            using (OleDbCommand DelCmd = new OleDbCommand(SongDeleteStr, conn))
                             {
-                                if (CdList.ElementAt(i).getSongNumber().Contains(SongNum))
+                                string SongNum = SongListView.SelectedRows[0].Cells["SongNumCol"].Value.ToString();
+                                DelCmd.Parameters.AddWithValue("@SongNumber", SongListView.SelectedRows[0].Cells["SongNumCol"].Value);
+                                conn.Open();
+                                DelCmd.ExecuteNonQuery();
+                                conn.Close();
+
+                                SongListView.Rows.Remove(SongListView.SelectedRows[0]);
+                                List<string> swapNumList = new List<string>();
+                                List<string> swapSongList = new List<string>();
+                                for (int i = 0; i < CdList.Count; i++)
                                 {
-                                    swapNumList = CdList.ElementAt<Cd>(i).getSongNumber();
-                                    swapSongList = CdList.ElementAt<Cd>(i).getSongName();
-                                    swapNumList.Remove(SongNum);
-                                    swapSongList.Remove(SongToDel);
-                                    CdList.ElementAt<Cd>(i).setSongNumber(swapNumList);
-                                    break;
+                                    if (CdList.ElementAt(i).getSongNumber().Contains(SongNum))
+                                    {
+                                        swapNumList = CdList.ElementAt<Cd>(i).getSongNumber();
+                                        swapSongList = CdList.ElementAt<Cd>(i).getSongName();
+                                        swapNumList.Remove(SongNum);
+                                        swapSongList.Remove(SongToDel);
+                                        CdList.ElementAt<Cd>(i).setSongNumber(swapNumList);
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    foreach (DataGridViewRow row in SongListView.Rows)
-                    {
-                        row.Cells["TrackNumCol"].Value = row.Index + 1;
+                        foreach (DataGridViewRow row in SongListView.Rows)
+                        {
+                            row.Cells["TrackNumCol"].Value = row.Index + 1;
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.StackTrace);
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.StackTrace);
+                    }
                 }
             }
         }
 
-        private void registerPnl_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
     }
 }
 

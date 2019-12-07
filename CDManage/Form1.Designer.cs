@@ -42,11 +42,19 @@
             this.ErrorLabel = new System.Windows.Forms.Label();
             this.ShowAllBtn = new System.Windows.Forms.Button();
             this.SongListView = new System.Windows.Forms.DataGridView();
+            this.NameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TrackNumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SongNumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SongListContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SongListToolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.SongListToolStripMenuItemDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.SongListToolStripMenuItemApplyChanges = new System.Windows.Forms.ToolStripMenuItem();
             this.ResultsList = new System.Windows.Forms.DataGridView();
+            this.AlbumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ArtistCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GenreCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,14 +108,7 @@
             this.txtNewUsrEmail = new System.Windows.Forms.TextBox();
             this.txtNewUsrPwd = new System.Windows.Forms.TextBox();
             this.txtNewUsrName = new System.Windows.Forms.TextBox();
-            this.NameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TrackNumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SongNumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AlbumCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ArtistCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GenreCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CdPnlClrBtn = new System.Windows.Forms.Button();
             this.loginPnl.SuspendLayout();
             this.cdEditPnl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SongListView)).BeginInit();
@@ -208,6 +209,7 @@
             // 
             // cdEditPnl
             // 
+            this.cdEditPnl.BackgroundImage = global::CDManage.Properties.Resources.recordBackground;
             this.cdEditPnl.Controls.Add(this.ErrorLabel);
             this.cdEditPnl.Controls.Add(this.ShowAllBtn);
             this.cdEditPnl.Controls.Add(this.SongListView);
@@ -229,6 +231,7 @@
             // ErrorLabel
             // 
             this.ErrorLabel.AutoSize = true;
+            this.ErrorLabel.BackColor = System.Drawing.Color.Transparent;
             this.ErrorLabel.Location = new System.Drawing.Point(12, 119);
             this.ErrorLabel.Name = "ErrorLabel";
             this.ErrorLabel.Size = new System.Drawing.Size(75, 17);
@@ -266,6 +269,26 @@
             this.SongListView.Size = new System.Drawing.Size(251, 353);
             this.SongListView.TabIndex = 12;
             this.SongListView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SongListView_CellContentClick);
+            // 
+            // NameCol
+            // 
+            this.NameCol.HeaderText = "Song Name";
+            this.NameCol.Name = "NameCol";
+            this.NameCol.ReadOnly = true;
+            this.NameCol.Width = 130;
+            // 
+            // TrackNumCol
+            // 
+            this.TrackNumCol.HeaderText = "Track#";
+            this.TrackNumCol.Name = "TrackNumCol";
+            this.TrackNumCol.ReadOnly = true;
+            // 
+            // SongNumCol
+            // 
+            this.SongNumCol.HeaderText = "Column1";
+            this.SongNumCol.Name = "SongNumCol";
+            this.SongNumCol.ReadOnly = true;
+            this.SongNumCol.Visible = false;
             // 
             // SongListContextMenuStrip
             // 
@@ -325,6 +348,41 @@
             this.ResultsList.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.ResultsList_CellContentClick);
             this.ResultsList.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.ResultsList_RowsAdded);
             // 
+            // AlbumCol
+            // 
+            this.AlbumCol.HeaderText = "Album";
+            this.AlbumCol.Name = "AlbumCol";
+            this.AlbumCol.ReadOnly = true;
+            this.AlbumCol.Visible = false;
+            this.AlbumCol.Width = 140;
+            // 
+            // ArtistCol
+            // 
+            this.ArtistCol.HeaderText = "Artist";
+            this.ArtistCol.Name = "ArtistCol";
+            this.ArtistCol.ReadOnly = true;
+            this.ArtistCol.Width = 60;
+            // 
+            // GenreCol
+            // 
+            this.GenreCol.HeaderText = "Genre";
+            this.GenreCol.Name = "GenreCol";
+            this.GenreCol.ReadOnly = true;
+            this.GenreCol.Width = 50;
+            // 
+            // DateCol
+            // 
+            this.DateCol.HeaderText = "Date";
+            this.DateCol.Name = "DateCol";
+            this.DateCol.ReadOnly = true;
+            // 
+            // IdCol
+            // 
+            this.IdCol.HeaderText = "AlbumId";
+            this.IdCol.Name = "IdCol";
+            this.IdCol.ReadOnly = true;
+            this.IdCol.Visible = false;
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -381,6 +439,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Location = new System.Drawing.Point(216, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 17);
@@ -390,6 +449,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Location = new System.Drawing.Point(15, 74);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(48, 17);
@@ -417,6 +477,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Location = new System.Drawing.Point(12, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 17);
@@ -438,6 +499,7 @@
             // 
             // addCdPnl
             // 
+            this.addCdPnl.Controls.Add(this.CdPnlClrBtn);
             this.addCdPnl.Controls.Add(this.AlreadyExistsLbl);
             this.addCdPnl.Controls.Add(this.label4);
             this.addCdPnl.Controls.Add(this.AddSongBx);
@@ -461,6 +523,7 @@
             // AlreadyExistsLbl
             // 
             this.AlreadyExistsLbl.AutoSize = true;
+            this.AlreadyExistsLbl.BackColor = System.Drawing.Color.Transparent;
             this.AlreadyExistsLbl.Location = new System.Drawing.Point(94, 183);
             this.AlreadyExistsLbl.Name = "AlreadyExistsLbl";
             this.AlreadyExistsLbl.Size = new System.Drawing.Size(119, 17);
@@ -471,6 +534,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Location = new System.Drawing.Point(13, 206);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
@@ -506,6 +570,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.Location = new System.Drawing.Point(239, 106);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
@@ -516,6 +581,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
             this.label13.Location = new System.Drawing.Point(239, 60);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
@@ -561,6 +627,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Location = new System.Drawing.Point(13, 144);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(91, 17);
@@ -570,6 +637,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Location = new System.Drawing.Point(13, 105);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(91, 17);
@@ -579,6 +647,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.Location = new System.Drawing.Point(11, 60);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(76, 17);
@@ -752,12 +821,11 @@
             this.registerPnl.Controls.Add(this.txtNewUsrEmail);
             this.registerPnl.Controls.Add(this.txtNewUsrPwd);
             this.registerPnl.Controls.Add(this.txtNewUsrName);
-            this.registerPnl.Location = new System.Drawing.Point(156, 596);
+            this.registerPnl.Location = new System.Drawing.Point(12, 659);
             this.registerPnl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.registerPnl.Name = "registerPnl";
             this.registerPnl.Size = new System.Drawing.Size(700, 491);
             this.registerPnl.TabIndex = 13;
-            this.registerPnl.Paint += new System.Windows.Forms.PaintEventHandler(this.registerPnl_Paint);
             // 
             // signUpBtn
             // 
@@ -773,6 +841,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
+            this.label21.BackColor = System.Drawing.Color.Transparent;
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.Location = new System.Drawing.Point(228, 256);
             this.label21.Name = "label21";
@@ -783,6 +852,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.Transparent;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.Location = new System.Drawing.Point(228, 218);
             this.label20.Name = "label20";
@@ -793,6 +863,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.Transparent;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.Location = new System.Drawing.Point(228, 177);
             this.label19.Name = "label19";
@@ -803,6 +874,7 @@
             // newUsrLbl
             // 
             this.newUsrLbl.AutoSize = true;
+            this.newUsrLbl.BackColor = System.Drawing.Color.Transparent;
             this.newUsrLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newUsrLbl.Location = new System.Drawing.Point(268, 140);
             this.newUsrLbl.Name = "newUsrLbl";
@@ -834,59 +906,16 @@
             this.txtNewUsrName.Size = new System.Drawing.Size(142, 22);
             this.txtNewUsrName.TabIndex = 16;
             // 
-            // NameCol
+            // CdPnlClrBtn
             // 
-            this.NameCol.HeaderText = "Song Name";
-            this.NameCol.Name = "NameCol";
-            this.NameCol.ReadOnly = true;
-            this.NameCol.Width = 130;
-            // 
-            // TrackNumCol
-            // 
-            this.TrackNumCol.HeaderText = "Track#";
-            this.TrackNumCol.Name = "TrackNumCol";
-            this.TrackNumCol.ReadOnly = true;
-            // 
-            // SongNumCol
-            // 
-            this.SongNumCol.HeaderText = "Column1";
-            this.SongNumCol.Name = "SongNumCol";
-            this.SongNumCol.ReadOnly = true;
-            this.SongNumCol.Visible = false;
-            // 
-            // AlbumCol
-            // 
-            this.AlbumCol.HeaderText = "Album";
-            this.AlbumCol.Name = "AlbumCol";
-            this.AlbumCol.ReadOnly = true;
-            this.AlbumCol.Visible = false;
-            this.AlbumCol.Width = 140;
-            // 
-            // ArtistCol
-            // 
-            this.ArtistCol.HeaderText = "Artist";
-            this.ArtistCol.Name = "ArtistCol";
-            this.ArtistCol.ReadOnly = true;
-            this.ArtistCol.Width = 60;
-            // 
-            // GenreCol
-            // 
-            this.GenreCol.HeaderText = "Genre";
-            this.GenreCol.Name = "GenreCol";
-            this.GenreCol.ReadOnly = true;
-            this.GenreCol.Width = 50;
-            // 
-            // DateCol
-            // 
-            this.DateCol.HeaderText = "Date";
-            this.DateCol.Name = "DateCol";
-            this.DateCol.ReadOnly = true;
-            // 
-            // IdCol
-            // 
-            this.IdCol.HeaderText = "AlbumId";
-            this.IdCol.Name = "IdCol";
-            this.IdCol.ReadOnly = true;
+            this.CdPnlClrBtn.BackColor = System.Drawing.Color.LightGray;
+            this.CdPnlClrBtn.Location = new System.Drawing.Point(242, 149);
+            this.CdPnlClrBtn.Name = "CdPnlClrBtn";
+            this.CdPnlClrBtn.Size = new System.Drawing.Size(75, 23);
+            this.CdPnlClrBtn.TabIndex = 29;
+            this.CdPnlClrBtn.Text = "Clear";
+            this.CdPnlClrBtn.UseVisualStyleBackColor = false;
+            this.CdPnlClrBtn.Click += new System.EventHandler(this.clrBtn_Click);
             // 
             // Form1
             // 
@@ -1009,6 +1038,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn GenreCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdCol;
+        private System.Windows.Forms.Button CdPnlClrBtn;
     }
 }
 
